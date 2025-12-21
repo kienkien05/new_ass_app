@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quản lý Người dùng (Admin) - EViENT</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="../../css/output.css" rel="stylesheet" />
+    <script src="../../js/main.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #101622;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+        }
+
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden">
+    <div class="flex h-screen w-full">
+        <aside id="admin-sidebar"
+            class="hidden lg:flex flex-col w-64 h-full border-r border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-surface-dark shrink-0">
+        </aside>
+
+        <main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark">
+            <header id="admin-header" class="sticky top-0 z-40 w-full flex-shrink-0">
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-6 md:p-8">
+                <div class="max-w-7xl mx-auto flex flex-col gap-6">
+
+                    <!-- Page Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-3xl font-bold tracking-tight">Quản lý Người dùng</h2>
+                            <p class="text-slate-500 dark:text-slate-400 dark:text-slate-400">Quản lý tài khoản người
+                                dùng và phân quyền</p>
+                        </div>
+                        <button
+                            class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-primary/30 transition-all">
+                            <span class="material-symbols-outlined">person_add</span>
+                            <span>Thêm người dùng</span>
+                        </button>
+                    </div>
+
+                    <!-- Search & Filter -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="relative flex-1">
+                            <span
+                                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                            <input type="text" placeholder="Tìm theo tên, email..."
+                                class="w-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-slate-800 rounded-xl py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/50" />
+                        </div>
+                        <select
+                            class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-slate-800 rounded-xl px-4 py-2.5">
+                            <option>Tất cả vai trò</option>
+                            <option>Admin</option>
+                            <option>Staff</option>
+                            <option>User</option>
+                        </select>
+                    </div>
+
+                    <!-- Users Table -->
+                    <div
+                        class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-slate-800 overflow-hidden">
+                        <table class="w-full">
+                            <thead
+                                class="bg-gray-50 dark:bg-[#222f49]/50 border-b border-gray-200 dark:border-slate-800">
+                                <tr>
+                                    <th
+                                        class="text-left px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">
+                                        Người
+                                        dùng</th>
+                                    <th
+                                        class="text-left px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">
+                                        Vai
+                                        trò</th>
+                                    <th
+                                        class="text-left px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">
+                                        Trạng
+                                        thái</th>
+                                    <th
+                                        class="text-left px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">
+                                        Ngày
+                                        tạo</th>
+                                    <th
+                                        class="text-right px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">
+                                        Thao
+                                        tác</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-slate-800">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                                                NA</div>
+                                            <div>
+                                                <p class="font-semibold">Nguyễn Văn A</p>
+                                                <p class="text-sm text-slate-500 dark:text-slate-400">
+                                                    nguyenvana@email.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span
+                                            class="px-2.5 py-1 rounded-lg bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 text-xs font-semibold">Admin</span>
+                                    </td>
+                                    <td class="px-6 py-4"><span
+                                            class="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">Hoạt
+                                            động</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">12/01/2024</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="p-2 text-slate-400 hover:text-primary"><span
+                                                class="material-symbols-outlined text-[20px]">edit</span></button>
+                                        <button class="p-2 text-slate-400 hover:text-red-500"><span
+                                                class="material-symbols-outlined text-[20px]">delete</span></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500 font-bold">
+                                                TB</div>
+                                            <div>
+                                                <p class="font-semibold">Trần Văn B</p>
+                                                <p class="text-sm text-slate-500 dark:text-slate-400">tranvanb@email.com
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span
+                                            class="px-2.5 py-1 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 text-xs font-semibold">Staff</span>
+                                    </td>
+                                    <td class="px-6 py-4"><span
+                                            class="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">Hoạt
+                                            động</span></td>
+                                    <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">15/02/2024</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="p-2 text-slate-400 hover:text-primary"><span
+                                                class="material-symbols-outlined text-[20px]">edit</span></button>
+                                        <button class="p-2 text-slate-400 hover:text-red-500"><span
+                                                class="material-symbols-outlined text-[20px]">delete</span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initAdminPage('users', 'Người dùng');
+        });
+    </script>
+</body>
+
+</html>

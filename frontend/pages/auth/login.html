@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Đăng nhập / Đăng ký - EViENT</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Static CSS -->
+    <link href="../../css/output.css" rel="stylesheet" />
+
+    <!-- Shared Global Logic -->
+    <script src="../../js/main.js"></script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden antialiased">
+    <div class="min-h-screen flex flex-col">
+        <!-- Top Navigation -->
+        <header
+            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#222f49] px-6 lg:px-10 py-3 bg-white dark:bg-[#101623] z-20">
+            <div class="flex items-center gap-4">
+                <a href="../user/home.html" class="flex items-center gap-2 group">
+                    <div class="size-8 text-primary">
+                        <svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z"
+                                fill="currentColor" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">
+                        EViENT</h2>
+                </a>
+            </div>
+            <div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+                <div class="flex items-center gap-9">
+                    <a class="text-slate-600 dark:text-slate-200 hover:text-primary text-sm font-medium leading-normal transition-colors"
+                        href="../user/home.html">Trang chủ</a>
+                    <a class="text-slate-600 dark:text-slate-200 hover:text-primary text-sm font-medium leading-normal transition-colors"
+                        href="#">Sự kiện</a>
+                    <a class="text-slate-600 dark:text-slate-200 hover:text-primary text-sm font-medium leading-normal transition-colors"
+                        href="#">Hỗ trợ</a>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content: Split Layout -->
+        <main class="flex flex-1 relative min-h-[calc(100vh-57px)]">
+            <!-- Left Side: Atmospheric Image (Hidden on mobile) -->
+            <div class="hidden lg:block lg:w-1/2 absolute left-0 top-0 bottom-0 bg-slate-900 overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-overlay"
+                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlZJW3DjDxdvb6JPvqkJDC3TNtErsTumPZA1FICO5paO49vY-XXb31DRkyAmGJ5Z6gspF-NsB_2sCQrh52-zink77pSBO_m5Imept3_foj-bgoZpEOnkXownXmZmWXnQDXHnsEL0RUTUEIqvzcYLkZ_6NY-0ln1fUkolysdro-7JkptYJ9nVOm1obaLQfLvvH1x6sQLHFuIuNBZpama1NiY3idqKEw0sQ_FzZO70pdx35JeMFbXmfWYQVzL1ner1rqPjechyS7rcM');">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#101622]"></div>
+                <div class="relative z-10 flex flex-col justify-start p-12 w-full h-full">
+                    <h1 class="text-3xl xl:text-4xl font-black text-white leading-tight mb-3 tracking-tight">
+                        Sống trọn từng<br />khoảnh khắc.
+                    </h1>
+                    <p class="text-slate-300 text-base max-w-sm leading-relaxed">
+                        Khám phá hàng ngàn sự kiện âm nhạc, lễ hội và giải trí đỉnh cao ngay tại EViENT.
+                    </p>
+                    <div class="mt-6 flex gap-4">
+                        <div class="flex -space-x-3">
+                            <img alt="User avatar" class="w-8 h-8 rounded-full border-2 border-[#101622]"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAggTPPC-VJLFbPIso4uEt0triz2WXHOj-USUpKMJkfr7SVv9Mg2uRVvQ6Y4BRfXXzjR4NsWI6r-tT7Vc_zE1VQSDrOPcwzE4kmSpJjEQvv1qRvp_aaHxAowyfzf0i9_xn99E_mhij0C3GExRofoHOGW1is0Ap1iY0PUwEwqTIpFPaP6CMGtA_6tvEEP_64guKzoYCT54Y31IGTW3aQPGaWyO-14A70VwzKYp_WvXd7mZ-EUGjrrLLmnz-_3kFWm2sO2onBAfjDNT4" />
+                            <img alt="User avatar" class="w-8 h-8 rounded-full border-2 border-[#101622]"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3IXUd1ApMEKGRlTspZmiGEXFqs_GZPEw51gF071XwDeOhUbWt3VkPv7MAF-xXuvIP8aSMdkarDOjNfVv7IaHKA_eoIOIlipFMNopPkgICeIjoB9d3Lp-lYCZWTTVWRE5rG_f2dCE5oRa7gHa_S5PD9K2IIG7DLvW8880edzfIDP4j96C9or0751ib974vaA1eT_5s1xPEzTSS6BkvLI5P4ZrIR2YGtB-hWFHkLNEh1RgtrXLake2dtqmfyU1MA7IjHLsQheZBCD0" />
+                            <img alt="User avatar" class="w-8 h-8 rounded-full border-2 border-[#101622]"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGJpZUVBeqNKl1wIzrUlqcncetJMPP8vHFVqlsBJozaI9T2QD1cGRqI_ICX49ANIeIuNYCeogT0t4EppiRmisqcmqW5LjooA38GKJBo4sovAgi2DNUZrcpXZJkQreVKLCP470Uma3ojnDBe4pW4rUYwCUWbKBJVMMi3mTYD7gflc_1eaCKiqykQO8ulEGteRgAv59oB983YrSL1RqYEKBAvnLxMEUDomFGJIMFdrT_XR5sLsxBNjwWAHsLjeKVCvrjsjnRAR8UTqs" />
+                            <div
+                                class="w-8 h-8 rounded-full border-2 border-[#101622] bg-slate-700 flex items-center justify-center text-xs text-white font-medium">
+                                +2k</div>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <div class="flex text-yellow-400 text-xs">
+                                <span class="material-symbols-outlined text-[14px]">star</span>
+                                <span class="material-symbols-outlined text-[14px]">star</span>
+                                <span class="material-symbols-outlined text-[14px]">star</span>
+                                <span class="material-symbols-outlined text-[14px]">star</span>
+                                <span class="material-symbols-outlined text-[14px]">star</span>
+                            </div>
+                            <p class="text-xs text-slate-400">Được tin dùng bởi cộng đồng</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Side: Auth Form -->
+            <div
+                class="flex-1 flex flex-col justify-center items-center p-6 lg:p-12 bg-white dark:bg-[#101623] lg:ml-[50%]">
+                <div class="w-full max-w-md flex flex-col gap-6">
+                    <!-- Header Text -->
+                    <div class="flex flex-col gap-2 text-center sm:text-left">
+                        <h2 id="header-title" class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+                            Tạo tài khoản</h2>
+                        <p id="header-desc" class="text-slate-500 dark:text-[#90a4cb]">Bắt đầu hành trình trải nghiệm
+                            của bạn ngay hôm nay.</p>
+                    </div>
+                    <!-- Tabs -->
+                    <div class="w-full">
+                        <div class="flex border-b border-slate-200 dark:border-[#314368]">
+                            <button id="tab-login"
+                                class="flex-1 pb-3 pt-2 text-center border-b-[3px] border-transparent text-slate-500 dark:text-[#90a4cb] font-medium text-sm hover:text-slate-800 dark:hover:text-white transition-colors"
+                                onclick="switchTab('login')">
+                                Đăng nhập
+                            </button>
+                            <button id="tab-register"
+                                class="flex-1 pb-3 pt-2 text-center border-b-[3px] border-primary text-primary dark:text-white font-bold text-sm"
+                                onclick="switchTab('register')">
+                                Đăng ký
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Login Form -->
+                    <form id="form-login" class="hidden flex-col gap-5 mt-2" onsubmit="event.preventDefault();">
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Email</span>
+                            <div class="relative">
+                                <input
+                                    class="w-full h-12 px-4 rounded-xl border border-slate-300 dark:border-[#314368] bg-white dark:bg-[#182234] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary placeholder:text-slate-400 dark:placeholder:text-[#90a4cb] transition-all"
+                                    placeholder="vidu@email.com" type="email" />
+                                <span
+                                    class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#90a4cb]"
+                                    style="font-size: 20px;">mail</span>
+                            </div>
+                        </label>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Mật khẩu</span>
+                            <div class="relative">
+                                <input
+                                    class="w-full h-12 px-4 rounded-xl border border-slate-300 dark:border-[#314368] bg-white dark:bg-[#182234] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary placeholder:text-slate-400 dark:placeholder:text-[#90a4cb] transition-all pr-12"
+                                    placeholder="Nhập mật khẩu" type="password" />
+                                <button
+                                    class="absolute right-0 top-0 h-full px-4 text-slate-400 dark:text-[#90a4cb] hover:text-slate-600 dark:hover:text-white transition-colors"
+                                    type="button">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 20px;">visibility_off</span>
+                                </button>
+                            </div>
+                        </label>
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    class="w-4 h-4 rounded border-slate-300 dark:border-[#314368] text-primary focus:ring-primary/50 bg-slate-50 dark:bg-[#182234]"
+                                    type="checkbox" />
+                                <span class="text-sm text-slate-600 dark:text-slate-400">Ghi nhớ đăng nhập</span>
+                            </label>
+                            <a class="text-sm text-primary hover:underline" href="#">Quên mật khẩu?</a>
+                        </div>
+                        <button
+                            class="w-full h-12 bg-primary hover:bg-blue-600 text-white font-bold rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                            <span>Đăng nhập</span>
+                            <span class="material-symbols-outlined text-[18px]">login</span>
+                        </button>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="form-register" class="flex flex-col gap-5 mt-2" onsubmit="event.preventDefault();">
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Email</span>
+                            <div class="relative">
+                                <input
+                                    class="w-full h-12 px-4 rounded-xl border border-slate-300 dark:border-[#314368] bg-white dark:bg-[#182234] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary placeholder:text-slate-400 dark:placeholder:text-[#90a4cb] transition-all"
+                                    placeholder="vidu@email.com" type="email" />
+                                <span
+                                    class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#90a4cb]"
+                                    style="font-size: 20px;">mail</span>
+                            </div>
+                        </label>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Mật khẩu</span>
+                            <div class="relative">
+                                <input
+                                    class="w-full h-12 px-4 rounded-xl border border-slate-300 dark:border-[#314368] bg-white dark:bg-[#182234] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary placeholder:text-slate-400 dark:placeholder:text-[#90a4cb] transition-all pr-12"
+                                    placeholder="Nhập mật khẩu" type="password" />
+                                <button
+                                    class="absolute right-0 top-0 h-full px-4 text-slate-400 dark:text-[#90a4cb] hover:text-slate-600 dark:hover:text-white transition-colors"
+                                    type="button">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 20px;">visibility_off</span>
+                                </button>
+                            </div>
+                        </label>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Xác nhận mật
+                                khẩu</span>
+                            <div class="relative">
+                                <input
+                                    class="w-full h-12 px-4 rounded-xl border border-slate-300 dark:border-[#314368] bg-white dark:bg-[#182234] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary placeholder:text-slate-400 dark:placeholder:text-[#90a4cb] transition-all pr-12"
+                                    placeholder="Nhập lại mật khẩu" type="password" />
+                                <button
+                                    class="absolute right-0 top-0 h-full px-4 text-slate-400 dark:text-[#90a4cb] hover:text-slate-600 dark:hover:text-white transition-colors"
+                                    type="button">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 20px;">visibility_off</span>
+                                </button>
+                            </div>
+                        </label>
+                        <div class="flex items-start gap-3">
+                            <input
+                                class="w-4 h-4 mt-0.5 rounded border-slate-300 dark:border-[#314368] text-primary focus:ring-primary/50 bg-slate-50 dark:bg-[#182234]"
+                                id="terms" type="checkbox" />
+                            <label class="text-sm text-slate-600 dark:text-slate-400" for="terms">
+                                Tôi đồng ý với <a class="text-primary hover:underline" href="#">Điều khoản sử dụng</a>
+                                và <a class="text-primary hover:underline" href="#">Chính sách bảo mật</a>.
+                            </label>
+                        </div>
+                        <button
+                            class="w-full h-12 bg-primary hover:bg-blue-600 text-white font-bold rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                            <span>Đăng ký</span>
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </button>
+                    </form>
+                    <!-- Divider -->
+                    <div class="relative flex py-2 items-center">
+                        <div class="flex-grow border-t border-slate-200 dark:border-[#314368]"></div>
+                        <span class="flex-shrink-0 mx-4 text-slate-400 text-sm">Hoặc đăng nhập với</span>
+                        <div class="flex-grow border-t border-slate-200 dark:border-[#314368]"></div>
+                    </div>
+                    <!-- Social Login -->
+                    <button
+                        class="w-full h-12 bg-white dark:bg-[#182234] border border-slate-300 dark:border-[#314368] hover:bg-slate-50 dark:hover:bg-[#222f49] text-slate-700 dark:text-white font-medium rounded-xl transition-all flex items-center justify-center gap-3">
+                        <svg class="w-5 h-5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                fill="#4285F4"></path>
+                            <path
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                fill="#34A853"></path>
+                            <path
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                                fill="#FBBC05"></path>
+                            <path
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                fill="#EA4335"></path>
+                        </svg>
+                        Tiếp tục với Google
+                    </button>
+                    <!-- Footer Switch -->
+                    <div id="footer-switch" class="mt-4 text-center">
+                        <p class="text-sm text-slate-600 dark:text-slate-300">
+                            Bạn đã có tài khoản?
+                            <a class="text-primary font-bold hover:underline ml-1" href="#"
+                                onclick="switchTab('login')">Đăng nhập ngay</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        function switchTab(tab) {
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const formLogin = document.getElementById('form-login');
+            const formRegister = document.getElementById('form-register');
+            const headerTitle = document.getElementById('header-title');
+            const headerDesc = document.getElementById('header-desc');
+            const footerSwitch = document.getElementById('footer-switch');
+
+            // Reset all tabs
+            tabLogin.className = 'flex-1 pb-3 pt-2 text-center border-b-[3px] border-transparent text-slate-500 dark:text-[#90a4cb] font-medium text-sm hover:text-slate-800 dark:hover:text-white transition-colors';
+            tabRegister.className = 'flex-1 pb-3 pt-2 text-center border-b-[3px] border-transparent text-slate-500 dark:text-[#90a4cb] font-medium text-sm hover:text-slate-800 dark:hover:text-white transition-colors';
+            formLogin.classList.add('hidden');
+            formLogin.classList.remove('flex');
+            formRegister.classList.add('hidden');
+            formRegister.classList.remove('flex');
+
+            if (tab === 'login') {
+                tabLogin.className = 'flex-1 pb-3 pt-2 text-center border-b-[3px] border-primary text-primary dark:text-white font-bold text-sm';
+                formLogin.classList.remove('hidden');
+                formLogin.classList.add('flex');
+                headerTitle.textContent = 'Chào mừng trở lại';
+                headerDesc.textContent = 'Đăng nhập để tiếp tục khám phá các sự kiện tuyệt vời.';
+                footerSwitch.innerHTML = '<p class="text-sm text-slate-600 dark:text-slate-300">Chưa có tài khoản? <a class="text-primary font-bold hover:underline ml-1" href="#" onclick="switchTab(\'register\')">Đăng ký ngay</a></p>';
+            } else {
+                tabRegister.className = 'flex-1 pb-3 pt-2 text-center border-b-[3px] border-primary text-primary dark:text-white font-bold text-sm';
+                formRegister.classList.remove('hidden');
+                formRegister.classList.add('flex');
+                headerTitle.textContent = 'Tạo tài khoản';
+                headerDesc.textContent = 'Bắt đầu hành trình trải nghiệm của bạn ngay hôm nay.';
+                footerSwitch.innerHTML = '<p class="text-sm text-slate-600 dark:text-slate-300">Bạn đã có tài khoản? <a class="text-primary font-bold hover:underline ml-1" href="#" onclick="switchTab(\'login\')">Đăng nhập ngay</a></p>';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quản lý Banner (Admin) - EViENT</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="../../css/output.css" rel="stylesheet" />
+    <script src="../../js/main.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #101622;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+        }
+
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden">
+    <div class="flex h-screen w-full">
+        <aside id="admin-sidebar"
+            class="hidden lg:flex flex-col w-64 h-full border-r border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-surface-dark shrink-0">
+        </aside>
+
+        <main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark">
+            <header id="admin-header" class="sticky top-0 z-40 w-full flex-shrink-0">
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-6 md:p-8">
+                <div class="max-w-7xl mx-auto flex flex-col gap-6">
+
+                    <!-- Page Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-3xl font-bold tracking-tight">Quản lý Banner</h2>
+                            <p class="text-slate-500 dark:text-slate-400">Quản lý hiển thị banner quảng cáo trên trang
+                                chủ.</p>
+                        </div>
+                        <button
+                            class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-primary/30 transition-all">
+                            <span class="material-symbols-outlined">add</span>
+                            <span>Thêm Banner</span>
+                        </button>
+                    </div>
+
+                    <!-- Filter tabs -->
+                    <div class="flex items-center gap-2 overflow-x-auto pb-2">
+                        <button
+                            class="px-4 py-2 rounded-xl bg-primary/10 text-primary text-sm font-semibold border border-primary/20">Tất
+                            cả</button>
+                        <button
+                            class="px-4 py-2 rounded-xl bg-white dark:bg-surface-dark text-slate-500 dark:text-slate-400 text-sm font-medium hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white border border-transparent transition-colors">Đang
+                            hiển thị</button>
+                        <button
+                            class="px-4 py-2 rounded-xl bg-white dark:bg-surface-dark text-slate-500 dark:text-slate-400 text-sm font-medium hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white border border-transparent transition-colors">Đã
+                            ẩn</button>
+                    </div>
+
+                    <!-- Banner Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div
+                            class="group bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-slate-800 overflow-hidden hover:shadow-xl transition-all">
+                            <div class="relative aspect-[16/9] bg-slate-800">
+                                <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvBHv0nq0Fph1oAMTqqVwGD-ZibJ9lnObe161xE8M2P1AgIYmlbEAsWXQ0dwGf1Sk_tzZ7vh3fsv627pRDHoQHUXQ2oDNp_1uHBBR0no3b_dhizEOdsDWrZrEk_VfzWFgp8wfsWmfpRfxmvIYzuj7rJ36TMYt5uKOmsHPvRdO5dTHtdIVX1IfgoxbjL-j2M557X0e-nYyRDMqjl64j3-n8R01VTesqz932wHo6tsI2L6QEcyA9ePsVZLsVgDtLBOPRiix23gYofuc" />
+                                <div class="absolute top-3 left-3">
+                                    <span
+                                        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Đang hiển thị
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-lg font-bold line-clamp-1 mb-1">Music Festival 2024</h3>
+                                <p class="text-sm text-slate-500 mb-4">Chiến dịch mùa hè - Hà Nội</p>
+                                <div
+                                    class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-slate-800">
+                                    <span class="text-xs text-slate-400">Cập nhật: 2 giờ trước</span>
+                                    <div class="flex gap-1">
+                                        <button class="p-2 text-slate-400 hover:text-primary rounded-lg"><span
+                                                class="material-symbols-outlined text-[20px]">edit</span></button>
+                                        <button class="p-2 text-slate-400 hover:text-red-500 rounded-lg"><span
+                                                class="material-symbols-outlined text-[20px]">delete</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add Banner Card -->
+                        <button
+                            class="flex flex-col items-center justify-center bg-gray-50 dark:bg-[#222f49]/30 rounded-2xl border-2 border-dashed border-gray-300 dark:border-slate-700 hover:border-primary min-h-[300px] transition-all">
+                            <div
+                                class="w-14 h-14 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center mb-4">
+                                <span class="material-symbols-outlined text-slate-400">add</span>
+                            </div>
+                            <h3 class="text-base font-semibold text-slate-600 dark:text-slate-400">Tải lên Banner mới
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-2">1920x600px</p>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initAdminPage('banners', 'Quản lý Banner');
+        });
+    </script>
+</body>
+
+</html>

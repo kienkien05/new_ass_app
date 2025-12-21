@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Chi Tiết Sự Kiện - EViENT</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Static CSS -->
+    <link href="../../css/output.css" rel="stylesheet" />
+    <!-- Shared Global Logic -->
+    <script src="../../js/main.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Scrollbar Styling */
+        .seat-map-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .seat-map-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .dark .seat-map-scroll::-webkit-scrollbar-track {
+            background: #101022;
+        }
+
+        .seat-map-scroll::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .dark .seat-map-scroll::-webkit-scrollbar-thumb {
+            background: #33334d;
+        }
+
+        .seat-map-scroll::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        .dark .seat-map-scroll::-webkit-scrollbar-thumb:hover {
+            background: #444466;
+        }
+
+        /* Active nav link style */
+        .nav-link-active {
+            color: #1C64F2 !important;
+            font-weight: 700 !important;
+            position: relative;
+        }
+
+        .nav-link-active::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #1C64F2;
+        }
+
+        .dark .nav-link-active {
+            color: #ffffff !important;
+        }
+
+        .dark .nav-link-active::after {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden transition-colors duration-300">
+    <div class="relative flex flex-col min-h-screen w-full">
+        <!-- ===== HEADER ===== -->
+        <header id="user-header"
+            class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-[#222249] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md py-3">
+            <!-- Content loaded by JS -->
+        </header>
+
+        <main class="flex-1 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-20 py-6">
+            <nav class="flex flex-wrap gap-2 items-center text-sm mb-6">
+                <a class="text-gray-400 hover:text-primary transition-colors" href="home.html">Trang chủ</a>
+                <span class="text-gray-600">/</span>
+                <a class="text-gray-400 hover:text-primary transition-colors" href="events.html">Sự kiện</a>
+                <span class="text-gray-600">/</span>
+                <span class="text-slate-900 dark:text-white font-medium">Đêm Nhạc Hội Mùa Hè 2024</span>
+            </nav>
+            <div
+                class="relative w-full rounded-3xl overflow-hidden h-[450px] md:h-[500px] mb-10 group shadow-2xl shadow-black/50">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                    data-alt="Large concert crowd illuminated by colorful stage lights and lasers"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnvLZUC86ekOorLhAhbP19kejhm8D0KirfydMCWEoFQOuwBDYfv8scpL75J2kxzkId4IrSCJeedQd0FrYT31OQgA3X4THAKEb7GoP67BINfiJ691wm7BltJUak-I3YgsWN-F3RDBFo0Ig3dBIK4xQziXRCz2QcEtzmtuOapwjO4SusFT7oQ7kqyCDL-jXHp1pEpNLs06uOpXkv_8lTTA4ICQMjepDMTX4q-3dfw8TZVbk4VFuFHXWyLUJ1iiB-3pRwP_6I22mXKMQ");'>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#101022] via-[#101022]/60 to-transparent"></div>
+                <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12">
+                    <div class="flex flex-col md:flex-row items-end justify-between gap-6">
+                        <div class="max-w-3xl space-y-4">
+                            <div class="flex gap-3">
+                                <span
+                                    class="bg-primary px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider shadow-[0_0_10px_rgba(28,100,242,0.6)]">Sắp
+                                    diễn ra</span>
+                                <span
+                                    class="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">Âm
+                                    nhạc</span>
+                            </div>
+                            <h1
+                                class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight drop-shadow-lg">
+                                Đêm Nhạc Hội Mùa Hè 2024
+                            </h1>
+                            <div
+                                class="flex flex-wrap items-center gap-6 text-gray-200 text-sm md:text-base font-medium">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">calendar_clock</span>
+                                    <span>20:00 - 15/07/2024</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">location_on</span>
+                                    <span>Trung tâm Hội nghị Quốc gia, Hà Nội</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="flex gap-3 md:gap-4 bg-black/40 backdrop-blur-md p-4 rounded-2xl border border-white/10 shadow-xl shrink-0">
+                            <div class="flex flex-col items-center min-w-[50px]">
+                                <span class="text-2xl md:text-3xl font-bold text-white">05</span>
+                                <span class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wide">Ngày</span>
+                            </div>
+                            <span class="text-xl md:text-2xl font-bold text-gray-500 pt-1">:</span>
+                            <div class="flex flex-col items-center min-w-[50px]">
+                                <span class="text-2xl md:text-3xl font-bold text-white">12</span>
+                                <span class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wide">Giờ</span>
+                            </div>
+                            <span class="text-xl md:text-2xl font-bold text-gray-500 pt-1">:</span>
+                            <div class="flex flex-col items-center min-w-[50px]">
+                                <span class="text-2xl md:text-3xl font-bold text-white">30</span>
+                                <span class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wide">Phút</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <div class="lg:col-span-8 flex flex-col gap-10">
+                    <div class="flex gap-8 border-b border-gray-200 dark:border-gray-800 pb-1 overflow-x-auto">
+                        <button
+                            class="pb-3 border-b-2 border-primary text-primary dark:text-white font-bold whitespace-nowrap">Giới
+                            thiệu</button>
+                        <button
+                            class="pb-3 border-b-2 border-transparent text-gray-500 hover:text-primary dark:hover:text-white font-medium whitespace-nowrap transition-colors">Thông
+                            tin vé</button>
+                        <button
+                            class="pb-3 border-b-2 border-transparent text-gray-500 hover:text-primary dark:hover:text-white font-medium whitespace-nowrap transition-colors">Sơ
+                            đồ ghế</button>
+                        <button
+                            class="pb-3 border-b-2 border-transparent text-gray-500 hover:text-primary dark:hover:text-white font-medium whitespace-nowrap transition-colors">Ban
+                            tổ chức</button>
+                    </div>
+                    <section class="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed text-base md:text-lg">
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white">Thông tin chi tiết</h3>
+                        <p>
+                            Đắm chìm trong không gian âm nhạc sôi động nhất mùa hè này tại "Đêm Nhạc Hội Mùa Hè
+                            2024".
+                            Sự kiện quy tụ những nghệ sĩ hàng đầu Việt Nam và Quốc tế, hứa hẹn mang đến những màn
+                            trình
+                            diễn bùng nổ, hệ thống âm thanh ánh sáng đẳng cấp thế giới.
+                        </p>
+                        <p>
+                            Không chỉ là âm nhạc, sự kiện còn là nơi kết nối đam mê, với các khu vực check-in độc
+                            đáo,
+                            gian hàng ẩm thực phong phú và quà tặng hấp dẫn từ nhà tài trợ. Hãy đến và tạo nên những
+                            kỷ
+                            niệm khó quên cùng bạn bè!
+                        </p>
+                    </section>
+                    <div
+                        class="flex items-center gap-5 p-5 bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
+                        <div class="size-16 rounded-full bg-cover bg-center ring-2 ring-gray-700"
+                            data-alt="Logo of the event organizer"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsJOrOSWBfdPLKE9VJ3S6Ue9FjAdkDS31efVCNAdwnEs6PRccBYv7liH3hHEg05gSgrm8jUUBQRlPgomn7gWq44kNEBxj5Uh8SEbGpTOvzVxg3BmWc7QCOoyAvpUV-WPT99-AgIcqjsxTQHx_VMZZk3GvxXZh4IT0BN9b2MkRajzjUja1BoLjy8XqGdzXoA");'>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Ban tổ chức</p>
+                            <h4 class="text-lg font-bold text-slate-900 dark:text-white">Vietnam Event Entertainment
+                            </h4>
+                            <p class="text-sm text-gray-500">Hơn 50+ sự kiện thành công mỗi năm</p>
+                        </div>
+                        <button
+                            class="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-slate-900 dark:text-white">Theo
+                            dõi</button>
+                    </div>
+                    <section>
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">stadium</span>
+                                Sơ đồ ghế ngồi VIP
+                            </h3>
+                            <div class="text-sm text-primary font-medium cursor-pointer hover:underline">Xem toàn
+                                màn
+                                hình</div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-800 rounded-2xl p-6 md:p-8 overflow-hidden">
+                            <div class="flex flex-wrap justify-center gap-6 mb-8 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <span class="size-4 rounded border-2 border-gray-600 bg-transparent"></span>
+                                    <span class="text-gray-400">Còn trống</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="size-4 rounded bg-primary shadow-[0_0_8px_rgba(28,100,242,0.6)]"></span>
+                                    <span class="text-gray-400">Đang chọn</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="size-4 rounded bg-gray-700 opacity-50"></span>
+                                    <span class="text-gray-400">Đã bán</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-center mb-10">
+                                <div
+                                    class="w-3/4 h-16 bg-gradient-to-b from-gray-200 dark:from-gray-700 to-white dark:to-surface-dark rounded-t-[50%] flex items-end justify-center pb-2 shadow-lg relative">
+                                    <span
+                                        class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">Sân
+                                        Khấu
+                                        (Stage)</span>
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-transparent to-primary/5 rounded-t-[50%]">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="seat-map-scroll overflow-x-auto pb-4">
+                                <div class="min-w-[600px] flex flex-col gap-3 items-center">
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
+                                            A</div>
+                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
+                                            disabled="" title="A1 - Đã bán"></button>
+                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
+                                            disabled="" title="A2 - Đã bán"></button>
+                                        <button
+                                            class="size-8 rounded-md bg-primary text-white shadow-[0_0_10px_rgba(28,100,242,0.5)] transform scale-110 font-bold text-xs"
+                                            title="A3 - Bạn đang chọn">A3</button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"
+                                            title="A4 - 1.200.000đ"></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"
+                                            title="A5 - 1.200.000đ"></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"
+                                            title="A6 - 1.200.000đ"></button>
+                                        <div class="w-8"></div>
+                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
+                                            disabled=""></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <div
+                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
+                                            A</div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
+                                            B</div>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <button
+                                            class="size-8 rounded-md bg-primary text-white shadow-[0_0_10px_rgba(28,100,242,0.5)] transform scale-110 font-bold text-xs"
+                                            title="B4 - Bạn đang chọn">B4</button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <div class="w-8"></div>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <div
+                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
+                                            B</div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
+                                            C</div>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
+                                            disabled=""></button>
+                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
+                                            disabled=""></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <div class="w-8"></div>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <button
+                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
+                                        <div
+                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
+                                            C</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="lg:col-span-4 relative">
+                    <div
+                        class="sticky top-24 bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden flex flex-col">
+                        <div class="p-6 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#1f1f35]">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Chọn loại vé</h3>
+                            <p class="text-sm text-gray-500">Số lượng có hạn, hãy đặt sớm!</p>
+                        </div>
+                        <div class="p-4 max-h-[400px] overflow-y-auto space-y-4">
+                            <div
+                                class="group p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a2e] hover:border-primary transition-all">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="font-bold text-slate-900 dark:text-white">Vé Phổ Thông (GA)</h4>
+                                            <span
+                                                class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-900/30 text-green-400">Còn
+                                                vé</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">Đứng tự do, xa sân khấu</p>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-bold text-primary dark:text-white">500.000đ</span>
+                                    <div class="flex items-center bg-gray-100 dark:bg-black/30 rounded-lg p-1">
+                                        <button
+                                            class="size-8 rounded-md flex items-center justify-center text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-slate-900 dark:hover:text-white transition-all disabled:opacity-50"
+                                            disabled="">
+                                            <span class="material-symbols-outlined text-sm">remove</span>
+                                        </button>
+                                        <span
+                                            class="w-8 text-center font-bold text-slate-900 dark:text-white text-sm">0</span>
+                                        <button
+                                            class="size-8 rounded-md flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-primary shadow-sm hover:scale-105 transition-all">
+                                            <span class="material-symbols-outlined text-sm">add</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="group p-4 rounded-xl border border-primary bg-primary/10 transition-all ring-1 ring-primary/20">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="font-bold text-slate-900 dark:text-white">Vé VIP</h4>
+                                            <span
+                                                class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-900/30 text-orange-400 flex items-center gap-1">
+                                                <span
+                                                    class="material-symbols-outlined text-[10px]">local_fire_department</span>
+                                                Sắp hết
+                                            </span>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">Ghế ngồi, gần sân khấu, quà tặng</p>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-bold text-primary dark:text-white">1.200.000đ</span>
+                                    <div
+                                        class="flex items-center bg-gray-100 dark:bg-black/40 rounded-lg p-1 shadow-sm">
+                                        <button
+                                            class="size-8 rounded-md flex items-center justify-center text-slate-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                                            <span class="material-symbols-outlined text-sm">remove</span>
+                                        </button>
+                                        <span
+                                            class="w-8 text-center font-bold text-slate-900 dark:text-white text-sm">2</span>
+                                        <button
+                                            class="size-8 rounded-md flex items-center justify-center bg-primary text-white shadow-sm hover:bg-primary-hover transition-all">
+                                            <span class="material-symbols-outlined text-sm">add</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="p-6 bg-gray-50 dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 mt-auto">
+                            <div class="space-y-3 mb-6">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Số lượng vé</span>
+                                    <span class="text-slate-900 dark:text-white font-medium">2 vé</span>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center pt-3 border-t border-dashed border-gray-300 dark:border-gray-700">
+                                    <span class="text-slate-900 dark:text-white font-bold">Tổng tạm tính</span>
+                                    <span class="text-2xl font-bold text-primary dark:text-white">2.400.000đ</span>
+                                </div>
+                            </div>
+                            <button
+                                class="group w-full h-14 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl flex items-center justify-center gap-3 transition-all shadow-[0_0_20px_rgba(28,100,242,0.5)] hover:shadow-[0_0_25px_rgba(28,100,242,0.6)] active:scale-[0.98]">
+                                <span>Đặt vé ngay</span>
+                                <span
+                                    class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            </button>
+                            <p
+                                class="text-center text-[10px] text-gray-400 mt-3 flex items-center justify-center gap-1">
+                                <span class="material-symbols-outlined text-[12px]">verified_user</span>
+                                Thanh toán bảo mật &amp; an toàn 100%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-20 border-t border-gray-200 dark:border-gray-800 pt-8 pb-12">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-gray-500 text-sm">© 2024 EViENT. All rights reserved.</p>
+                    <div class="flex gap-6">
+                        <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                                class="material-symbols-outlined">social_leaderboard</span></a>
+                        <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                                class="material-symbols-outlined">photo_camera</span></a>
+                        <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                                class="material-symbols-outlined">alternate_email</span></a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="user-footer"
+        class="w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-[#222249] py-12 px-4 lg:px-10">
+        <!-- Content loaded by JS -->
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initUserPage('events', 'Chi Tiết Sự Kiện');
+        });
+    </script>
+</body>
+
+</html>

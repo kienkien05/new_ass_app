@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Ví Vé - EViENT</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Static CSS -->
+    <link href="../../css/output.css" rel="stylesheet" />
+
+    <!-- Shared Global Logic -->
+    <script src="../../js/main.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ticket-perforation {
+            position: relative;
+            background-image: radial-gradient(circle at center, transparent 8px, #ffffff 9px);
+            background-size: 100% 20px;
+            background-repeat: no-repeat;
+            background-position: -10px center;
+        }
+
+        .dark .ticket-perforation {
+            background-image: radial-gradient(circle at center, transparent 8px, #1f2937 9px);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Active nav link style */
+        .nav-link-active {
+            color: #1C64F2 !important;
+            font-weight: 700 !important;
+            position: relative;
+        }
+
+        .nav-link-active::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #1C64F2;
+        }
+
+        .dark .nav-link-active {
+            color: #ffffff !important;
+        }
+
+        .dark .nav-link-active::after {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col overflow-x-hidden">
+    <!-- ===== HEADER ===== -->
+    <header id="user-header"
+        class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-[#222249] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md py-3">
+        <!-- Content loaded by JS -->
+    </header>
+
+    <div class="flex-1 w-full max-w-[1440px] mx-auto p-4 lg:p-8">
+        <div class="mb-8">
+            <h1 class="text-slate-900 dark:text-white tracking-tight text-3xl lg:text-[32px] font-bold leading-tight">Ví
+                Vé Của Tôi</h1>
+            <p class="text-slate-500 dark:text-[#8baecf] text-sm font-normal leading-normal mt-1">Quản lý và sử dụng vé
+                sự kiện điện tử của bạn</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 h-full">
+            <div class="lg:col-span-4 flex flex-col gap-4 h-full">
+                <div
+                    class="flex flex-col gap-3 bg-white dark:bg-[#1a1a2e] p-4 rounded-xl shadow-sm border border-gray-200 dark:border-[#2d2d3d]">
+                    <div class="relative w-full">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            <span class="material-symbols-outlined text-[20px]">search</span>
+                        </span>
+                        <input
+                            class="w-full pl-11 pr-4 h-12 rounded-lg bg-slate-50 dark:bg-[#101022] border border-gray-200 dark:border-[#2d2d3d] text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                            placeholder="Tìm kiếm sự kiện..." />
+                    </div>
+                    <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+                        <button
+                            class="whitespace-nowrap px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold shadow-md shadow-primary/20">Tất
+                            cả</button>
+                        <button
+                            class="whitespace-nowrap px-4 py-2 rounded-lg bg-white dark:bg-[#101022] border border-gray-200 dark:border-[#2d2d3d] text-slate-500 dark:text-[#8baecf] hover:bg-gray-50 dark:hover:bg-[#1a1a2e] text-xs font-medium transition-colors">Chưa
+                            check-in</button>
+                        <button
+                            class="whitespace-nowrap px-4 py-2 rounded-lg bg-white dark:bg-[#101022] border border-gray-200 dark:border-[#2d2d3d] text-slate-500 dark:text-[#8baecf] hover:bg-gray-50 dark:hover:bg-[#1a1a2e] text-xs font-medium transition-colors">Đã
+                            check-in</button>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3 overflow-y-auto max-h-[calc(100vh-300px)] pr-1">
+                    <div
+                        class="group cursor-pointer p-4 rounded-xl bg-white dark:bg-[#1a1a2e] border-2 border-primary shadow-lg shadow-primary/10 transition-all hover:-translate-y-0.5 relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full -mr-4 -mt-4">
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-16 h-16 rounded-lg bg-cover bg-center shrink-0 shadow-sm"
+                                data-alt="Music festival crowd with purple lights"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1M_gndCmXaHqqjmKmci4VROkfrPrmtyaUHcpqBVUREQe021D5cz4LRT1bZEpLlhfv3QJxzShUFykpejPRvI2HxpfsuRgKZ16_LdocYWFAggI0D7Ry0Q2ZsfzjtE_yys47X8_VIA099CgPfjJmpjjeattlM1Ecc5JQo5nTVrynrHDQg9sRn_tRb1-J3a9Nk99e1K3ndFiONM9Vn4H5cUxKwbgABPHw8zOrklHXaaxOdWfof5EgkUzcRI9mqY3k6-OxkGBALrfv5SI");'>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex justify-between items-start mb-1">
+                                    <span
+                                        class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5"></span>
+                                        Sẵn sàng
+                                    </span>
+                                    <span class="text-[10px] text-slate-500 dark:text-[#8baecf] font-medium">Vừa
+                                        mua</span>
+                                </div>
+                                <h3 class="text-slate-900 dark:text-white font-bold text-sm truncate pr-2">Music
+                                    Festival 2024</h3>
+                                <p class="text-slate-500 dark:text-[#8baecf] text-xs mt-1 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                    20/11/2024 • 19:00
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group cursor-pointer p-4 rounded-xl bg-white dark:bg-[#1a1a2e] border border-transparent hover:border-gray-200 dark:hover:border-[#2d2d3d] shadow-sm transition-all hover:-translate-y-0.5">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-16 h-16 rounded-lg bg-cover bg-center shrink-0 grayscale group-hover:grayscale-0 transition-all duration-300"
+                                data-alt="Tech conference workshop people sitting"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdzHJXEbaYMPih_bUEf8_uU5Ay6-AJknef-FXCzIHddmcy5EwDVbSnLlWmcKWHVPslC0U5HFB1ybCLiOeOTlFE98E1rFykV-Z_35ED-XMqn88OIBEyJTFy6lDEBAJQ7SWzgIWmyAzP2suO8kHx0LkO9ctOyNj6Zoff-rDFlJAIgSfBy8d9BmHizt_ah31Vr9el69OmfsnqXb8jPm8lZ4VuznHK4dzoZdGJYEiXWBWJxBLHNMDvvi8C5pV2QSWjr3q7sOvLDKNJVc4");'>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex justify-between items-start mb-1">
+                                    <span
+                                        class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                                        Đã check-in
+                                    </span>
+                                </div>
+                                <h3
+                                    class="text-slate-900 dark:text-gray-300 font-bold text-sm truncate pr-2 group-hover:text-primary transition-colors">
+                                    Hội thảo Công nghệ TechTalk</h3>
+                                <p class="text-slate-500 dark:text-[#8baecf] text-xs mt-1 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                    15/12/2024 • 08:30
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group cursor-pointer p-4 rounded-xl bg-white dark:bg-[#1a1a2e] border border-transparent hover:border-gray-200 dark:hover:border-[#2d2d3d] shadow-sm transition-all hover:-translate-y-0.5">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-16 h-16 rounded-lg bg-cover bg-center shrink-0 group-hover:grayscale-0 transition-all duration-300"
+                                data-alt="Art gallery exhibition modern art"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBthm4NUWFSozft7P0ZyYUbWG7S_eHQ-4DSBlLOlcU8oIe92-KdIzvYqQR7z13fxYvoLjccmk-spzARVKGn-NOd_EHlz8Ooslftwuxtdj8k9i2jr48iWVfGLAPQcgM4nhriEdZMS5TGsqdYsA0c3enc5O8p_1Pfp-33qpjiROqTwHtEX7QJnxELQrrEPkbc2oBBB0tyLMYix-1Ys-xVWRPvssZ-cI7Z8Qm_HLRwjwlnDwyB5hH2SkLLlJXKq0eLN1dIG5THLO9FsiI");'>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex justify-between items-start mb-1">
+                                    <span
+                                        class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5"></span>
+                                        Sẵn sàng
+                                    </span>
+                                </div>
+                                <h3
+                                    class="text-slate-900 dark:text-gray-300 font-bold text-sm truncate pr-2 group-hover:text-primary transition-colors">
+                                    Triển lãm Nghệ thuật Đương đại</h3>
+                                <p class="text-slate-500 dark:text-[#8baecf] text-xs mt-1 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                    05/01/2025 • 09:00
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-8 flex flex-col h-full">
+                <div
+                    class="bg-white dark:bg-[#1f2937] rounded-3xl overflow-hidden shadow-xl border border-gray-200 dark:border-[#2d2d3d] flex flex-col md:flex-row h-auto min-h-[600px] md:h-[600px]">
+                    <div class="w-full md:w-5/12 relative flex flex-col">
+                        <div class="absolute inset-0 bg-cover bg-center z-0"
+                            data-alt="Concert stage lights and atmosphere"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACidm0cP6VfbHUhyJ9zZAbJ9pKs-3KIO2SLMzElrAzJEtSwrtPDNF3cgI02N72Mmqjr4mrRdpUQ9aQRV7lgc0gPL1ewL28h2u2-ZfBP8ktBkjrHSnBPgdWhiID8jFWu22gyC87HPsriHD5npjoD6IoIRgzpsyTYnh52CHDWGoEeSwsbgdc_XGmT_DE_41KHxc988ScJETtnemVvMx-UW7UudRzDiJ8PfK_ua7FCcAUEkx032yrWPFb0YeuN8gf1U6Uw-m7VD4yKZ4");'>
+                            <div class="absolute inset-0 bg-primary/80 dark:bg-[#000000]/70 mix-blend-multiply"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-[#1C64F2] via-transparent to-transparent opacity-90">
+                            </div>
+                        </div>
+                        <div class="relative z-10 p-8 flex flex-col h-full justify-between text-white">
+                            <div>
+                                <div
+                                    class="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold mb-4 border border-white/30">
+                                    <span class="material-symbols-outlined text-[14px]">confirmation_number</span>
+                                    Vé Điện Tử
+                                </div>
+                                <h2 class="text-3xl font-bold leading-tight mb-2">Music Festival 2024</h2>
+                                <div class="flex flex-col gap-2 opacity-90 text-sm">
+                                    <p class="flex items-center gap-2 font-medium">
+                                        <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                                        20/11/2024
+                                    </p>
+                                    <p class="flex items-center gap-2 font-medium">
+                                        <span class="material-symbols-outlined text-[18px]">schedule</span>
+                                        19:00 - 23:00
+                                    </p>
+                                    <p class="flex items-center gap-2 font-medium">
+                                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                                        Sân vận động Mỹ Đình, Hà Nội
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-8 pt-8 border-t border-white/20">
+                                <div class="text-xs uppercase tracking-wider opacity-70 mb-1">Đơn vị tổ chức</div>
+                                <div class="flex items-center gap-3">
+                                    <div class="size-8 rounded-full bg-white/90" data-alt="Organizer logo placeholder">
+                                    </div>
+                                    <span class="font-bold text-lg">Vietnam Events Corp</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="hidden md:flex flex-col items-center justify-center w-8 bg-slate-50 dark:bg-[#101022] relative z-20">
+                        <div
+                            class="h-[90%] border-r-2 border-dashed border-gray-300 dark:border-gray-600 absolute left-1/2 -translate-x-1/2">
+                        </div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-slate-50 dark:bg-[#101022] absolute top-[-16px] left-1/2 -translate-x-1/2 shadow-[inset_0_-2px_4px_rgba(0,0,0,0.1)]">
+                        </div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-slate-50 dark:bg-[#101022] absolute bottom-[-16px] left-1/2 -translate-x-1/2 shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]">
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-white dark:bg-[#1f2937] p-6 lg:p-10 flex flex-col relative">
+                        <div
+                            class="md:hidden absolute -left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#f5f5f8] dark:bg-[#101022]">
+                        </div>
+                        <div
+                            class="md:hidden absolute -right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#f5f5f8] dark:bg-[#101022]">
+                        </div>
+                        <div
+                            class="flex justify-between items-center mb-8 pb-4 border-b border-dashed border-[#e7e7f4] dark:border-[#374151]">
+                            <div class="flex flex-col">
+                                <span
+                                    class="text-xs text-slate-500 dark:text-[#8baecf] font-bold uppercase tracking-wider">Trạng
+                                    thái vé</span>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="flex h-3 w-3 rounded-full bg-green-500 relative">
+                                        <span
+                                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                    </span>
+                                    <span class="text-green-600 dark:text-green-400 font-bold text-lg">Chưa
+                                        check-in</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span
+                                    class="text-xs text-slate-500 dark:text-[#8baecf] font-bold uppercase tracking-wider">Mã
+                                    Vé</span>
+                                <p class="text-slate-900 dark:text-white font-mono font-bold text-xl tracking-wide">
+                                    #TIK-8821</p>
+                            </div>
+                        </div>
+                        <div class="flex-1 flex flex-col md:flex-row gap-8">
+                            <div class="flex flex-col items-center justify-center md:w-1/2">
+                                <div
+                                    class="p-4 bg-white rounded-2xl shadow-[0_0_15px_rgba(0,0,0,0.05)] border border-gray-100 relative group">
+                                    <img alt="QR Code for Ticket Check-in"
+                                        class="w-48 h-48 object-contain mix-blend-multiply dark:mix-blend-normal"
+                                        data-alt="Black and white QR code pattern"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN2CbhBXZQf0k7rllOd0EPDIQbYbBYd1MsA1a4iKnBTZ8af4RYZlea9u99FD9nW5KwceOG97GBEAGzqU1LwIMB4drZYsCRP91C5fNbaeCntFHXluzn0CcaC6gk8CF4RQGZU10n7tx6q8gYTrZWWORpGDKM9vGU6Z_QTl6D06BZM50Gaw0lUAr2zEhHDSXzyjb_v4Hz74yGfJx8bjAEyKh426zdB4rBwxoXYv2jMcv8BDjF9Iu24COa6LO-bhYOo983Qcc2XfS4qvo" />
+                                    <div
+                                        class="absolute left-4 right-4 h-1 bg-primary/50 shadow-[0_0_10px_#1C64F2] rounded-full top-4 animate-[scan_3s_ease-in-out_infinite] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-3 text-center">Đưa mã này cho nhân viên soát vé</p>
+                            </div>
+                            <div class="flex flex-col justify-center gap-6 md:w-1/2">
+                                <div class="space-y-1">
+                                    <p
+                                        class="text-xs text-indigo-700 dark:text-[#8baecf] font-bold uppercase tracking-wider">
+                                        Khách tham dự</p>
+                                    <p class="text-slate-900 dark:text-white text-lg font-semibold">Nguyễn Văn An</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p
+                                        class="text-xs text-indigo-700 dark:text-[#8baecf] font-bold uppercase tracking-wider">
+                                        Loại vé</p>
+                                    <p class="text-primary dark:text-white font-bold text-lg">VIP Pass</p>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="space-y-1">
+                                        <p
+                                            class="text-xs text-indigo-700 dark:text-[#8baecf] font-bold uppercase tracking-wider">
+                                            Cổng</p>
+                                        <p class="text-slate-900 dark:text-white font-semibold">C-02</p>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <p
+                                            class="text-xs text-indigo-700 dark:text-[#8baecf] font-bold uppercase tracking-wider">
+                                            Hàng</p>
+                                        <p class="text-slate-900 dark:text-white font-semibold">A</p>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <p
+                                            class="text-xs text-indigo-700 dark:text-[#8baecf] font-bold uppercase tracking-wider">
+                                            Ghế</p>
+                                        <p class="text-slate-900 dark:text-white font-semibold">12</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="mt-8 pt-6 border-t border-[#e7e7f4] dark:border-[#374151] flex flex-col sm:flex-row gap-3">
+                            <button
+                                class="flex-1 flex items-center justify-center gap-2 rounded-xl h-12 px-6 bg-white dark:bg-[#2a2a45] text-primary dark:text-white border border-gray-200 dark:border-gray-600 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all text-sm font-bold">
+                                <span class="material-symbols-outlined">download</span>
+                                Tải vé về máy
+                            </button>
+                            <button
+                                class="flex-1 flex items-center justify-center gap-2 rounded-xl h-12 px-6 bg-white dark:bg-[#2a2a45] text-slate-900 dark:text-gray-300 border border-transparent hover:bg-gray-50 dark:hover:bg-[#323250] transition-all text-sm font-bold">
+                                <span class="material-symbols-outlined">share</span>
+                                Chia sẻ vé
+                            </button>
+                            <button
+                                class="sm:w-auto w-full flex items-center justify-center p-3 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                                title="Báo cáo sự cố">
+                                <span class="material-symbols-outlined">report_problem</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="user-footer"
+        class="w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-[#222249] py-12 px-4 lg:px-10">
+        <!-- Content loaded by JS -->
+    </footer>
+
+    <style>
+        @keyframes scan {
+
+            0%,
+            100% {
+                top: 1rem;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            50% {
+                top: calc(100% - 1rem);
+            }
+
+            90% {
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initUserPage('wallet', 'Ví Vé');
+        });
+    </script>
+</body>
+
+</html>

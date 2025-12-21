@@ -14,6 +14,7 @@
         rel="stylesheet" />
     <!-- Static CSS -->
     <link href="../../css/output.css" rel="stylesheet" />
+    <link rel="icon" href="../../assets/image/favicon.png" />
 
     <!-- Shared Global Logic -->
     <script src="../../js/main.js"></script>
@@ -27,13 +28,11 @@
             class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#222f49] px-6 lg:px-10 py-3 bg-white dark:bg-[#101623] z-20">
             <div class="flex items-center gap-4">
                 <a href="../user/home.html" class="flex items-center gap-2 group">
-                    <div class="size-8 text-primary">
-                        <svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z"
-                                fill="currentColor" fill-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">
+                    <img src="../../assets/image/favicon.png"
+                        class="size-9 rounded-xl shadow-[0_0_15px_rgba(28,100,242,0.4)] transition-transform group-hover:scale-110"
+                        alt="EViENT Logo" />
+                    <h2
+                        class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] group-hover:text-primary transition-colors">
                         EViENT</h2>
                 </a>
             </div>
@@ -46,51 +45,18 @@
                     <a class="text-slate-600 dark:text-slate-200 hover:text-primary text-sm font-medium leading-normal transition-colors"
                         href="#">Hỗ trợ</a>
                 </div>
+                <!-- Theme Toggle -->
+                <button onclick="toggleDarkMode()"
+                    class="size-10 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block">light_mode</span>
+                </button>
             </div>
         </header>
         <!-- Main Content: Split Layout -->
         <main class="flex flex-1 relative min-h-[calc(100vh-57px)]">
-            <!-- Left Side: Atmospheric Image (Hidden on mobile) -->
-            <div class="hidden lg:block lg:w-1/2 absolute left-0 top-0 bottom-0 bg-slate-900 overflow-hidden">
-                <div class="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-overlay"
-                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlZJW3DjDxdvb6JPvqkJDC3TNtErsTumPZA1FICO5paO49vY-XXb31DRkyAmGJ5Z6gspF-NsB_2sCQrh52-zink77pSBO_m5Imept3_foj-bgoZpEOnkXownXmZmWXnQDXHnsEL0RUTUEIqvzcYLkZ_6NY-0ln1fUkolysdro-7JkptYJ9nVOm1obaLQfLvvH1x6sQLHFuIuNBZpama1NiY3idqKEw0sQ_FzZO70pdx35JeMFbXmfWYQVzL1ner1rqPjechyS7rcM');">
-                </div>
-                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#101622]"></div>
-                <div class="relative z-10 flex flex-col justify-start p-12 w-full h-full">
-                    <h1 class="text-3xl xl:text-4xl font-black text-white leading-tight mb-3 tracking-tight">
-                        Sống trọn từng<br />khoảnh khắc.
-                    </h1>
-                    <p class="text-slate-300 text-base max-w-sm leading-relaxed">
-                        Khám phá hàng ngàn sự kiện âm nhạc, lễ hội và giải trí đỉnh cao ngay tại EViENT.
-                    </p>
-                    <div class="mt-6 flex gap-4">
-                        <div class="flex -space-x-3">
-                            <img alt="User avatar" class="w-8 h-8 rounded-full border-2 border-[#101622]"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAggTPPC-VJLFbPIso4uEt0triz2WXHOj-USUpKMJkfr7SVv9Mg2uRVvQ6Y4BRfXXzjR4NsWI6r-tT7Vc_zE1VQSDrOPcwzE4kmSpJjEQvv1qRvp_aaHxAowyfzf0i9_xn99E_mhij0C3GExRofoHOGW1is0Ap1iY0PUwEwqTIpFPaP6CMGtA_6tvEEP_64guKzoYCT54Y31IGTW3aQPGaWyO-14A70VwzKYp_WvXd7mZ-EUGjrrLLmnz-_3kFWm2sO2onBAfjDNT4" />
-                            <img alt="User avatar" class="w-8 h-8 rounded-full border-2 border-[#101622]"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3IXUd1ApMEKGRlTspZmiGEXFqs_GZPEw51gF071XwDeOhUbWt3VkPv7MAF-xXuvIP8aSMdkarDOjNfVv7IaHKA_eoIOIlipFMNopPkgICeIjoB9d3Lp-lYCZWTTVWRE5rG_f2dCE5oRa7gHa_S5PD9K2IIG7DLvW8880edzfIDP4j96C9or0751ib974vaA1eT_5s1xPEzTSS6BkvLI5P4ZrIR2YGtB-hWFHkLNEh1RgtrXLake2dtqmfyU1MA7IjHLsQheZBCD0" />
-                            <img alt="User avatar" class="w-8 h-8 rounded-full border-2 border-[#101622]"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGJpZUVBeqNKl1wIzrUlqcncetJMPP8vHFVqlsBJozaI9T2QD1cGRqI_ICX49ANIeIuNYCeogT0t4EppiRmisqcmqW5LjooA38GKJBo4sovAgi2DNUZrcpXZJkQreVKLCP470Uma3ojnDBe4pW4rUYwCUWbKBJVMMi3mTYD7gflc_1eaCKiqykQO8ulEGteRgAv59oB983YrSL1RqYEKBAvnLxMEUDomFGJIMFdrT_XR5sLsxBNjwWAHsLjeKVCvrjsjnRAR8UTqs" />
-                            <div
-                                class="w-8 h-8 rounded-full border-2 border-[#101622] bg-slate-700 flex items-center justify-center text-xs text-white font-medium">
-                                +2k</div>
-                        </div>
-                        <div class="flex flex-col justify-center">
-                            <div class="flex text-yellow-400 text-xs">
-                                <span class="material-symbols-outlined text-[14px]">star</span>
-                                <span class="material-symbols-outlined text-[14px]">star</span>
-                                <span class="material-symbols-outlined text-[14px]">star</span>
-                                <span class="material-symbols-outlined text-[14px]">star</span>
-                                <span class="material-symbols-outlined text-[14px]">star</span>
-                            </div>
-                            <p class="text-xs text-slate-400">Được tin dùng bởi cộng đồng</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Right Side: Auth Form -->
-            <div
-                class="flex-1 flex flex-col justify-center items-center p-6 lg:p-12 bg-white dark:bg-[#101623] lg:ml-[50%]">
+            <!-- Auth Form -->
+            <div class="flex-1 flex flex-col justify-center items-center p-6 lg:p-12 bg-white dark:bg-[#101623]">
                 <div class="w-full max-w-md flex flex-col gap-6">
                     <!-- Header Text -->
                     <div class="flex flex-col gap-2 text-center sm:text-left">

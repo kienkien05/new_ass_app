@@ -115,20 +115,22 @@
 
         <!-- ===== HEADER ===== -->
         <header id="user-header"
-            class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-[#222249] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md px-4 lg:px-10 py-3">
+            class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-[#27272a] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md px-4 lg:px-10 py-3">
             <!-- Content loaded by JS -->
         </header>
 
         <!-- ===== MAIN CONTENT ===== -->
         <main class="flex-1 w-full mx-auto max-w-[1440px]">
-            <div class="layout-container flex flex-col lg:flex-row h-full grow w-full">
+            <div class="layout-container flex flex-col lg:flex-row h-full grow w-full"
+                style="display: flex; flex-direction: row;">
                 <!-- Sidebar Filters -->
                 <aside
-                    class="w-full lg:w-[360px] flex-shrink-0 p-6 lg:border-r lg:border-[#222249] lg:bg-background-light lg:dark:bg-[#101023]">
+                    class="w-full lg:w-[360px] flex-shrink-0 p-6 lg:border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-surface-dark"
+                    style="width: 360px; flex-shrink: 0;">
                     <div class="sticky top-24 flex flex-col gap-6">
                         <!-- HeadlineText -->
                         <div
-                            class="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-[#222249]">
+                            class="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-[#27272a]">
                             <h3 class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight">
                                 Bộ lọc tìm kiếm</h3>
                             <button class="text-primary text-sm font-medium hover:underline">Đặt lại</button>
@@ -136,12 +138,12 @@
                         <!-- TextField: Keyword -->
                         <div class="flex flex-col gap-2">
                             <p class="text-slate-700 dark:text-white text-base font-medium leading-normal">Từ khóa</p>
-                            <div class="flex w-full items-stretch rounded-xl">
+                            <div class="relative w-full">
                                 <input
-                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-[#313168] bg-white dark:bg-[#181834] focus:border-primary h-12 placeholder:text-gray-400 dark:placeholder:text-[#9090cb] px-4 rounded-r-none border-r-0 text-base font-normal leading-normal"
+                                    class="form-input w-full rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-[#3f3f46] bg-white dark:bg-[#18181b] focus:border-primary h-12 placeholder:text-gray-400 dark:placeholder:text-[#a1a1aa] pl-4 pr-12 text-base font-normal leading-normal"
                                     placeholder="Tên sự kiện, nghệ sĩ..." value="" />
                                 <div
-                                    class="text-gray-400 dark:text-[#9090cb] flex border border-gray-300 dark:border-[#313168] bg-white dark:bg-[#181834] items-center justify-center pr-4 rounded-r-xl border-l-0">
+                                    class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-400 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined">search</span>
                                 </div>
                             </div>
@@ -152,14 +154,14 @@
                             <div class="relative">
                                 <!-- Using a div wrapper for the icon since select arrow is tricky to style purely with tailwind classes in this context -->
                                 <select
-                                    class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-[#313168] bg-white dark:bg-[#181834] focus:border-primary h-12 px-4 text-base font-normal leading-normal appearance-none cursor-pointer">
+                                    class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-[#3f3f46] bg-white dark:bg-[#18181b] focus:border-primary h-12 px-4 text-base font-normal leading-normal appearance-none cursor-pointer">
                                     <option disabled="" selected="" value="">Chọn thành phố</option>
                                     <option value="hcm">Hồ Chí Minh</option>
                                     <option value="hn">Hà Nội</option>
                                     <option value="dn">Đà Nẵng</option>
                                 </select>
                                 <div
-                                    class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400 dark:text-[#9090cb]">
+                                    class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined">expand_more</span>
                                 </div>
                             </div>
@@ -168,55 +170,56 @@
                         <div class="flex flex-col gap-2">
                             <p class="text-slate-700 dark:text-white text-base font-medium leading-normal">Thời gian</p>
                             <div
-                                class="bg-white dark:bg-[#181834] rounded-xl border border-gray-300 dark:border-[#313168] p-4">
+                                class="bg-white dark:bg-[#18181b] rounded-xl border border-gray-300 dark:border-[#3f3f46] p-4">
                                 <div class="flex items-center justify-between mb-4">
                                     <button
-                                        class="text-slate-700 dark:text-white hover:bg-gray-100 dark:hover:bg-[#313168] rounded-full p-1 transition-colors">
+                                        class="text-slate-700 dark:text-white hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-full p-1 transition-colors">
                                         <span class="material-symbols-outlined text-sm">chevron_left</span>
                                     </button>
                                     <p
                                         class="text-slate-900 dark:text-white text-sm font-bold leading-tight flex-1 text-center">
                                         Tháng 11 2025</p>
                                     <button
-                                        class="text-slate-700 dark:text-white hover:bg-gray-100 dark:hover:bg-[#313168] rounded-full p-1 transition-colors">
+                                        class="text-slate-700 dark:text-white hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-full p-1 transition-colors">
                                         <span class="material-symbols-outlined text-sm">chevron_right</span>
                                     </button>
                                 </div>
-                                <div class="grid grid-cols-7 gap-1 text-center">
-                                    <p class="text-gray-500 dark:text-[#9090cb] text-xs font-medium py-2">S</p>
-                                    <p class="text-gray-500 dark:text-[#9090cb] text-xs font-medium py-2">M</p>
-                                    <p class="text-gray-500 dark:text-[#9090cb] text-xs font-medium py-2">T</p>
-                                    <p class="text-gray-500 dark:text-[#9090cb] text-xs font-medium py-2">W</p>
-                                    <p class="text-gray-500 dark:text-[#9090cb] text-xs font-medium py-2">T</p>
-                                    <p class="text-gray-500 dark:text-[#9090cb] text-xs font-medium py-2">F</p>
-                                    <p class="text-gray-500 dark:text-[#9090cb] text-xs font-medium py-2">S</p>
+                                <div class="grid grid-cols-7 gap-1 text-center"
+                                    style="display: grid; grid-template-columns: repeat(7, 1fr);">
+                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">S</p>
+                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">M</p>
+                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">T</p>
+                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">W</p>
+                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">T</p>
+                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">F</p>
+                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">S</p>
                                     <!-- Days -->
                                     <span class="text-gray-300 dark:text-white/30 text-xs py-2">29</span>
                                     <span class="text-gray-300 dark:text-white/30 text-xs py-2">30</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">1</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">1</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">2</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">2</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">3</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">3</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">4</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">4</span>
                                     <span
                                         class="bg-primary text-white text-xs py-2 rounded-lg font-bold shadow-lg shadow-primary/30 cursor-pointer">5</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">6</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">6</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">7</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">7</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">8</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">8</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">9</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">9</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">10</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">10</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">11</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">11</span>
                                     <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#313168] rounded-lg cursor-pointer">12</span>
+                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">12</span>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +237,7 @@
                         <div>
                             <h1 class="text-slate-900 dark:text-white text-3xl font-bold leading-tight mb-2">Sự kiện sắp
                                 diễn ra</h1>
-                            <p class="text-gray-500 dark:text-[#9090cb] text-sm font-medium">Hiển thị 12 kết quả phù hợp
+                            <p class="text-gray-500 dark:text-[#a1a1aa] text-sm font-medium">Hiển thị 12 kết quả phù hợp
                                 nhất</p>
                         </div>
                         <div class="flex items-center gap-3">
@@ -242,14 +245,14 @@
                                 theo:</span>
                             <div class="relative min-w-[160px]">
                                 <select
-                                    class="w-full bg-white dark:bg-[#181834] border border-gray-300 dark:border-[#313168] text-slate-900 dark:text-white text-sm rounded-lg px-3 py-2.5 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+                                    class="w-full bg-white dark:bg-[#18181b] border border-gray-300 dark:border-[#3f3f46] text-slate-900 dark:text-white text-sm rounded-lg px-3 py-2.5 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
                                     <option>Mới nhất</option>
                                     <option>Sắp diễn ra</option>
                                     <option>Giá: Thấp đến Cao</option>
                                     <option>Giá: Cao đến Thấp</option>
                                 </select>
                                 <div
-                                    class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500 dark:text-[#9090cb]">
+                                    class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-sm">expand_more</span>
                                 </div>
                             </div>
@@ -259,7 +262,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                         <!-- Card 1 -->
                         <div
-                            class="group bg-white dark:bg-[#181834] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#222249] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
+                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
                             <div class="relative h-48 w-full overflow-hidden">
                                 <div
                                     class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
@@ -271,7 +274,7 @@
                                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArLjL46r3XJPY4Yk8AxyZ1m_Z5OZavCh9WmA_bxmaWCG4gR7LUL-9bNPcjyDrE4a3V_tOyZxjO5jJSVU0hx1OMMbarZwuRQU718yp1z3OJxNNW8Z7UxlAAgEYvRZuEKZZLaR3E5iuQL6jF4eM_ftZSfhrvgfbnH2m7KK-9NCEab7XBdqDiDaD1hjyfC0eV8TucB62UfUkx6IwAFGV7ALXg7Vf2AFwwBr4pYsemf1QDA05qlhgn92Vz_wlqIRY-HdhRHGepHqSYDYKY");'>
                                 </div>
                                 <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent dark:from-[#181834] dark:to-transparent opacity-60">
+                                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent dark:from-[#18181b] dark:to-transparent opacity-60">
                                 </div>
                                 <div class="absolute top-3 right-3">
                                     <span
@@ -283,18 +286,18 @@
                                 <h3
                                     class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                                     Đêm Nhạc EDM Mùa Hè - Sôi Động Cùng DJ Top 1</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
                                     <p class="text-sm">20:00 - 23:00</p>
                                 </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
                                     <p class="text-sm line-clamp-1">SVĐ Mỹ Đình, Hà Nội</p>
                                 </div>
                                 <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#313168] flex items-center justify-between">
+                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
                                     <div>
-                                        <p class="text-gray-500 dark:text-[#9090cb] text-xs">Giá vé từ</p>
+                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
                                         <p class="text-slate-900 dark:text-white font-bold text-lg">500.000 đ</p>
                                     </div>
                                     <button
@@ -306,7 +309,7 @@
                         </div>
                         <!-- Card 2 -->
                         <div
-                            class="group bg-white dark:bg-[#181834] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#222249] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
+                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
                             <div class="relative h-48 w-full overflow-hidden">
                                 <div
                                     class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
@@ -327,18 +330,18 @@
                                 <h3
                                     class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                                     Tech Summit 2025: Tương Lai Của AI</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
                                     <p class="text-sm">08:00 - 17:00</p>
                                 </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
                                     <p class="text-sm line-clamp-1">Gem Center, TP. Hồ Chí Minh</p>
                                 </div>
                                 <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#313168] flex items-center justify-between">
+                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
                                     <div>
-                                        <p class="text-gray-500 dark:text-[#9090cb] text-xs">Giá vé từ</p>
+                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
                                         <p class="text-slate-900 dark:text-white font-bold text-lg">Miễn phí</p>
                                     </div>
                                     <button
@@ -350,7 +353,7 @@
                         </div>
                         <!-- Card 3 -->
                         <div
-                            class="group bg-white dark:bg-[#181834] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#222249] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
+                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
                             <div class="relative h-48 w-full overflow-hidden">
                                 <div
                                     class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
@@ -371,18 +374,18 @@
                                 <h3
                                     class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                                     Hòa Nhạc Giao Hưởng: Mùa Đông Ấm Áp</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
                                     <p class="text-sm">19:30 - 21:30</p>
                                 </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
                                     <p class="text-sm line-clamp-1">Nhà Hát Lớn, Hà Nội</p>
                                 </div>
                                 <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#313168] flex items-center justify-between">
+                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
                                     <div>
-                                        <p class="text-gray-500 dark:text-[#9090cb] text-xs">Giá vé từ</p>
+                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
                                         <p class="text-slate-900 dark:text-white font-bold text-lg">1.200.000 đ</p>
                                     </div>
                                     <button
@@ -394,7 +397,7 @@
                         </div>
                         <!-- Card 4 -->
                         <div
-                            class="group bg-white dark:bg-[#181834] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#222249] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
+                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
                             <div class="relative h-48 w-full overflow-hidden">
                                 <div
                                     class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
@@ -415,18 +418,18 @@
                                 <h3
                                     class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                                     Triển Lãm Tranh Đương Đại 2025</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
                                     <p class="text-sm">09:00 - 18:00</p>
                                 </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
                                     <p class="text-sm line-clamp-1">Bảo tàng Mỹ Thuật, TP. HCM</p>
                                 </div>
                                 <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#313168] flex items-center justify-between">
+                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
                                     <div>
-                                        <p class="text-gray-500 dark:text-[#9090cb] text-xs">Giá vé từ</p>
+                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
                                         <p class="text-slate-900 dark:text-white font-bold text-lg">50.000 đ</p>
                                     </div>
                                     <button
@@ -438,7 +441,7 @@
                         </div>
                         <!-- Card 5 -->
                         <div
-                            class="group bg-white dark:bg-[#181834] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#222249] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
+                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
                             <div class="relative h-48 w-full overflow-hidden">
                                 <div
                                     class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
@@ -459,18 +462,18 @@
                                 <h3
                                     class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                                     Countdown 2025: Đà Nẵng Chào Năm Mới</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
                                     <p class="text-sm">21:00 - 00:30</p>
                                 </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
                                     <p class="text-sm line-clamp-1">Công viên Biển Đông, Đà Nẵng</p>
                                 </div>
                                 <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#313168] flex items-center justify-between">
+                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
                                     <div>
-                                        <p class="text-gray-500 dark:text-[#9090cb] text-xs">Giá vé từ</p>
+                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
                                         <p class="text-slate-900 dark:text-white font-bold text-lg">Miễn phí</p>
                                     </div>
                                     <button
@@ -482,7 +485,7 @@
                         </div>
                         <!-- Card 6 -->
                         <div
-                            class="group bg-white dark:bg-[#181834] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#222249] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
+                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
                             <div class="relative h-48 w-full overflow-hidden">
                                 <div
                                     class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
@@ -503,18 +506,18 @@
                                 <h3
                                     class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                                     Giải Marathon Quốc Tế TP.HCM 2025</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
                                     <p class="text-sm">04:00 - 10:00</p>
                                 </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#9090cb]">
+                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
                                     <p class="text-sm line-clamp-1">Quận 1, TP. Hồ Chí Minh</p>
                                 </div>
                                 <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#313168] flex items-center justify-between">
+                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
                                     <div>
-                                        <p class="text-gray-500 dark:text-[#9090cb] text-xs">Giá vé từ</p>
+                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
                                         <p class="text-slate-900 dark:text-white font-bold text-lg">750.000 đ</p>
                                     </div>
                                     <button
@@ -528,7 +531,7 @@
                     <!-- Pagination -->
                     <div class="flex items-center justify-center mt-12 mb-8">
                         <button
-                            class="flex items-center gap-2 rounded-full border border-gray-300 dark:border-[#313168] bg-white dark:bg-[#181834] px-8 py-3 text-sm font-bold text-slate-900 dark:text-white transition-all hover:bg-gray-100 dark:hover:bg-[#313168] hover:shadow-lg">
+                            class="flex items-center gap-2 rounded-full border border-gray-300 dark:border-[#3f3f46] bg-white dark:bg-[#18181b] px-8 py-3 text-sm font-bold text-slate-900 dark:text-white transition-all hover:bg-gray-100 dark:hover:bg-[#3f3f46] hover:shadow-lg">
                             Xem thêm sự kiện
                             <span class="material-symbols-outlined">arrow_downward</span>
                         </button>
@@ -539,7 +542,7 @@
 
         <!-- ===== FOOTER ===== -->
         <footer id="user-footer"
-            class="w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-[#222249] py-12 px-4 lg:px-10">
+            class="w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-[#27272a] py-12 px-4 lg:px-10">
             <!-- Content loaded by JS -->
         </footer>
 

@@ -5,26 +5,38 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                // Primary Brand
-                "primary": "#1c1cf2",
-                "primary-hover": "#1650C4",
-                "primary-light": "rgba(28, 100, 242, 0.1)",
+                // Primary Brand (keeping blue accent)
+                "primary": "#3b82f6",           // blue-500
+                "primary-hover": "#2563eb",     // blue-600
+                "primary-light": "rgba(59, 130, 246, 0.1)",
 
-                // Backgrounds
-                "background-light": "#f5f5f8",
-                "background-dark": "#101022",
+                // Backgrounds - Shadcn Zinc
+                "background-light": "#fafafa",  // zinc-50
+                "background-dark": "#09090b",   // zinc-950
 
-                // Surfaces
-                "surface-dark": "#1a1a2e",
+                // Surfaces/Cards - Shadcn Zinc
                 "surface-light": "#ffffff",
+                "surface-dark": "#18181b",      // zinc-900
 
-                // Inputs
-                "input-dark": "#222249",
-                "input-light": "#eaeaef",
+                // Muted/Secondary - Shadcn Zinc
+                "muted-dark": "#27272a",        // zinc-800
+                "muted-light": "#f4f4f5",       // zinc-100
 
-                // Typography / Neutrals
-                "text-secondary": "#9090cb", // Dark mode secondary
-                "text-secondary-light": "#64748B",
+                // Borders - Shadcn Zinc
+                "border-dark": "#27272a",       // zinc-800
+                "border-light": "#e4e4e7",      // zinc-200
+
+                // Inputs - Shadcn Zinc  
+                "input-dark": "#27272a",        // zinc-800
+                "input-light": "#e4e4e7",       // zinc-200
+
+                // Typography / Neutrals - Shadcn Zinc
+                "text-secondary": "#71717a",    // zinc-500
+                "text-muted": "#a1a1aa",        // zinc-400
+
+                // Accent colors
+                "accent-dark": "#3f3f46",       // zinc-700
+                "accent-light": "#f4f4f5",      // zinc-100
             },
             fontFamily: {
                 "display": ["Be Vietnam Pro", "sans-serif"],

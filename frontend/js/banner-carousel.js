@@ -76,7 +76,7 @@ class BannerCarousel {
 
     createSlideHTML(banner, index) {
         return `
-            <div class="min-w-full w-full h-full relative shrink-0">
+            <a href="${banner.detailLink || 'event-detail.html'}" class="min-w-full w-full h-full relative shrink-0 block cursor-pointer">
                 <div class="absolute inset-0 bg-cover bg-center"
                      style="background-image: url('${banner.image}');">
                 </div>
@@ -103,17 +103,8 @@ class BannerCarousel {
                         ${banner.date ? `<span class="flex items-center gap-1"><span class="material-symbols-outlined text-primary">calendar_today</span> ${banner.date}</span>` : ''}
                         ${banner.location ? `<span class="flex items-center gap-1"><span class="material-symbols-outlined text-primary">location_on</span> ${banner.location}</span>` : ''}
                     </div>` : ''}
-                    
-                    <div class="mt-2 flex gap-3">
-                        <a href="${banner.bookingLink || '#'}" class="flex items-center justify-center rounded-xl h-10 md:h-12 px-6 md:px-8 bg-primary hover:bg-primary-hover text-white text-sm md:text-base font-bold transition-all shadow-lg hover:shadow-primary/50 hover:-translate-y-0.5">
-                            Đặt vé ngay
-                        </a>
-                        <a href="${banner.detailLink || '#'}" class="flex items-center justify-center rounded-xl h-10 md:h-12 px-5 md:px-6 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-sm md:text-base font-bold transition-all border border-white/20 hover:border-white/40">
-                            Chi tiết
-                        </a>
-                    </div>
                 </div>
-            </div>
+            </a>
         `;
     }
 

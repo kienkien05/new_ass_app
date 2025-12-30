@@ -275,7 +275,18 @@ class BannerCarousel {
 }
 
 // Data Source - Centralized Banner Data
-const bannerData = [];
+// Data Source - Centralized Banner Data
+const bannerData = [
+    {
+        id: 1,
+        image: '../../assets/image/banner.png',
+        title: 'Trải nghiệm sự kiện đẳng cấp cùng EViENT',
+        isDefault: true,
+        isHighlight: true,
+        bookingLink: 'events.html',
+        detailLink: 'events.html'
+    }
+];
 
 // Initialize on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {

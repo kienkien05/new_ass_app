@@ -26,11 +26,14 @@ function toggleDarkMode() {
  * @param {string} componentPath - Path to the HTML component file
  */
 async function loadComponent(elementId, componentPath) {
+    const element = document.getElementById(elementId);
+    if (!element) return; // Skip if element doesn't exist
+
     try {
         const response = await fetch(componentPath);
         if (!response.ok) throw new Error(`Failed to load ${componentPath}`);
         const html = await response.text();
-        document.getElementById(elementId).innerHTML = html;
+        element.innerHTML = html;
     } catch (error) {
         console.error('Component load error:', error);
     }

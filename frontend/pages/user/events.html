@@ -124,15 +124,14 @@
             <div class="layout-container flex flex-col lg:flex-row h-full grow w-full"
                 style="display: flex; flex-direction: row;">
                 <!-- Sidebar Filters -->
-                <aside
-                    class="w-full lg:w-[360px] flex-shrink-0 p-6 lg:border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-surface-dark"
-                    style="width: 360px; flex-shrink: 0;">
-                    <div class="sticky top-24 flex flex-col gap-6">
+                <aside class="w-full lg:w-[320px] flex-shrink-0 lg:mr-6" style="width: 320px; flex-shrink: 0;">
+                    <div
+                        class="sticky top-24 flex flex-col gap-6 p-6 rounded-2xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-surface-dark h-fit shadow-sm">
                         <!-- HeadlineText -->
                         <div
                             class="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-[#27272a]">
                             <h3 class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight">
-                                Bộ lọc tìm kiếm</h3>
+                                Bộ lọc</h3>
                             <button class="text-primary text-sm font-medium hover:underline">Đặt lại</button>
                         </div>
                         <!-- TextField: Keyword -->
@@ -141,7 +140,7 @@
                             <div class="relative w-full">
                                 <input
                                     class="form-input w-full rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-[#3f3f46] bg-white dark:bg-[#18181b] focus:border-primary h-12 placeholder:text-gray-400 dark:placeholder:text-[#a1a1aa] pl-4 pr-12 text-base font-normal leading-normal"
-                                    placeholder="Tên sự kiện, nghệ sĩ..." value="" />
+                                    placeholder="Tên sự kiện..." value="" />
                                 <div
                                     class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-400 dark:text-[#a1a1aa]">
                                     <span class="material-symbols-outlined">search</span>
@@ -152,13 +151,9 @@
                         <div class="flex flex-col gap-2">
                             <p class="text-slate-700 dark:text-white text-base font-medium leading-normal">Địa điểm</p>
                             <div class="relative">
-                                <!-- Using a div wrapper for the icon since select arrow is tricky to style purely with tailwind classes in this context -->
                                 <select
                                     class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-[#3f3f46] bg-white dark:bg-[#18181b] focus:border-primary h-12 px-4 text-base font-normal leading-normal appearance-none cursor-pointer">
-                                    <option disabled="" selected="" value="">Chọn thành phố</option>
-                                    <option value="hcm">Hồ Chí Minh</option>
-                                    <option value="hn">Hà Nội</option>
-                                    <option value="dn">Đà Nẵng</option>
+                                    <option disabled="" selected="" value="">Tất cả thành phố</option>
                                 </select>
                                 <div
                                     class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400 dark:text-[#a1a1aa]">
@@ -169,7 +164,6 @@
                         <!-- CalendarPicker -->
                         <p class="text-slate-700 dark:text-white text-base font-medium leading-normal">Thời gian</p>
                         <div class="flex flex-col gap-3">
-                            <!-- Custom Range -->
                             <div class="grid grid-cols-2 gap-2 mt-1">
                                 <div class="flex flex-col gap-1">
                                     <label class="text-[10px] uppercase font-bold text-gray-400">Từ ngày</label>
@@ -188,22 +182,16 @@
 
                         <script>
                             function selectDateFilter(btn) {
-                                // Remove active class from all buttons
                                 document.querySelectorAll('.filter-date-btn').forEach(b => {
                                     b.classList.remove('bg-primary', 'text-white', 'border-primary', 'active');
                                     b.classList.add('bg-white', 'dark:bg-[#18181b]', 'text-slate-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-700');
                                 });
-
-                                // Add active class to clicked button
                                 btn.classList.remove('bg-white', 'dark:bg-[#18181b]', 'text-slate-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-700');
                                 btn.classList.add('bg-primary', 'text-white', 'border-primary', 'active');
-
-                                // Clear date inputs
                                 document.querySelectorAll('input[type="date"]').forEach(input => input.value = '');
                             }
 
                             function resetQuickFilters() {
-                                // Remove active class from all buttons when date input is used
                                 document.querySelectorAll('.filter-date-btn').forEach(b => {
                                     b.classList.remove('bg-primary', 'text-white', 'border-primary', 'active');
                                     b.classList.add('bg-white', 'dark:bg-[#18181b]', 'text-slate-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-700');
@@ -213,7 +201,7 @@
                         <!-- Filter Actions -->
                         <button
                             class="flex w-full items-center justify-center rounded-xl h-12 bg-primary hover:bg-blue-700 text-white text-base font-bold leading-normal transition-all shadow-lg shadow-primary/20 mt-2">
-                            Áp dụng bộ lọc
+                            Áp dụng
                         </button>
                     </div>
                 </aside>
@@ -255,7 +243,7 @@
                         </div>
                     </div>
                     <!-- Pagination -->
-                    <div class="flex items-center justify-center mt-12 mb-8">
+                    <div id="load-more-container" class="hidden flex items-center justify-center mt-12 mb-8">
                         <button
                             class="flex items-center gap-2 rounded-full border border-gray-300 dark:border-[#3f3f46] bg-white dark:bg-[#18181b] px-8 py-3 text-sm font-bold text-slate-900 dark:text-white transition-all hover:bg-gray-100 dark:hover:bg-[#3f3f46] hover:shadow-lg">
                             Xem thêm sự kiện
@@ -266,17 +254,14 @@
             </div>
         </main>
 
-        <!-- ===== FOOTER ===== -->
-        <footer id="user-footer"
-            class="w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-[#27272a] py-12 px-4 lg:px-10">
-            <!-- Content loaded by JS -->
-        </footer>
-
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             initUserPage('events', 'Sự kiện');
+            // Initial check with 0 items or mock items if added
+            updateLoadMoreVisibility();
+            window.addEventListener('resize', updateLoadMoreVisibility);
         });
 
         const btnApplyFilter = document.querySelector('button.bg-primary.hover\\:bg-blue-700');
@@ -292,6 +277,7 @@
             const location = locationSelect ? locationSelect.value : '';
 
             const cards = document.querySelectorAll('.event-card');
+            let visibleCount = 0;
 
             cards.forEach(card => {
                 const title = card.getAttribute('data-title').toLowerCase();
@@ -310,10 +296,47 @@
 
                 if (matchesKeyword && matchesLocation) {
                     card.classList.remove('hidden');
+                    visibleCount++;
                 } else {
                     card.classList.add('hidden');
                 }
             });
+
+            // Update button visibility after filtering
+            updateLoadMoreVisibility(visibleCount);
+        }
+
+        /**
+         * Update Load More button visibility based on 5-row rule
+         * Grid:
+         * - Mobile (<768px): 1 col -> 5 items
+         * - Tablet (>=768px): 2 cols -> 10 items
+         * - Desktop (>=1280px): 3 cols -> 15 items
+         */
+        function updateLoadMoreVisibility(countOverride = null) {
+            const container = document.getElementById('load-more-container');
+            if (!container) return;
+
+            // Get visible card count if not provided
+            let count = countOverride;
+            if (count === null) {
+                const cards = document.querySelectorAll('.event-card:not(.hidden)');
+                count = cards.length;
+            }
+
+            // Determine columns based on window width
+            const width = window.innerWidth;
+            let cols = 1;
+            if (width >= 1280) cols = 3;      // xl:grid-cols-3
+            else if (width >= 768) cols = 2;  // md:grid-cols-2
+
+            const limit = cols * 5; // 5 rows
+
+            if (count > limit) {
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
         }
     </script>
 </body>

@@ -271,7 +271,7 @@ async function initUserPage(pageId, pageName) {
     initHeaderEvents();
 
     // Default to User state for demo (CHANGE TO FALSE FOR PROD)
-    updateHeaderState(true);
+    updateHeaderState(false);
 
     // Set active nav
     setActiveUserNav(pageId);

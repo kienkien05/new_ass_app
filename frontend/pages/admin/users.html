@@ -63,7 +63,8 @@
                                 dùng và phân quyền</p>
                         </div>
                         <button
-                            class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-primary/30 transition-all">
+                            class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-primary/30 transition-all"
+                            onclick="document.getElementById('addUserModal').classList.remove('hidden')">
                             <span class="material-symbols-outlined">person_add</span>
                             <span>Thêm người dùng</span>
                         </button>
@@ -115,60 +116,10 @@
                                         tác</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-slate-800">
-                                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div
-                                                class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-                                                NA</div>
-                                            <div>
-                                                <p class="font-semibold">Nguyễn Văn A</p>
-                                                <p class="text-sm text-slate-500 dark:text-slate-400">
-                                                    nguyenvana@email.com</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4"><span
-                                            class="px-2.5 py-1 rounded-lg bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 text-xs font-semibold">Admin</span>
-                                    </td>
-                                    <td class="px-6 py-4"><span
-                                            class="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">Hoạt
-                                            động</span></td>
-                                    <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">12/01/2025</td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="p-2 text-slate-400 hover:text-primary"><span
-                                                class="material-symbols-outlined text-[20px]">edit</span></button>
-                                        <button class="p-2 text-slate-400 hover:text-red-500"><span
-                                                class="material-symbols-outlined text-[20px]">delete</span></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div
-                                                class="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500 font-bold">
-                                                TB</div>
-                                            <div>
-                                                <p class="font-semibold">Trần Văn B</p>
-                                                <p class="text-sm text-slate-500 dark:text-slate-400">tranvanb@email.com
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4"><span
-                                            class="px-2.5 py-1 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 text-xs font-semibold">Staff</span>
-                                    </td>
-                                    <td class="px-6 py-4"><span
-                                            class="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">Hoạt
-                                            động</span></td>
-                                    <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">15/02/2025</td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="p-2 text-slate-400 hover:text-primary"><span
-                                                class="material-symbols-outlined text-[20px]">edit</span></button>
-                                        <button class="p-2 text-slate-400 hover:text-red-500"><span
-                                                class="material-symbols-outlined text-[20px]">delete</span></button>
-                                    </td>
+                            <tbody id="user-list-body" class="divide-y divide-gray-200 dark:divide-slate-800">
+                                <!-- Data will be populated by API -->
+                                <tr class="hidden">
+                                    <td colspan="5" class="py-8 text-center text-slate-500">Đang tải dữ liệu...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -177,6 +128,74 @@
                 </div>
             </div>
         </main>
+        <!-- Add User Modal -->
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden text-left"
+            id="addUserModal">
+            <div
+                class="relative w-full max-w-lg bg-white dark:bg-surface-dark rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-800 overflow-hidden transform transition-all animate-fade-in-up">
+                <div
+                    class="px-6 py-4 border-b border-gray-200 dark:border-slate-800 flex justify-between items-center bg-gray-50 dark:bg-[#222f49]">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">person_add</span>
+                        Thêm người dùng mới
+                    </h3>
+                    <button
+                        class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        onclick="document.getElementById('addUserModal').classList.add('hidden')">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <div class="p-6 flex flex-col gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-slate-700 dark:text-white">Họ và tên <span
+                                class="text-red-500">*</span></label>
+                        <input
+                            class="w-full bg-white dark:bg-background-dark text-slate-900 dark:text-white placeholder-slate-400 border border-gray-300 dark:border-slate-700 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+                            placeholder="Nhập họ tên..." type="text" />
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-slate-700 dark:text-white">Email <span
+                                class="text-red-500">*</span></label>
+                        <input
+                            class="w-full bg-white dark:bg-background-dark text-slate-900 dark:text-white placeholder-slate-400 border border-gray-300 dark:border-slate-700 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+                            placeholder="Nhập email..." type="email" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-slate-700 dark:text-white">Vai trò</label>
+                            <select
+                                class="w-full bg-white dark:bg-background-dark text-slate-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent">
+                                <option value="user">User</option>
+                                <option value="staff">Staff</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-slate-700 dark:text-white">Trạng thái</label>
+                            <select
+                                class="w-full bg-white dark:bg-background-dark text-slate-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent">
+                                <option value="active">Hoạt động</option>
+                                <option value="inactive">Khóa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="px-6 py-4 bg-gray-50 dark:bg-[#222f49] border-t border-gray-200 dark:border-slate-800 flex justify-end gap-3">
+                    <button
+                        class="px-4 py-2 text-sm font-medium text-slate-700 dark:text-white bg-transparent border border-gray-300 dark:border-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                        onclick="document.getElementById('addUserModal').classList.add('hidden')">
+                        Hủy bỏ
+                    </button>
+                    <button
+                        class="px-4 py-2 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary-hover shadow-lg shadow-primary/30 transition-colors flex items-center gap-2"
+                        onclick="alert('Đã lưu thông tin người dùng! (Demo)'); document.getElementById('addUserModal').classList.add('hidden')">
+                        <span class="material-symbols-outlined text-[18px]">save</span>
+                        Lưu người dùng
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>

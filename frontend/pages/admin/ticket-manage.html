@@ -64,7 +64,8 @@
                         </div>
                         <div class="flex gap-2">
                             <button
-                                class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-primary/30 transition-all">
+                                class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-primary/30 transition-all"
+                                onclick="document.getElementById('addTicketModal').classList.remove('hidden')">
                                 <span class="material-symbols-outlined">add_ticket</span>
                                 <span>Thêm vé mới</span>
                             </button>
@@ -114,44 +115,10 @@
                                         tác</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-slate-800">
-                                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                                    <td class="px-6 py-4">
-                                        <p class="font-semibold">Vé VIP - Music Fest</p>
-                                        <p class="text-xs text-slate-500">Khu vực Vip A</p>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">Music Festival 2025</td>
-                                    <td class="px-6 py-4 font-bold text-primary">1.200.000đ</td>
-                                    <td class="px-6 py-4 text-sm">500</td>
-                                    <td class="px-6 py-4 text-sm">342</td>
-                                    <td class="px-6 py-4"><span
-                                            class="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">Đang
-                                            bán</span></td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="p-2 text-slate-400 hover:text-primary"><span
-                                                class="material-symbols-outlined text-[20px]">edit</span></button>
-                                        <button class="p-2 text-slate-400 hover:text-red-500"><span
-                                                class="material-symbols-outlined text-[20px]">delete</span></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                                    <td class="px-6 py-4">
-                                        <p class="font-semibold">Vé GA - Music Fest</p>
-                                        <p class="text-xs text-slate-500">Khu vực thường</p>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">Music Festival 2025</td>
-                                    <td class="px-6 py-4 font-bold text-primary">599.000đ</td>
-                                    <td class="px-6 py-4 text-sm">2000</td>
-                                    <td class="px-6 py-4 text-sm">1890</td>
-                                    <td class="px-6 py-4"><span
-                                            class="px-2.5 py-1 rounded-lg bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 text-xs font-semibold">Sắp
-                                            hết</span></td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="p-2 text-slate-400 hover:text-primary"><span
-                                                class="material-symbols-outlined text-[20px]">edit</span></button>
-                                        <button class="p-2 text-slate-400 hover:text-red-500"><span
-                                                class="material-symbols-outlined text-[20px]">delete</span></button>
-                                    </td>
+                            <tbody id="ticket-list-body" class="divide-y divide-gray-200 dark:divide-slate-800">
+                                <!-- Data will be populated by API -->
+                                <tr class="hidden">
+                                    <td colspan="7" class="py-8 text-center text-slate-500">Đang tải dữ liệu...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -160,6 +127,71 @@
                 </div>
             </div>
         </main>
+        <!-- Add Ticket Modal -->
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden text-left"
+            id="addTicketModal">
+            <div
+                class="relative w-full max-w-lg bg-white dark:bg-surface-dark rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-800 overflow-hidden transform transition-all animate-fade-in-up">
+                <div
+                    class="px-6 py-4 border-b border-gray-200 dark:border-slate-800 flex justify-between items-center bg-gray-50 dark:bg-[#222f49]">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">confirmation_number</span>
+                        Thêm loại vé mới
+                    </h3>
+                    <button
+                        class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        onclick="document.getElementById('addTicketModal').classList.add('hidden')">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <div class="p-6 flex flex-col gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-slate-700 dark:text-white">Tên loại vé <span
+                                class="text-red-500">*</span></label>
+                        <input
+                            class="w-full bg-white dark:bg-background-dark text-slate-900 dark:text-white placeholder-slate-400 border border-gray-300 dark:border-slate-700 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+                            placeholder="Ví dụ: Vé VIP, Vé Thường..." type="text" />
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-slate-700 dark:text-white">Sự kiện áp dụng</label>
+                        <select
+                            class="w-full bg-white dark:bg-background-dark text-slate-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent">
+                            <option value="">-- Chọn sự kiện --</option>
+                            <option value="1">Music Festival 2025</option>
+                            <option value="2">Tech Summit 2025</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-slate-700 dark:text-white">Giá vé (VNĐ)</label>
+                            <input
+                                class="w-full bg-white dark:bg-background-dark text-slate-900 dark:text-white placeholder-slate-400 border border-gray-300 dark:border-slate-700 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+                                placeholder="0" type="number" />
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-slate-700 dark:text-white">Số lượng phát hành</label>
+                            <input
+                                class="w-full bg-white dark:bg-background-dark text-slate-900 dark:text-white placeholder-slate-400 border border-gray-300 dark:border-slate-700 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
+                                placeholder="100" type="number" />
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="px-6 py-4 bg-gray-50 dark:bg-[#222f49] border-t border-gray-200 dark:border-slate-800 flex justify-end gap-3">
+                    <button
+                        class="px-4 py-2 text-sm font-medium text-slate-700 dark:text-white bg-transparent border border-gray-300 dark:border-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                        onclick="document.getElementById('addTicketModal').classList.add('hidden')">
+                        Hủy bỏ
+                    </button>
+                    <button
+                        class="px-4 py-2 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary-hover shadow-lg shadow-primary/30 transition-colors flex items-center gap-2"
+                        onclick="alert('Đã lưu thông tin vé! (Demo)'); document.getElementById('addTicketModal').classList.add('hidden')">
+                        <span class="material-symbols-outlined text-[18px]">save</span>
+                        Lưu vé
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>

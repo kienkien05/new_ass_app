@@ -91,41 +91,16 @@
 
                     <!-- Ticket Info Panel -->
                     <div class="w-full lg:w-96 flex flex-col gap-4">
-                        <!-- Status -->
-                        <div class="bg-white dark:bg-surface-dark rounded-2xl p-1 border border-emerald-500">
-                            <div class="bg-gradient-to-b from-emerald-500/10 to-transparent rounded-xl p-6 text-center">
-                                <div
-                                    class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-500/40">
-                                    <span class="material-symbols-outlined text-white text-5xl">check_circle</span>
-                                </div>
-                                <h2 class="text-2xl font-bold uppercase">Hợp lệ</h2>
-                                <p class="text-emerald-500 text-sm mt-1">Check-in thành công</p>
-                            </div>
+                        <!-- Status (Hidden by default or replaced by empty state) -->
+                        <div id="scan-result" class="hidden flex-col gap-4">
+                            <!-- Will be populated by JS -->
                         </div>
 
-                        <!-- Customer Info -->
-                        <div
-                            class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-slate-800 flex-1 p-6">
-                            <h3 class="text-sm font-bold text-slate-500 uppercase mb-4">Thông tin khách hàng</h3>
-                            <div class="flex items-center gap-4 mb-4">
-                                <div
-                                    class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">
-                                    NA</div>
-                                <div>
-                                    <h3 class="text-xl font-bold">Nguyễn Văn A</h3>
-                                    <p class="text-sm text-slate-500">nguyenvana@email.com</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="p-3 bg-gray-50 dark:bg-[#222f49]/50 rounded-xl">
-                                    <span class="text-xs text-slate-500 block mb-1">Mã vé</span>
-                                    <span class="font-mono font-bold">#TIK-9928</span>
-                                </div>
-                                <div class="p-3 bg-gray-50 dark:bg-[#222f49]/50 rounded-xl">
-                                    <span class="text-xs text-slate-500 block mb-1">Sự kiện</span>
-                                    <span class="font-bold text-primary">Music Fest 2025</span>
-                                </div>
-                            </div>
+                        <!-- Empty State -->
+                        <div id="scan-empty-state"
+                            class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-slate-800 flex-1 p-8 flex flex-col items-center justify-center text-center opacity-60">
+                            <span class="material-symbols-outlined text-4xl text-slate-400 mb-2">qr_code_scanner</span>
+                            <p class="text-slate-500 dark:text-slate-400 font-medium">Đang chờ quét...</p>
                         </div>
                     </div>
 

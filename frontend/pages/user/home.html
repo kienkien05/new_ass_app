@@ -77,284 +77,20 @@
                     <h3 class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight">Sự kiện
                         nổi bật tuần này</h3>
                     <div class="flex gap-2">
-                        <button
+                        <button id="btn-prev"
                             class="size-9 rounded-full bg-gray-200 dark:bg-surface-dark flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
                             <span class="material-symbols-outlined text-slate-900 dark:text-white">chevron_left</span>
                         </button>
-                        <button
+                        <button id="btn-next"
                             class="size-9 rounded-full bg-gray-200 dark:bg-surface-dark flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
                             <span class="material-symbols-outlined text-slate-900 dark:text-white">chevron_right</span>
                         </button>
                     </div>
                 </div>
-                <div class="flex overflow-x-auto gap-5 pb-6 no-scrollbar snap-x snap-mandatory">
-                    <div
-                        class="snap-start min-w-[300px] md:min-w-[340px] flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg dark:hover:shadow-primary/20 transition-all duration-300">
-                        <div class="w-full aspect-[4/3] bg-cover bg-center relative overflow-hidden"
-                            data-alt="Vibrant abstract colorful party scene"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtXc0HQBXNfDOsgbwPtdX88vHNYEJ7JQtXWLfVljLt24H8-thSJIj1Ps1e39BU1PYzDDfKK0U4xW_bFPxhBKXnI7y9vBIG3VA6HpNOWKK6y8AedmQteKdqmEaipOeHs6cgwjc3DPrQwrHmL5Tyfydmy0DxO9W_FxreEK9tzTHRU7lXYIE1qnMMxmSdUhgPhbL93KNZwJ8cbRV8Vq4TkZNb1FlgCgs9viXmUEea07MHuSsxqKY8wTZlQPkIopm9L1iB8LIDGtm6Es4');">
-                            <div
-                                class="absolute top-3 right-3 bg-white/90 dark:bg-black/80 backdrop-blur text-xs font-bold px-2 py-1 rounded-lg text-slate-900 dark:text-white shadow-sm">
-                                500.000đ
-                            </div>
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
-                        </div>
-                        <div class="flex flex-col flex-1 p-4 pt-1 gap-2">
-                            <div class="flex justify-between items-start">
-                                <span
-                                    class="text-primary dark:text-white text-xs font-bold uppercase tracking-wider mt-1">Âm
-                                    nhạc</span>
-                                <span
-                                    class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/5 px-2 py-1 rounded-md">
-                                    <span class="material-symbols-outlined text-[14px]">calendar_month</span> 15/10
-                                </span>
-                            </div>
-                            <h4
-                                class="text-slate-900 dark:text-white text-lg font-bold leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-                                Lễ hội Âm nhạc Mùa Thu Hà Nội</h4>
-                            <p
-                                class="text-slate-500 dark:text-text-secondary text-sm font-normal line-clamp-1 flex items-center gap-1">
-                                <span class="material-symbols-outlined text-[16px]">location_on</span> Công viên Thống
-                                Nhất, Hà Nội
-                            </p>
-                            <div class="mt-auto pt-3">
-                                <button
-                                    class="w-full h-10 rounded-lg bg-gray-100 dark:bg-input-dark hover:bg-primary hover:text-white text-slate-900 dark:text-white text-sm font-bold transition-colors">
-                                    Đặt vé ngay
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="snap-start min-w-[300px] md:min-w-[340px] flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg dark:hover:shadow-primary/20 transition-all duration-300">
-                        <div class="w-full aspect-[4/3] bg-cover bg-center relative overflow-hidden"
-                            data-alt="Conference speaker on stage with blue lighting"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQS5ixvFPmc-a-NhUUG35htf-hP08m3hRrl-rF2awGhd6AuRAH7tsEYlevO-rqGG4E0GyWdBkHaIuwSiQuKkQoRVMq83M23WAVzafYyhtKuPhFh97kFvMUltKhQFyq-L0707UqM22GLdtsNF0n6sg7VMTotoWgFOgV3cXYpniBPsYeE7cLnnrfwyyGHNuxG7rBBHplSWE-tgot4a-wukIvBg0Bdj_LOxsl7pNxTvRSPi2Syu_4NuBAEXYnfbBhfXXvshYNzeDxduI');">
-                            <div
-                                class="absolute top-3 right-3 bg-primary text-white text-xs font-bold px-2 py-1 rounded-lg shadow-sm">
-                                Miễn phí
-                            </div>
-                        </div>
-                        <div class="flex flex-col flex-1 p-4 pt-1 gap-2">
-                            <div class="flex justify-between items-start">
-                                <span
-                                    class="text-primary dark:text-white text-xs font-bold uppercase tracking-wider mt-1">Hội
-                                    thảo</span>
-                                <span
-                                    class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/5 px-2 py-1 rounded-md">
-                                    <span class="material-symbols-outlined text-[14px]">calendar_month</span> 22/10
-                                </span>
-                            </div>
-                            <h4
-                                class="text-slate-900 dark:text-white text-lg font-bold leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-                                Tech Summit 2025: Kỷ nguyên AI</h4>
-                            <p
-                                class="text-slate-500 dark:text-text-secondary text-sm font-normal line-clamp-1 flex items-center gap-1">
-                                <span class="material-symbols-outlined text-[16px]">location_on</span> Trung tâm Hội
-                                nghị Quốc gia
-                            </p>
-                            <div class="mt-auto pt-3">
-                                <button
-                                    class="w-full h-10 rounded-lg bg-gray-100 dark:bg-input-dark hover:bg-primary hover:text-white text-slate-900 dark:text-white text-sm font-bold transition-colors">
-                                    Đăng ký ngay
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="snap-start min-w-[300px] md:min-w-[340px] flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg dark:hover:shadow-primary/20 transition-all duration-300">
-                        <div class="w-full aspect-[4/3] bg-cover bg-center relative overflow-hidden"
-                            data-alt="Modern art gallery exhibition with visitors"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDkjTVAkTTaF3ZcXyhQeu0pLjIpWtMP5HFegR9yOa955TxhYl39YbKKsMgO0UbAiIo7rmdgfq9mBmM5p_5Qn6WjG6nQcfNEswKGJhRivcWhJx6qa5GFHwfJFLg1pQphDM1uQlKTcqzprX1o9qJPv0kQzNCMxUUAzg0RAq7DXCkvGZYuiaA2EfyEbdBy9uBe0H_EB2KyKX-tb5EVVjokluc64m8sj8_Mf21QmDFaNHZsPZWJVItgQHGTCApYtKnHi4RWlH9G_22ZSm8');">
-                            <div
-                                class="absolute top-3 right-3 bg-white/90 dark:bg-black/80 backdrop-blur text-xs font-bold px-2 py-1 rounded-lg text-slate-900 dark:text-white shadow-sm">
-                                150.000đ
-                            </div>
-                        </div>
-                        <div class="flex flex-col flex-1 p-4 pt-1 gap-2">
-                            <div class="flex justify-between items-start">
-                                <span
-                                    class="text-primary dark:text-white text-xs font-bold uppercase tracking-wider mt-1">Nghệ
-                                    thuật</span>
-                                <span
-                                    class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/5 px-2 py-1 rounded-md">
-                                    <span class="material-symbols-outlined text-[14px]">calendar_month</span> 25/10
-                                </span>
-                            </div>
-                            <h4
-                                class="text-slate-900 dark:text-white text-lg font-bold leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-                                Triển lãm Nghệ thuật Đương đại "Sống"</h4>
-                            <p
-                                class="text-slate-500 dark:text-text-secondary text-sm font-normal line-clamp-1 flex items-center gap-1">
-                                <span class="material-symbols-outlined text-[16px]">location_on</span> Vincom Center for
-                                Contemporary Art
-                            </p>
-                            <div class="mt-auto pt-3">
-                                <button
-                                    class="w-full h-10 rounded-lg bg-gray-100 dark:bg-input-dark hover:bg-primary hover:text-white text-slate-900 dark:text-white text-sm font-bold transition-colors">
-                                    Mua vé
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="snap-start min-w-[300px] md:min-w-[340px] flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg dark:hover:shadow-primary/20 transition-all duration-300">
-                        <div class="w-full aspect-[4/3] bg-cover bg-center relative overflow-hidden"
-                            data-alt="Football match stadium night view"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7JJX7U4NC99i4tueB9ricYBK-_uN7aw7B_oCI2F9SzQcoq4sPJIBiUehD7AIm_b57NQbYbTW-EAiRFVzMd3CTMSL3_lvYb864yfRv2s4-fW4KCrYU8Xt4rTpaHpkSD_Kn6XW9VoyS-c5PfjH_QMQkbsQUx2_9eN0Ih0dJu7U_2l8a-lA5W3SqIVTRihCrHBn99nwGD_zURCbCbSCNjiNLBMgnXB8YoUMUvhYT_1u63TgX-Qcw06-zewfb3cqvEQdcRoQJ_jmtZY4');">
-                            <div
-                                class="absolute top-3 right-3 bg-white/90 dark:bg-black/80 backdrop-blur text-xs font-bold px-2 py-1 rounded-lg text-slate-900 dark:text-white shadow-sm">
-                                Từ 200k
-                            </div>
-                            <div
-                                class="absolute bottom-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm">
-                                Sắp bán hết
-                            </div>
-                        </div>
-                        <div class="flex flex-col flex-1 p-4 pt-1 gap-2">
-                            <div class="flex justify-between items-start">
-                                <span
-                                    class="text-primary dark:text-white text-xs font-bold uppercase tracking-wider mt-1">Thể
-                                    thao</span>
-                                <span
-                                    class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/5 px-2 py-1 rounded-md">
-                                    <span class="material-symbols-outlined text-[14px]">calendar_month</span> 28/10
-                                </span>
-                            </div>
-                            <h4
-                                class="text-slate-900 dark:text-white text-lg font-bold leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-                                Chung kết Bóng đá Sinh viên Toàn quốc</h4>
-                            <p
-                                class="text-slate-500 dark:text-text-secondary text-sm font-normal line-clamp-1 flex items-center gap-1">
-                                <span class="material-symbols-outlined text-[16px]">location_on</span> Sân vận động Bách
-                                Khoa
-                            </p>
-                            <div class="mt-auto pt-3">
-                                <button
-                                    class="w-full h-10 rounded-lg bg-gray-100 dark:bg-input-dark hover:bg-primary hover:text-white text-slate-900 dark:text-white text-sm font-bold transition-colors">
-                                    Mua vé
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="mb-12">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight">Tất cả sự
-                        kiện</h3>
-                    <a class="text-primary hover:text-primary-hover font-semibold text-sm flex items-center gap-1"
-                        href="events.html">
-                        Xem tất cả <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </a>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <div
-                        class="flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg transition-all">
-                        <div class="w-full aspect-video bg-cover bg-center"
-                            data-alt="Concert stage with purple lights and crowd"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_pFP8CZS33IjqFJnxJRzPmaJcQz4VxFduZr0zi_0TQcIAqVdOmwLfn_7V6SNB11ItQcgR9IJH0syTWldDwJ26xChlCsflxTyE7qxwcGj_WJotSwEoLYnApI9T2cNPHwEKOE0tfJXZxZtOAvBstEUfAiRAX4upC3ozo0S7-45gLxSPFHe1ehVplpZf3WaK0NUpJJEUeqebTXXZCG_8X34C2M1_29a4aqs4mIZTy1a2SasrGx2P1PsFZ0KR85fgfZw3bpfxarD4o0E');">
-                        </div>
-                        <div class="p-4 pt-1 flex flex-col gap-2 flex-1">
-                            <div class="text-xs text-gray-500 dark:text-text-secondary font-medium">10 Nov • 19:00</div>
-                            <h4
-                                class="text-slate-900 dark:text-white font-bold text-lg leading-snug group-hover:text-primary transition-colors">
-                                Nhạc Indie: Những kẻ mộng mơ</h4>
-                            <div class="text-sm text-gray-500 dark:text-text-secondary mt-auto">100.000đ</div>
-                        </div>
-                    </div>
-                    <div
-                        class="flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg transition-all">
-                        <div class="w-full aspect-video bg-cover bg-center" data-alt="Dark auditorium with red seats"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCN3scu433onRm-4VIs5sq3N9oYyGzqlVBhLXRagva3Q58xbeaGeUaO1B6HPusEj3tK5rDAgCgWgWdJhuIz87bzGeN1mHzaaH2wpf4xmgjmLDzijJb_kcMAsgmbiENt8nGG-x1QaRxNIQ66iNWK-OBmz8e6D9az0FowbUZlB3_DJW4bW02KVAlkxuCjfYsXc4Tqt1bGPsuTdCQlpylRW7h4MqB1ZU3pQypM4CFVtSMLRw8CLhCGgjAOgzZmpldmgbl6ul0es6Zhbjs');">
-                        </div>
-                        <div class="p-4 pt-1 flex flex-col gap-2 flex-1">
-                            <div class="text-xs text-gray-500 dark:text-text-secondary font-medium">12 Nov • 08:00</div>
-                            <h4
-                                class="text-slate-900 dark:text-white font-bold text-lg leading-snug group-hover:text-primary transition-colors">
-                                Workshop: Marketing 5.0</h4>
-                            <div class="text-sm text-gray-500 dark:text-text-secondary mt-auto">Miễn phí</div>
-                        </div>
-                    </div>
-                    <div
-                        class="flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg transition-all">
-                        <div class="w-full aspect-video bg-cover bg-center"
-                            data-alt="Abstract colorful paint splash art"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzk9QyWPcS9bj7bTYefntjp_Yl0Us-RUerLBPSoRJhbb7Cw93EyQbo-gLJN_Zg32LPBDd62HwAFkYPQp3bgajWJARD3D-D_wbrj7QYMZkGTKduqEi_XAptq2GgBbNElJUzHOblK2BtTaxZvHwg-R8CpuxDwj5ao3OfoJon580OWlUumqGLcB_Iegvi_rGt7H2gyIO7ErsZDJ_WO3J66hWUb-QwPqMw4byM9g-NBlI0DZMD4oqVHYF78TW_dX3Bo11tccPu9ABRlFE');">
-                        </div>
-                        <div class="p-4 pt-1 flex flex-col gap-2 flex-1">
-                            <div class="text-xs text-gray-500 dark:text-text-secondary font-medium">18 Nov • 09:00</div>
-                            <h4
-                                class="text-slate-900 dark:text-white font-bold text-lg leading-snug group-hover:text-primary transition-colors">
-                                Triển lãm tranh: Sắc màu cuộc sống</h4>
-                            <div class="text-sm text-gray-500 dark:text-text-secondary mt-auto">50.000đ</div>
-                        </div>
-                    </div>
-                    <div
-                        class="flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg transition-all">
-                        <div class="w-full aspect-video bg-cover bg-center" data-alt="Green grass field outdoors"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDVSPsElRY9dOj4tRBm3J6EcOUrAHMWH1Hq6mPlg5-kIDIXMaMevU9sOR_PKmPsFZs_96U2s3Q9X8dZnuhpi38XZxyydsdkXC1xlaj8JewRYSKemHhzadhaOJexEQqEb7YykoWEV_7HuoMGDgaErioC1CIMaALHnn5bO_olM2wcSElcPMEJahZmlaq_2sNZzpbS5uspr-zbXDxeoxcHKr8kEMSwy9K_fONVNpd99RDnCNS_VNtseriA_atkGIYtvDuE4FMTvDgBWF8');">
-                        </div>
-                        <div class="p-4 pt-1 flex flex-col gap-2 flex-1">
-                            <div class="text-xs text-gray-500 dark:text-text-secondary font-medium">20 Nov • 07:00</div>
-                            <h4
-                                class="text-slate-900 dark:text-white font-bold text-lg leading-snug group-hover:text-primary transition-colors">
-                                Giải chạy Marathon Vì Môi Trường</h4>
-                            <div class="text-sm text-gray-500 dark:text-text-secondary mt-auto">350.000đ</div>
-                        </div>
-                    </div>
-                    <div
-                        class="flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg transition-all">
-                        <div class="w-full aspect-video bg-cover bg-center" data-alt="Open book on a wooden table"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXy2iA-K0L0DNF98r7nAyv_4Aq9Apeuk3L4f_CrN4a7xC2mGRfoMWDx5X8O1lVYGA8WJUKSx5jTurx889C7AUsK7Et9KP4VnWMz-N8VvNGyOtAJCFHI7tpjyipz4UKpo-LaTIFuHv9hPKfpbN1AbZ0TkoFPHhdGcJPHy656O0f7oet-7E_CRNbj991VC3KpA4g2aZch_-mIKBAVCe2am-RRYHYJDqm0PAZNuqC8AJpXXNXNESBguYblPSJfXAx0Zc53PVc1siWovw');">
-                        </div>
-                        <div class="p-4 pt-1 flex flex-col gap-2 flex-1">
-                            <div class="text-xs text-gray-500 dark:text-text-secondary font-medium">25 Nov • 14:00</div>
-                            <h4
-                                class="text-slate-900 dark:text-white font-bold text-lg leading-snug group-hover:text-primary transition-colors">
-                                Hội sách Mùa Đông 2025</h4>
-                            <div class="text-sm text-gray-500 dark:text-text-secondary mt-auto">Miễn phí</div>
-                        </div>
-                    </div>
-                    <div
-                        class="flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg transition-all">
-                        <div class="w-full aspect-video bg-cover bg-center" data-alt="Concert crowd with hands raised"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXXNQR7gxEEm0h05-tIS6_jVusRg8As5aEYyWuz0L-bqzBH0-GCeC7USuxGnWmdScpx8Z3aHfAl4-m1_90K85tJr_38psy1iMlLJwixf_rAnjdEjI60PBBAcpnU-qx93JXrxrV-y_RdHcOIzxwJxayFi7h5vlngXCMOvtthX-OhHEcL4GiPUg87yErqjnXHAIx7tMzM1LC3s7Zau63LdOhwQ8tIKUPcCNNUkacyEbhVwaQ8F_r6YlDWi3Y_0YgnwKAHY0JDFVJt50');">
-                        </div>
-                        <div class="p-4 pt-1 flex flex-col gap-2 flex-1">
-                            <div class="text-xs text-gray-500 dark:text-text-secondary font-medium">01 Dec • 20:00</div>
-                            <h4
-                                class="text-slate-900 dark:text-white font-bold text-lg leading-snug group-hover:text-primary transition-colors">
-                                Rock Night: Bùng cháy đam mê</h4>
-                            <div class="text-sm text-gray-500 dark:text-text-secondary mt-auto">200.000đ</div>
-                        </div>
-                    </div>
-                    <div
-                        class="flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg transition-all">
-                        <div class="w-full aspect-video bg-cover bg-center"
-                            data-alt="Modern laptop on a desk showing code"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDGOxhYwF6tiIhSRw62yAnIZRKhbTPpkW0QxXujqoSvekSZ3Er3dyNazeD4k99xfc1WT685MCEzxGJtbqa_nzaoGgmEUhXRhv4dJ84EXeJUT73sfCmMJq3wnjUhKIFS7uV0rOkIYqeAoyuvv4EFuw_ph1IKDUDV2ykn2w8Bg40wCOpu1eyDlzlAxRBBHwNGL-LbUAO2Tk346gtgm3FffiFFGEXaE-kZP_ta6UETqWtrqj1BlK7nw2HLINFwQl72aQNOHqQSXqVMD50');">
-                        </div>
-                        <div class="p-4 pt-1 flex flex-col gap-2 flex-1">
-                            <div class="text-xs text-gray-500 dark:text-text-secondary font-medium">05 Dec • 09:00</div>
-                            <h4
-                                class="text-slate-900 dark:text-white font-bold text-lg leading-snug group-hover:text-primary transition-colors">
-                                Hackathon: Code for Future</h4>
-                            <div class="text-sm text-gray-500 dark:text-text-secondary mt-auto">Miễn phí</div>
-                        </div>
-                    </div>
-                    <div
-                        class="flex flex-col gap-3 rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-200 dark:border-transparent overflow-hidden group hover:shadow-lg transition-all">
-                        <div class="w-full aspect-video bg-cover bg-center" data-alt="DJ turntable close up"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAkcG3PopIpcOUYmwUotnskX5M9lnDe_q-wU3k_UVshGKOZu64rNxYeTM13AO3vXNAZoZqFnAjfi3lbLvbDP6KvmlmoQSbrFGsBtVro4VicwF81y9rZrs2jUrQQXBS65CIzSjO-MNetY2K5bl22IBoEBtUGoYq0VWsmMcwKpKoevDz5lgUDJc4ajLk0PjuUnZL-e7VJoH0mfgOTeYk4cy7sLaKdt5q0ZLUwp_sPp5EiQmLrm6Xfk7KjN6HmKxi3twqQyKzHcP0BB0I');">
-                        </div>
-                        <div class="p-4 pt-1 flex flex-col gap-2 flex-1">
-                            <div class="text-xs text-gray-500 dark:text-text-secondary font-medium">10 Dec • 21:00</div>
-                            <h4
-                                class="text-slate-900 dark:text-white font-bold text-lg leading-snug group-hover:text-primary transition-colors">
-                                DJ Night: Underground Beats</h4>
-                            <div class="text-sm text-gray-500 dark:text-text-secondary mt-auto">300.000đ</div>
-                        </div>
+                <div id="event-scroll-container"
+                    class="flex overflow-x-auto gap-5 pb-6 no-scrollbar snap-x snap-mandatory scroll-smooth">
+                    <div class="w-full py-12 text-center text-slate-500 dark:text-slate-400">
+                        <p>Đang tải sự kiện nổi bật...</p>
                     </div>
                 </div>
             </section>
@@ -369,6 +105,21 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             initUserPage('home', 'Trang Chủ');
+
+            // Scroll Logic
+            const scrollContainer = document.getElementById('event-scroll-container');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+
+            if (scrollContainer && btnPrev && btnNext) {
+                btnPrev.addEventListener('click', () => {
+                    scrollContainer.scrollBy({ left: -320, behavior: 'smooth' });
+                });
+
+                btnNext.addEventListener('click', () => {
+                    scrollContainer.scrollBy({ left: 320, behavior: 'smooth' });
+                });
+            }
         });
     </script>
 </body>

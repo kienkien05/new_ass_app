@@ -81,22 +81,22 @@
                         <div
                             class="bg-white dark:bg-surface-dark p-5 rounded-2xl border border-gray-200 dark:border-slate-800">
                             <p class="text-slate-500 text-sm font-medium">Tổng vé đã bán</p>
-                            <p class="text-3xl font-bold mt-1">12,450</p>
+                            <p id="stat-sold" class="text-3xl font-bold mt-1">-</p>
                         </div>
                         <div
                             class="bg-white dark:bg-surface-dark p-5 rounded-2xl border border-gray-200 dark:border-slate-800">
                             <p class="text-slate-500 text-sm font-medium">Đã check-in</p>
-                            <p class="text-3xl font-bold mt-1 text-emerald-500">8,920</p>
+                            <p id="stat-checkin" class="text-3xl font-bold mt-1 text-emerald-500">-</p>
                         </div>
                         <div
                             class="bg-white dark:bg-surface-dark p-5 rounded-2xl border border-gray-200 dark:border-slate-800">
                             <p class="text-slate-500 text-sm font-medium">Chưa sử dụng</p>
-                            <p class="text-3xl font-bold mt-1 text-amber-500">3,530</p>
+                            <p id="stat-unused" class="text-3xl font-bold mt-1 text-amber-500">-</p>
                         </div>
                         <div
                             class="bg-white dark:bg-surface-dark p-5 rounded-2xl border border-gray-200 dark:border-slate-800">
                             <p class="text-slate-500 text-sm font-medium">Đã hủy</p>
-                            <p class="text-3xl font-bold mt-1 text-red-500">45</p>
+                            <p id="stat-cancelled" class="text-3xl font-bold mt-1 text-red-500">-</p>
                         </div>
                     </div>
 
@@ -111,8 +111,6 @@
                         <select
                             class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-slate-800 rounded-xl px-4 py-2.5">
                             <option>Tất cả sự kiện</option>
-                            <option>Music Festival 2025</option>
-                            <option>Tech Summit</option>
                         </select>
                         <select
                             class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-slate-800 rounded-xl px-4 py-2.5">
@@ -143,40 +141,9 @@
                                         tác</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-slate-800">
-                                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                                    <td class="px-6 py-4 font-mono font-bold">#TIK-9928</td>
-                                    <td class="px-6 py-4">
-                                        <p class="font-semibold">Nguyễn Văn A</p>
-                                        <p class="text-sm text-slate-500">nguyenvana@email.com</p>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">Music Festival 2025</td>
-                                    <td class="px-6 py-4"><span
-                                            class="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">Đã
-                                            check-in</span></td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="p-2 text-slate-400 hover:text-primary"><span
-                                                class="material-symbols-outlined text-[20px]">visibility</span></button>
-                                        <button class="p-2 text-slate-400 hover:text-primary"><span
-                                                class="material-symbols-outlined text-[20px]">qr_code</span></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                                    <td class="px-6 py-4 font-mono font-bold">#TIK-9927</td>
-                                    <td class="px-6 py-4">
-                                        <p class="font-semibold">Trần Thị B</p>
-                                        <p class="text-sm text-slate-500">tranthib@email.com</p>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">Music Festival 2025</td>
-                                    <td class="px-6 py-4"><span
-                                            class="px-2.5 py-1 rounded-lg bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 text-xs font-semibold">Chưa
-                                            sử dụng</span></td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="p-2 text-slate-400 hover:text-primary"><span
-                                                class="material-symbols-outlined text-[20px]">visibility</span></button>
-                                        <button class="p-2 text-slate-400 hover:text-primary"><span
-                                                class="material-symbols-outlined text-[20px]">qr_code</span></button>
-                                    </td>
+                            <tbody id="history-list-body" class="divide-y divide-gray-200 dark:divide-slate-800">
+                                <tr class="hidden">
+                                    <td colspan="5" class="py-8 text-center text-slate-500">Đang tải dữ liệu...</td>
                                 </tr>
                             </tbody>
                         </table>

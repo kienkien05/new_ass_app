@@ -82,11 +82,7 @@ class BannerCarousel {
                 </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                 
-                ${banner.isDefault ? `
-                <div class="absolute top-6 right-6 md:top-10 md:right-10 z-20 animate-fade-in">
-                    <img src="../../assets/image/favicon.png" class="w-12 h-12 md:w-20 md:h-20 drop-shadow-lg opacity-90 hover:scale-110 transition-transform duration-300" alt="EViENT Logo">
-                </div>
-                ` : ''}
+                ${banner.isDefault ? '' : ''}
 
                 <div class="absolute bottom-0 left-0 w-full p-6 md:p-12 flex flex-col items-start gap-3 md:gap-4 animate-slide-up">
                     ${banner.isHighlight ? `
@@ -279,47 +275,7 @@ class BannerCarousel {
 }
 
 // Data Source - Centralized Banner Data
-const bannerData = [
-    {
-        id: 1,
-        image: '../../assets/image/banner.png',
-        title: 'Trải nghiệm sự kiện đẳng cấp cùng EViENT',
-        isDefault: true,
-        isHighlight: true,
-        bookingLink: 'event-detail.html',
-        detailLink: 'event-detail.html'
-    },
-    {
-        id: 2,
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC5rAulyOoZSi14akh-35GWyQf53Is0h_kqMR82owxRsehutOKfQSK0ObJvSNWEvV0xgEoTFnJWwalXUZTFXN0ksKJ_Va4BGs2legkbDqLftE3RjfRCq-Gb0gExw1TQpBXq7abWX319g1QeBWsEX5Ff45FubVNEF0GWfkGJENRjrc7cho7iiloViOsRqX-xqsdMYZqbUe_mD_ueZ9nO4nAAsH9YHIBtRLNm3QWnOhDYkx2GA3W2iu4HDYyWSSmp2Pxre9P7uKwBVoM',
-        title: 'Đại nhạc hội EDM: Lights of Saigon 2025',
-        date: '20/11/2025',
-        location: 'SVĐ Quân Khu 7, TP.HCM',
-        isHighlight: true,
-        bookingLink: 'event-detail.html',
-        detailLink: 'event-detail.html'
-    },
-    {
-        id: 3,
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQS5ixvFPmc-a-NhUUG35htf-hP08m3hRrl-rF2awGhd6AuRAH7tsEYlevO-rqGG4E0GyWdBkHaIuwSiQuKkQoRVMq83M23WAVzafYyhtKuPhFh97kFvMUltKhQFyq-L0707UqM22GLdtsNF0n6sg7VMTotoWgFOgV3cXYpniBPsYeE7cLnnrfwyyGHNuxG7rBBHplSWE-tgot4a-wukIvBg0Bdj_LOxsl7pNxTvRSPi2Syu_4NuBAEXYnfbBhfXXvshYNzeDxduI',
-        title: 'Tech Summit 2025: Kỷ nguyên AI',
-        date: '22/10/2025',
-        location: 'Trung tâm Hội nghị Quốc gia',
-        isHighlight: false,
-        bookingLink: 'event-detail.html',
-        detailLink: 'event-detail.html'
-    },
-    {
-        id: 4,
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDkjTVAkTTaF3ZcXyhQeu0pLjIpWtMP5HFegR9yOa955TxhYl39YbKKsMgO0UbAiIo7rmdgfq9mBmM5p_5Qn6WjG6nQcfNEswKGJhRivcWhJx6qa5GFHwfJFLg1pQphDM1uQlKTcqzprX1o9qJPv0kQzNCMxUUAzg0RAq7DXCkvGZYuiaA2EfyEbdBy9uBe0H_EB2KyKX-tb5EVVjokluc64m8sj8_Mf21QmDFaNHZsPZWJVItgQHGTCApYtKnHi4RWlH9G_22ZSm8',
-        title: 'Triển lãm Nghệ thuật Đương đại "Sống"',
-        date: '25/10/2025',
-        location: 'Viencom Center for Contemporary Art',
-        isHighlight: false,
-        bookingLink: 'event-detail.html',
-        detailLink: 'event-detail.html'
-    }
-];
+const bannerData = [];
 
 // Initialize on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {

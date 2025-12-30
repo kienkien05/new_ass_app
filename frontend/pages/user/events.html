@@ -167,62 +167,49 @@
                             </div>
                         </div>
                         <!-- CalendarPicker -->
-                        <div class="flex flex-col gap-2">
-                            <p class="text-slate-700 dark:text-white text-base font-medium leading-normal">Thời gian</p>
-                            <div
-                                class="bg-white dark:bg-[#18181b] rounded-xl border border-gray-300 dark:border-[#3f3f46] p-4">
-                                <div class="flex items-center justify-between mb-4">
-                                    <button
-                                        class="text-slate-700 dark:text-white hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-full p-1 transition-colors">
-                                        <span class="material-symbols-outlined text-sm">chevron_left</span>
-                                    </button>
-                                    <p
-                                        class="text-slate-900 dark:text-white text-sm font-bold leading-tight flex-1 text-center">
-                                        Tháng 11 2025</p>
-                                    <button
-                                        class="text-slate-700 dark:text-white hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-full p-1 transition-colors">
-                                        <span class="material-symbols-outlined text-sm">chevron_right</span>
-                                    </button>
+                        <p class="text-slate-700 dark:text-white text-base font-medium leading-normal">Thời gian</p>
+                        <div class="flex flex-col gap-3">
+                            <!-- Custom Range -->
+                            <div class="grid grid-cols-2 gap-2 mt-1">
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-[10px] uppercase font-bold text-gray-400">Từ ngày</label>
+                                    <input type="date"
+                                        class="w-full bg-white dark:bg-[#18181b] border border-gray-300 dark:border-[#3f3f46] text-slate-900 dark:text-white text-xs rounded-lg px-2 py-2 focus:ring-1 focus:ring-primary focus:border-primary"
+                                        onchange="resetQuickFilters()">
                                 </div>
-                                <div class="grid grid-cols-7 gap-1 text-center"
-                                    style="display: grid; grid-template-columns: repeat(7, 1fr);">
-                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">S</p>
-                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">M</p>
-                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">T</p>
-                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">W</p>
-                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">T</p>
-                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">F</p>
-                                    <p class="text-gray-500 dark:text-[#a1a1aa] text-xs font-medium py-2">S</p>
-                                    <!-- Days -->
-                                    <span class="text-gray-300 dark:text-white/30 text-xs py-2">29</span>
-                                    <span class="text-gray-300 dark:text-white/30 text-xs py-2">30</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">1</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">2</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">3</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">4</span>
-                                    <span
-                                        class="bg-primary text-white text-xs py-2 rounded-lg font-bold shadow-lg shadow-primary/30 cursor-pointer">5</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">6</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">7</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">8</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">9</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">10</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">11</span>
-                                    <span
-                                        class="text-slate-700 dark:text-white text-xs py-2 hover:bg-gray-100 dark:hover:bg-[#3f3f46] rounded-lg cursor-pointer">12</span>
+                                <div class="flex flex-col gap-1">
+                                    <label class="text-[10px] uppercase font-bold text-gray-400">Đến ngày</label>
+                                    <input type="date"
+                                        class="w-full bg-white dark:bg-[#18181b] border border-gray-300 dark:border-[#3f3f46] text-slate-900 dark:text-white text-xs rounded-lg px-2 py-2 focus:ring-1 focus:ring-primary focus:border-primary"
+                                        onchange="resetQuickFilters()">
                                 </div>
                             </div>
                         </div>
+
+                        <script>
+                            function selectDateFilter(btn) {
+                                // Remove active class from all buttons
+                                document.querySelectorAll('.filter-date-btn').forEach(b => {
+                                    b.classList.remove('bg-primary', 'text-white', 'border-primary', 'active');
+                                    b.classList.add('bg-white', 'dark:bg-[#18181b]', 'text-slate-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-700');
+                                });
+
+                                // Add active class to clicked button
+                                btn.classList.remove('bg-white', 'dark:bg-[#18181b]', 'text-slate-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-700');
+                                btn.classList.add('bg-primary', 'text-white', 'border-primary', 'active');
+
+                                // Clear date inputs
+                                document.querySelectorAll('input[type="date"]').forEach(input => input.value = '');
+                            }
+
+                            function resetQuickFilters() {
+                                // Remove active class from all buttons when date input is used
+                                document.querySelectorAll('.filter-date-btn').forEach(b => {
+                                    b.classList.remove('bg-primary', 'text-white', 'border-primary', 'active');
+                                    b.classList.add('bg-white', 'dark:bg-[#18181b]', 'text-slate-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-700');
+                                });
+                            }
+                        </script>
                         <!-- Filter Actions -->
                         <button
                             class="flex w-full items-center justify-center rounded-xl h-12 bg-primary hover:bg-blue-700 text-white text-base font-bold leading-normal transition-all shadow-lg shadow-primary/20 mt-2">
@@ -260,272 +247,11 @@
                     </div>
                     <!-- Events Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <!-- Card 1 -->
+                        <!-- Event list will be populated by API -->
                         <div
-                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
-                            <div class="relative h-48 w-full overflow-hidden">
-                                <div
-                                    class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
-                                    <span class="text-white text-xs font-bold uppercase">THG 11</span>
-                                    <span class="text-white text-lg font-bold">15</span>
-                                </div>
-                                <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                    data-alt="Crowd at a concert with colorful lights"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArLjL46r3XJPY4Yk8AxyZ1m_Z5OZavCh9WmA_bxmaWCG4gR7LUL-9bNPcjyDrE4a3V_tOyZxjO5jJSVU0hx1OMMbarZwuRQU718yp1z3OJxNNW8Z7UxlAAgEYvRZuEKZZLaR3E5iuQL6jF4eM_ftZSfhrvgfbnH2m7KK-9NCEab7XBdqDiDaD1hjyfC0eV8TucB62UfUkx6IwAFGV7ALXg7Vf2AFwwBr4pYsemf1QDA05qlhgn92Vz_wlqIRY-HdhRHGepHqSYDYKY");'>
-                                </div>
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent dark:from-[#18181b] dark:to-transparent opacity-60">
-                                </div>
-                                <div class="absolute top-3 right-3">
-                                    <span
-                                        class="bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Âm
-                                        nhạc</span>
-                                </div>
-                            </div>
-                            <div class="p-5 flex flex-col flex-1">
-                                <h3
-                                    class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                                    Đêm Nhạc EDM Mùa Hè - Sôi Động Cùng DJ Top 1</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
-                                    <p class="text-sm">20:00 - 23:00</p>
-                                </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
-                                    <p class="text-sm line-clamp-1">SVĐ Mỹ Đình, Hà Nội</p>
-                                </div>
-                                <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
-                                    <div>
-                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
-                                        <p class="text-slate-900 dark:text-white font-bold text-lg">500.000 đ</p>
-                                    </div>
-                                    <button
-                                        class="rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white px-4 py-2 text-sm font-bold transition-all">
-                                        Mua vé
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 2 -->
-                        <div
-                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
-                            <div class="relative h-48 w-full overflow-hidden">
-                                <div
-                                    class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
-                                    <span class="text-white text-xs font-bold uppercase">THG 11</span>
-                                    <span class="text-white text-lg font-bold">20</span>
-                                </div>
-                                <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                    data-alt="Business conference speaker on stage"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBjuxjgfoczehCUDEXiRAoVfUdyCfxlviZM3xKTQB39pFkqj0qb_SezVAaxkiVfVHEn4JKXZorSgSprBGQ1DoNUkGab23ZmrmJ6l5eYAn8F_0Lh-kVISLnjm2UtpiJTVTj1AnURJSr-pKbG--ycBhoMrS4PEfxi-x44h8xZe4dB7NMr2PXwferXrQquHGcQnXVOITFLN1dK0UOHeWRou_RCXbq38gl2yNMMVkLXiki9t-uDnN3ngsGpcdMTO700l4wEZBNDjRFzqw4");'>
-                                </div>
-                                <div class="absolute top-3 right-3">
-                                    <span
-                                        class="bg-purple-600 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Hội
-                                        thảo</span>
-                                </div>
-                            </div>
-                            <div class="p-5 flex flex-col flex-1">
-                                <h3
-                                    class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                                    Tech Summit 2025: Tương Lai Của AI</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
-                                    <p class="text-sm">08:00 - 17:00</p>
-                                </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
-                                    <p class="text-sm line-clamp-1">Gem Center, TP. Hồ Chí Minh</p>
-                                </div>
-                                <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
-                                    <div>
-                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
-                                        <p class="text-slate-900 dark:text-white font-bold text-lg">Miễn phí</p>
-                                    </div>
-                                    <button
-                                        class="rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white px-4 py-2 text-sm font-bold transition-all">
-                                        Đăng ký
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 3 -->
-                        <div
-                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
-                            <div class="relative h-48 w-full overflow-hidden">
-                                <div
-                                    class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
-                                    <span class="text-white text-xs font-bold uppercase">THG 12</span>
-                                    <span class="text-white text-lg font-bold">05</span>
-                                </div>
-                                <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                    data-alt="Classical orchestra performing in a hall"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVeyMfcl6rIYHj_1Iz2YrkoyHhN6Fs6BbJDkgY3h2T5HfIRvljMbBERqzFWeBbXNDkkYTtfMHsH02bfPgfSqoVlcf1OiIuEULdGp2VfKPMBkWYz5FTkANgOJ-S7OLHn84gQIxj124GzmXWyfVO8QWQIaLdWxY5n6UgWw6V6zzu-qt_VkfRM6BZGEhGXhbPS-WAIPj-1r3lIw7i4NvpB4w7DAu0djebvcn300kynKZmJUMq0F-UWcB8NGCruUWbg09RnTvUcEKSYwo");'>
-                                </div>
-                                <div class="absolute top-3 right-3">
-                                    <span
-                                        class="bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Nghệ
-                                        thuật</span>
-                                </div>
-                            </div>
-                            <div class="p-5 flex flex-col flex-1">
-                                <h3
-                                    class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                                    Hòa Nhạc Giao Hưởng: Mùa Đông Ấm Áp</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
-                                    <p class="text-sm">19:30 - 21:30</p>
-                                </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
-                                    <p class="text-sm line-clamp-1">Nhà Hát Lớn, Hà Nội</p>
-                                </div>
-                                <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
-                                    <div>
-                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
-                                        <p class="text-slate-900 dark:text-white font-bold text-lg">1.200.000 đ</p>
-                                    </div>
-                                    <button
-                                        class="rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white px-4 py-2 text-sm font-bold transition-all">
-                                        Mua vé
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 4 -->
-                        <div
-                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
-                            <div class="relative h-48 w-full overflow-hidden">
-                                <div
-                                    class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
-                                    <span class="text-white text-xs font-bold uppercase">THG 12</span>
-                                    <span class="text-white text-lg font-bold">12</span>
-                                </div>
-                                <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                    data-alt="Art gallery exhibition with paintings"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdgdEdalYIMEWkCnvBbQ_4DI9T4w_YkVSlfGH3aFZJxu9ydA2QejzlCMXxRI2hAntN50Mo6a96uakdlnz5H47XJ6OrbWoCsCUQkVwmAmFL0Hke_98zzKA7TMykrGQg9cMATDskq9SuviL7R26qXVJhjryFYkqdU_gIj6rDc59At1lVznPDajoQnOkF68uYmX3Y5w4GeqoxLH7puNg5hMEzw-pJZYyYLs-GflJ__2DhdUkX30hmvh4jux9rIUL3ZRmyIf-9C8dEUbA");'>
-                                </div>
-                                <div class="absolute top-3 right-3">
-                                    <span
-                                        class="bg-pink-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Triển
-                                        lãm</span>
-                                </div>
-                            </div>
-                            <div class="p-5 flex flex-col flex-1">
-                                <h3
-                                    class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                                    Triển Lãm Tranh Đương Đại 2025</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
-                                    <p class="text-sm">09:00 - 18:00</p>
-                                </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
-                                    <p class="text-sm line-clamp-1">Bảo tàng Mỹ Thuật, TP. HCM</p>
-                                </div>
-                                <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
-                                    <div>
-                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
-                                        <p class="text-slate-900 dark:text-white font-bold text-lg">50.000 đ</p>
-                                    </div>
-                                    <button
-                                        class="rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white px-4 py-2 text-sm font-bold transition-all">
-                                        Mua vé
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 5 -->
-                        <div
-                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
-                            <div class="relative h-48 w-full overflow-hidden">
-                                <div
-                                    class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
-                                    <span class="text-white text-xs font-bold uppercase">THG 01</span>
-                                    <span class="text-white text-lg font-bold">01</span>
-                                </div>
-                                <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                    data-alt="New year fireworks at night"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAqw2Ova9ajiVbGQAHP0aKwWKEVjFKMtV8ENsuTW-N_ujVt1f4DIsPrdyFLcuHeRkjMHU2JcnDRRD5pKs7qXzWSfthOcqFdeaerdFBfji0oyECFdtaF6iCFVkVAQKlfbtAHWj_csf4-kPdTtqEJkyp0dSfGbqDMLPwgliCLSonaYRlUKCqtzg8CeuhY8kMcTxBayTmu-ybl0rwjPIMorKZiu-_yWWyL2GVU9MnJ7vdaM9G7KjISAjie9dsh_QqqwK6n9SSbdP9H3I");'>
-                                </div>
-                                <div class="absolute top-3 right-3">
-                                    <span
-                                        class="bg-blue-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Lễ
-                                        hội</span>
-                                </div>
-                            </div>
-                            <div class="p-5 flex flex-col flex-1">
-                                <h3
-                                    class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                                    Countdown 2025: Đà Nẵng Chào Năm Mới</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
-                                    <p class="text-sm">21:00 - 00:30</p>
-                                </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
-                                    <p class="text-sm line-clamp-1">Công viên Biển Đông, Đà Nẵng</p>
-                                </div>
-                                <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
-                                    <div>
-                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
-                                        <p class="text-slate-900 dark:text-white font-bold text-lg">Miễn phí</p>
-                                    </div>
-                                    <button
-                                        class="rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white px-4 py-2 text-sm font-bold transition-all">
-                                        Xem thêm
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card 6 -->
-                        <div
-                            class="group bg-white dark:bg-[#18181b] rounded-2xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full">
-                            <div class="relative h-48 w-full overflow-hidden">
-                                <div
-                                    class="absolute top-3 left-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 flex flex-col items-center justify-center z-10">
-                                    <span class="text-white text-xs font-bold uppercase">THG 01</span>
-                                    <span class="text-white text-lg font-bold">10</span>
-                                </div>
-                                <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                    data-alt="Marathon runners on the street"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDrA6HxtcAm9AucUzAi0t7gIUGKndrmirkg0-LqJMomq6hnddugOvc74kZzW_Xj0LMny_6VRHCEkVHrTVUYheQBiU6HTb3rBw3lqF4o3UGjV704sg9DTaG63t9Jwu9cNQlg8tEvboxJZHAFgm73IknDrEC7fhw0VBjXj1G4s3ZLhm7MNPgaGn9ThmjAZGQ2o2QWGqt6fgerB0Q8gzOBG_SVOESuN00hBkAZAtU4gpt46lfXgsSJSAB7R-fHpUvSrDzcBOsxeVdGokA");'>
-                                </div>
-                                <div class="absolute top-3 right-3">
-                                    <span
-                                        class="bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Thể
-                                        thao</span>
-                                </div>
-                            </div>
-                            <div class="p-5 flex flex-col flex-1">
-                                <h3
-                                    class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                                    Giải Marathon Quốc Tế TP.HCM 2025</h3>
-                                <div class="flex items-start gap-2 mb-2 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">schedule</span>
-                                    <p class="text-sm">04:00 - 10:00</p>
-                                </div>
-                                <div class="flex items-start gap-2 mb-4 text-gray-500 dark:text-[#a1a1aa]">
-                                    <span class="material-symbols-outlined text-[18px] mt-0.5">location_on</span>
-                                    <p class="text-sm line-clamp-1">Quận 1, TP. Hồ Chí Minh</p>
-                                </div>
-                                <div
-                                    class="mt-auto pt-4 border-t border-gray-100 dark:border-[#3f3f46] flex items-center justify-between">
-                                    <div>
-                                        <p class="text-gray-500 dark:text-[#a1a1aa] text-xs">Giá vé từ</p>
-                                        <p class="text-slate-900 dark:text-white font-bold text-lg">750.000 đ</p>
-                                    </div>
-                                    <button
-                                        class="rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white px-4 py-2 text-sm font-bold transition-all">
-                                        Mua vé
-                                    </button>
-                                </div>
-                            </div>
+                            class="col-span-full flex flex-col items-center justify-center py-12 text-center text-gray-500 dark:text-gray-400">
+                            <span class="material-symbols-outlined text-4xl mb-2">event_busy</span>
+                            <p>Chưa có sự kiện nào.</p>
                         </div>
                     </div>
                     <!-- Pagination -->
@@ -552,6 +278,43 @@
         document.addEventListener('DOMContentLoaded', () => {
             initUserPage('events', 'Sự kiện');
         });
+
+        const btnApplyFilter = document.querySelector('button.bg-primary.hover\\:bg-blue-700');
+        if (btnApplyFilter) {
+            btnApplyFilter.addEventListener('click', filterEvents);
+        }
+
+        function filterEvents() {
+            const keywordInput = document.querySelector('input[placeholder="Tên sự kiện, nghệ sĩ..."]');
+            const locationSelect = document.querySelector('select.form-select');
+
+            const keyword = keywordInput ? keywordInput.value.toLowerCase().trim() : '';
+            const location = locationSelect ? locationSelect.value : '';
+
+            const cards = document.querySelectorAll('.event-card');
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const cardLoc = card.getAttribute('data-location');
+
+                let matchesKeyword = true;
+                let matchesLocation = true;
+
+                if (keyword && !title.includes(keyword)) {
+                    matchesKeyword = false;
+                }
+
+                if (location && cardLoc !== location) {
+                    matchesLocation = false;
+                }
+
+                if (matchesKeyword && matchesLocation) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
     </script>
 </body>
 

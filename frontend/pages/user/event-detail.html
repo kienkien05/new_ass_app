@@ -105,47 +105,30 @@
                 </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-[#09090b]/60 to-transparent"></div>
                 <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12">
-                    <div class="flex flex-col md:flex-row items-end justify-between gap-6">
-                        <div class="max-w-3xl space-y-4">
-                            <div class="flex gap-3">
-                                <span
-                                    class="bg-primary px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider shadow-[0_0_10px_rgba(28,100,242,0.6)]">Sắp
-                                    diễn ra</span>
-                                <span
-                                    class="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">Âm
-                                    nhạc</span>
-                            </div>
-                            <h1
-                                class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight drop-shadow-lg">
-                                Đêm Nhạc Hội Mùa Hè 2025
-                            </h1>
-                            <div
-                                class="flex flex-wrap items-center gap-6 text-gray-200 text-sm md:text-base font-medium">
-                                <div class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-primary">calendar_clock</span>
-                                    <span>20:00 - 15/07/2025</span>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12">
+                        <div class="flex flex-col md:flex-row items-end justify-between gap-6">
+                            <div class="max-w-3xl space-y-4">
+                                <div class="flex gap-3">
+                                    <span id="event-status-badge"
+                                        class="bg-primary px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider shadow-[0_0_10px_rgba(28,100,242,0.6)] hidden"></span>
+                                    <span id="event-category-badge"
+                                        class="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider hidden"></span>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-primary">location_on</span>
-                                    <span>Trung tâm Hội nghị Quốc gia, Hà Nội</span>
+                                <h1 id="event-title"
+                                    class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight drop-shadow-lg">
+                                    Đang tải sự kiện...
+                                </h1>
+                                <div
+                                    class="flex flex-wrap items-center gap-6 text-gray-200 text-sm md:text-base font-medium">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary">calendar_clock</span>
+                                        <span id="event-time">-</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary">location_on</span>
+                                        <span id="event-location">-</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div
-                            class="flex gap-3 md:gap-4 bg-black/40 backdrop-blur-md p-4 rounded-2xl border border-white/10 shadow-xl shrink-0">
-                            <div class="flex flex-col items-center min-w-[50px]">
-                                <span class="text-2xl md:text-3xl font-bold text-white">05</span>
-                                <span class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wide">Ngày</span>
-                            </div>
-                            <span class="text-xl md:text-2xl font-bold text-gray-500 pt-1">:</span>
-                            <div class="flex flex-col items-center min-w-[50px]">
-                                <span class="text-2xl md:text-3xl font-bold text-white">12</span>
-                                <span class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wide">Giờ</span>
-                            </div>
-                            <span class="text-xl md:text-2xl font-bold text-gray-500 pt-1">:</span>
-                            <div class="flex flex-col items-center min-w-[50px]">
-                                <span class="text-2xl md:text-3xl font-bold text-white">30</span>
-                                <span class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wide">Phút</span>
                             </div>
                         </div>
                     </div>
@@ -153,176 +136,20 @@
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div class="lg:col-span-8 flex flex-col gap-10">
-                    <div class="flex gap-8 border-b border-gray-200 dark:border-gray-800 pb-1 overflow-x-auto">
-                        <button
-                            class="pb-3 border-b-2 border-primary text-primary dark:text-white font-bold whitespace-nowrap">Giới
-                            thiệu</button>
-                        <button
-                            class="pb-3 border-b-2 border-transparent text-gray-500 hover:text-primary dark:hover:text-white font-medium whitespace-nowrap transition-colors">Thông
-                            tin vé</button>
-                        <button
-                            class="pb-3 border-b-2 border-transparent text-gray-500 hover:text-primary dark:hover:text-white font-medium whitespace-nowrap transition-colors">Sơ
-                            đồ ghế</button>
-                        <button
-                            class="pb-3 border-b-2 border-transparent text-gray-500 hover:text-primary dark:hover:text-white font-medium whitespace-nowrap transition-colors">Ban
-                            tổ chức</button>
-                    </div>
                     <section class="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed text-base md:text-lg">
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white">Thông tin chi tiết</h3>
-                        <p>
-                            Đắm chìm trong không gian âm nhạc sôi động nhất mùa hè này tại "Đêm Nhạc Hội Mùa Hè
-                            2025".
-                            Sự kiện quy tụ những nghệ sĩ hàng đầu Việt Nam và Quốc tế, hứa hẹn mang đến những màn
-                            trình
-                            diễn bùng nổ, hệ thống âm thanh ánh sáng đẳng cấp thế giới.
-                        </p>
-                        <p>
-                            Không chỉ là âm nhạc, sự kiện còn là nơi kết nối đam mê, với các khu vực check-in độc
-                            đáo,
-                            gian hàng ẩm thực phong phú và quà tặng hấp dẫn từ nhà tài trợ. Hãy đến và tạo nên những
-                            kỷ
-                            niệm khó quên cùng bạn bè!
-                        </p>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white">Mô tả sự kiện</h3>
+                        <p id="event-description">Đang tải mô tả...</p>
                     </section>
-                    <div
-                        class="flex items-center gap-5 p-5 bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
-                        <div class="size-16 rounded-full bg-cover bg-center ring-2 ring-gray-700"
-                            data-alt="Logo of the event organizer"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsJOrOSWBfdPLKE9VJ3S6Ue9FjAdkDS31efVCNAdwnEs6PRccBYv7liH3hHEg05gSgrm8jUUBQRlPgomn7gWq44kNEBxj5Uh8SEbGpTOvzVxg3BmWc7QCOoyAvpUV-WPT99-AgIcqjsxTQHx_VMZZk3GvxXZh4IT0BN9b2MkRajzjUja1BoLjy8XqGdzXoA");'>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Ban tổ chức</p>
-                            <h4 class="text-lg font-bold text-slate-900 dark:text-white">Vietnam Event Entertainment
-                            </h4>
-                            <p class="text-sm text-gray-500">Hơn 50+ sự kiện thành công mỗi năm</p>
-                        </div>
-                        <button
-                            class="px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-slate-900 dark:text-white">Theo
-                            dõi</button>
-                    </div>
                     <section>
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                                 <span class="material-symbols-outlined text-primary">stadium</span>
-                                Sơ đồ ghế ngồi VIP
+                                Sơ đồ sự kiện
                             </h3>
-                            <div class="text-sm text-primary font-medium cursor-pointer hover:underline">Xem toàn
-                                màn
-                                hình</div>
                         </div>
-                        <div
-                            class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-800 rounded-2xl p-6 md:p-8 overflow-hidden">
-                            <div class="flex flex-wrap justify-center gap-6 mb-8 text-sm">
-                                <div class="flex items-center gap-2">
-                                    <span class="size-4 rounded border-2 border-gray-600 bg-transparent"></span>
-                                    <span class="text-gray-400">Còn trống</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span
-                                        class="size-4 rounded bg-primary shadow-[0_0_8px_rgba(28,100,242,0.6)]"></span>
-                                    <span class="text-gray-400">Đang chọn</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="size-4 rounded bg-gray-700 opacity-50"></span>
-                                    <span class="text-gray-400">Đã bán</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-center mb-10">
-                                <div
-                                    class="w-3/4 h-16 bg-gradient-to-b from-gray-200 dark:from-gray-700 to-white dark:to-surface-dark rounded-t-[50%] flex items-end justify-center pb-2 shadow-lg relative">
-                                    <span
-                                        class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">Sân
-                                        Khấu
-                                        (Stage)</span>
-                                    <div
-                                        class="absolute inset-0 bg-gradient-to-t from-transparent to-primary/5 rounded-t-[50%]">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="seat-map-scroll overflow-x-auto pb-4">
-                                <div class="min-w-[600px] flex flex-col gap-3 items-center">
-                                    <div class="flex gap-2">
-                                        <div
-                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
-                                            A</div>
-                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
-                                            disabled="" title="A1 - Đã bán"></button>
-                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
-                                            disabled="" title="A2 - Đã bán"></button>
-                                        <button
-                                            class="size-8 rounded-md bg-primary text-white shadow-[0_0_10px_rgba(28,100,242,0.5)] transform scale-110 font-bold text-xs"
-                                            title="A3 - Bạn đang chọn">A3</button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"
-                                            title="A4 - 1.200.000đ"></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"
-                                            title="A5 - 1.200.000đ"></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"
-                                            title="A6 - 1.200.000đ"></button>
-                                        <div class="w-8"></div>
-                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
-                                            disabled=""></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <div
-                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
-                                            A</div>
-                                    </div>
-                                    <div class="flex gap-2">
-                                        <div
-                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
-                                            B</div>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <button
-                                            class="size-8 rounded-md bg-primary text-white shadow-[0_0_10px_rgba(28,100,242,0.5)] transform scale-110 font-bold text-xs"
-                                            title="B4 - Bạn đang chọn">B4</button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <div class="w-8"></div>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <div
-                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
-                                            B</div>
-                                    </div>
-                                    <div class="flex gap-2">
-                                        <div
-                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
-                                            C</div>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
-                                            disabled=""></button>
-                                        <button class="size-8 rounded-md bg-gray-700 opacity-50 cursor-not-allowed"
-                                            disabled=""></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <div class="w-8"></div>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <button
-                                            class="size-8 rounded-md border-2 border-gray-600 hover:border-primary hover:bg-primary/10 transition-colors"></button>
-                                        <div
-                                            class="text-xs text-gray-500 w-4 flex items-center justify-center font-bold">
-                                            C</div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="event-seatmap-container"
+                            class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-800 rounded-2xl p-6 md:p-8 overflow-hidden min-h-[400px] flex items-center justify-center">
+                            <p class="text-gray-500">Sơ đồ sẽ được hiển thị tại đây</p>
                         </div>
                     </section>
                 </div>
@@ -333,82 +160,21 @@
                             <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Chọn loại vé</h3>
                             <p class="text-sm text-gray-500">Số lượng có hạn, hãy đặt sớm!</p>
                         </div>
-                        <div class="p-4 max-h-[400px] overflow-y-auto space-y-4">
-                            <div
-                                class="group p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#18181b] hover:border-primary transition-all">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div>
-                                        <div class="flex items-center gap-2">
-                                            <h4 class="font-bold text-slate-900 dark:text-white">Vé Phổ Thông (GA)</h4>
-                                            <span
-                                                class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-900/30 text-green-400">Còn
-                                                vé</span>
-                                        </div>
-                                        <p class="text-xs text-gray-500 mt-1">Đứng tự do, xa sân khấu</p>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg font-bold text-primary dark:text-white">500.000đ</span>
-                                    <div class="flex items-center bg-gray-100 dark:bg-black/30 rounded-lg p-1">
-                                        <button
-                                            class="size-8 rounded-md flex items-center justify-center text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-slate-900 dark:hover:text-white transition-all disabled:opacity-50"
-                                            disabled="">
-                                            <span class="material-symbols-outlined text-sm">remove</span>
-                                        </button>
-                                        <span
-                                            class="w-8 text-center font-bold text-slate-900 dark:text-white text-sm">0</span>
-                                        <button
-                                            class="size-8 rounded-md flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-primary shadow-sm hover:scale-105 transition-all">
-                                            <span class="material-symbols-outlined text-sm">add</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="group p-4 rounded-xl border border-primary bg-primary/10 transition-all ring-1 ring-primary/20">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div>
-                                        <div class="flex items-center gap-2">
-                                            <h4 class="font-bold text-slate-900 dark:text-white">Vé VIP</h4>
-                                            <span
-                                                class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-900/30 text-orange-400 flex items-center gap-1">
-                                                <span
-                                                    class="material-symbols-outlined text-[10px]">local_fire_department</span>
-                                                Sắp hết
-                                            </span>
-                                        </div>
-                                        <p class="text-xs text-gray-500 mt-1">Ghế ngồi, gần sân khấu, quà tặng</p>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg font-bold text-primary dark:text-white">1.200.000đ</span>
-                                    <div
-                                        class="flex items-center bg-gray-100 dark:bg-black/40 rounded-lg p-1 shadow-sm">
-                                        <button
-                                            class="size-8 rounded-md flex items-center justify-center text-slate-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
-                                            <span class="material-symbols-outlined text-sm">remove</span>
-                                        </button>
-                                        <span
-                                            class="w-8 text-center font-bold text-slate-900 dark:text-white text-sm">2</span>
-                                        <button
-                                            class="size-8 rounded-md flex items-center justify-center bg-primary text-white shadow-sm hover:bg-primary-hover transition-all">
-                                            <span class="material-symbols-outlined text-sm">add</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="ticket-types-list" class="p-4 max-h-[400px] overflow-y-auto space-y-4">
+                            <p class="text-center text-gray-500 py-4">Đang tải loại vé...</p>
                         </div>
                         <div
                             class="p-6 bg-gray-50 dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 mt-auto">
                             <div class="space-y-3 mb-6">
                                 <div class="flex justify-between text-sm">
                                     <span class="text-gray-500">Số lượng vé</span>
-                                    <span class="text-slate-900 dark:text-white font-medium">2 vé</span>
+                                    <span id="total-qty" class="text-slate-900 dark:text-white font-medium">2 vé</span>
                                 </div>
                                 <div
                                     class="flex justify-between items-center pt-3 border-t border-dashed border-gray-300 dark:border-gray-700">
                                     <span class="text-slate-900 dark:text-white font-bold">Tổng tạm tính</span>
-                                    <span class="text-2xl font-bold text-primary dark:text-white">2.400.000đ</span>
+                                    <span id="total-price"
+                                        class="text-2xl font-bold text-primary dark:text-white">2.400.000đ</span>
                                 </div>
                             </div>
                             <button
@@ -451,7 +217,41 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             initUserPage('events', 'Chi Tiết Sự Kiện');
+            updateSummary(); // Initial calc
         });
+
+        function updateTicketQty(btn, change) {
+            const row = btn.closest('.ticket-row');
+            const qtySpan = row.querySelector('.qty-display');
+            let currentQty = parseInt(qtySpan.innerText);
+            let newQty = currentQty + change;
+
+            if (newQty < 0) newQty = 0;
+
+            qtySpan.innerText = newQty;
+
+            // Toggle minus button disabled state
+            const minusBtn = row.querySelector('.btn-minus');
+            if (minusBtn) minusBtn.disabled = newQty === 0;
+
+            updateSummary();
+        }
+
+        function updateSummary() {
+            let totalQty = 0;
+            let totalPrice = 0;
+
+            document.querySelectorAll('.ticket-row').forEach(row => {
+                const price = parseInt(row.getAttribute('data-price'));
+                const qty = parseInt(row.querySelector('.qty-display').innerText);
+
+                totalQty += qty;
+                totalPrice += (price * qty);
+            });
+
+            document.getElementById('total-qty').innerText = totalQty + ' vé';
+            document.getElementById('total-price').innerText = totalPrice.toLocaleString('vi-VN') + 'đ';
+        }
     </script>
 </body>
 

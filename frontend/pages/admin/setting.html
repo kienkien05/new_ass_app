@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Cài đặt (Admin) - EViENT</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="../../css/output.css" rel="stylesheet" />
+    <script src="../../js/main.js"></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden">
+    <div class="flex h-screen w-full">
+        <aside id="admin-sidebar"
+            class="hidden lg:flex flex-col w-64 h-full border-r border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-surface-dark shrink-0">
+        </aside>
+
+        <main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark">
+            <header id="admin-header" class="sticky top-0 z-40 w-full flex-shrink-0">
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-6 md:p-8">
+                <div class="max-w-4xl mx-auto flex flex-col gap-6">
+
+                    <!-- Page Header -->
+                    <div>
+                        <h2 class="text-3xl font-bold tracking-tight">Cài đặt hệ thống</h2>
+                        <p class="text-slate-500 dark:text-slate-400">Quản lý cấu hình và tài khoản</p>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="border-b border-gray-200 dark:border-slate-800">
+                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                            <button onclick="switchTab('general')" id="tab-general"
+                                class="tab-btn border-primary text-primary whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                Chung
+                            </button>
+                            <button onclick="switchTab('account')" id="tab-account"
+                                class="tab-btn border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                Tài khoản
+                            </button>
+                            <button onclick="switchTab('system')" id="tab-system"
+                                class="tab-btn border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                Hệ thống
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Tab Contents -->
+                    <div id="content-general" class="tab-content flex flex-col gap-6">
+                        <div
+                            class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-slate-800 p-6">
+                            <h3 class="text-lg font-bold mb-4">Thông tin Website</h3>
+                            <div class="grid gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Tên
+                                        Website</label>
+                                    <input type="text" value="EViENT"
+                                        class="w-full rounded-lg border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-input-dark px-4 py-2.5">
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Ngôn
+                                        ngữ mặc định</label>
+                                    <select
+                                        class="w-full rounded-lg border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-input-dark px-4 py-2.5">
+                                        <option value="vi">Tiếng Việt</option>
+                                        <option value="en">English</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="content-account" class="tab-content hidden flex-col gap-6">
+                        <div
+                            class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-slate-800 p-6">
+                            <h3 class="text-lg font-bold mb-4">Thông tin cá nhân</h3>
+                            <div class="flex items-center gap-4 mb-6">
+                                <div
+                                    class="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">
+                                    AD</div>
+                                <button class="text-sm text-primary font-semibold hover:underline">Thay đổi
+                                    Avatar</button>
+                            </div>
+                            <div class="grid gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Họ
+                                        tên</label>
+                                    <input type="text" value="Admin User"
+                                        class="w-full rounded-lg border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-input-dark px-4 py-2.5">
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
+                                    <input type="email" value="admin@evient.com" readonly
+                                        class="w-full rounded-lg border-gray-300 dark:border-slate-700 bg-gray-100 dark:bg-[#222f49] px-4 py-2.5 text-slate-500 cursor-not-allowed">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="content-system" class="tab-content hidden flex-col gap-6">
+                        <div
+                            class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-slate-800 p-6">
+                            <h3 class="text-lg font-bold mb-4">Bảo trì & Vận hành</h3>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium">Chế độ bảo trì</h4>
+                                    <p class="text-sm text-slate-500">Chỉ admin mới có thể truy cập hệ thống</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" value="" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 dark:peer-focus:ring-primary/20 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save Action -->
+                    <div class="flex justify-end">
+                        <button
+                            class="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-primary/30 transition-all">
+                            Lưu thay đổi
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initAdminPage('settings', 'Cài đặt'); // Using 'settings' to match sidebar for now, but filename is setting.html
+        });
+
+        function switchTab(tabName) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Remove active style from all tabs
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('border-primary', 'text-primary');
+                el.classList.add('border-transparent', 'text-slate-500');
+            });
+
+            // Show selected content
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            // Add active style to selected tab
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            activeTab.classList.remove('border-transparent', 'text-slate-500');
+            activeTab.classList.add('border-primary', 'text-primary');
+        }
+    </script>
+</body>
+
+</html>

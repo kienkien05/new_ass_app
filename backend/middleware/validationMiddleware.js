@@ -83,6 +83,26 @@ const createBannerRules = [
         .isInt({ min: 0 }).withMessage('priority phải là số nguyên >= 0'),
 ];
 
+const updateBannerRules = [
+    body('title')
+        .optional()
+        .trim()
+        .notEmpty().withMessage('Tiêu đề không được để trống')
+        .isLength({ max: 200 }).withMessage('Tiêu đề tối đa 200 ký tự'),
+    body('image_url')
+        .optional()
+        .notEmpty().withMessage('URL hình ảnh không được để trống'),
+    body('is_active')
+        .optional()
+        .isBoolean().withMessage('is_active phải là boolean'),
+    body('is_homepage')
+        .optional()
+        .isBoolean().withMessage('is_homepage phải là boolean'),
+    body('priority')
+        .optional()
+        .isInt({ min: 0 }).withMessage('priority phải là số nguyên >= 0'),
+];
+
 // Order validation rules
 const createOrderRules = [
     body('eventId')
@@ -119,6 +139,7 @@ module.exports = {
     loginRules,
     createEventRules,
     createBannerRules,
+    updateBannerRules,
     createOrderRules,
     createRoomRules,
     idParamRules,

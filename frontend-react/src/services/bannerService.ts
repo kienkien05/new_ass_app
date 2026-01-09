@@ -23,6 +23,11 @@ export const bannerService = {
         return response.data.data
     },
 
+    getPublicBanners: async (): Promise<Banner[]> => {
+        const response = await api.get<ApiResponse<Banner[]>>('/banners/public')
+        return response.data.data
+    },
+
     createBanner: async (data: Partial<Banner>): Promise<Banner> => {
         const response = await api.post<ApiResponse<Banner>>('/banners', data)
         return response.data.data

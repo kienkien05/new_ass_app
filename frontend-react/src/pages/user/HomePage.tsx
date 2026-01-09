@@ -47,29 +47,12 @@ function BannerCarousel({ events, adminBanners }: { events: Event[], adminBanner
                 link: b.link_url || '#',
             })
         })
-    } else {
-        // Fallback static banner if no admin banners
-        bannerItems.push({
-            type: 'static',
-            image: '/images/banner.png',
-            title: 'Khám phá sự kiện tuyệt vời',
-            subtitle: 'Tham gia hàng ngàn sự kiện hấp dẫn. Từ âm nhạc, công nghệ đến ẩm thực - tất cả đều có tại EViENT.',
-            link: '/events',
-        })
     }
 
     // 2. Add Event Banners (limit total to maybe 5 or just append all passed events)
     // Using slice to limit potential visual clutter if too many
-    events.slice(0, 4).forEach((event) => {
-        bannerItems.push({
-            type: 'event',
-            image: event.banner_image || '/images/banner.png',
-            title: event.title,
-            subtitle: event.location,
-            link: `/events/${event.id}`,
-            event,
-        })
-    })
+    // 2. Event Banners are no longer automatically added. 
+    // Admins must explicitly create a banner for an event if they want it shown in the carousel.
 
 
     // Auto-slide every 5 seconds
@@ -294,8 +277,7 @@ export default function HomePage() {
     const { data: adminBanners } = useQuery({
         queryKey: ['banners', 'home'],
         queryFn: async () => {
-            const allBanners = await bannerService.getBanners()
-            return allBanners.filter(b => b.is_active && b.is_homepage).sort((a, b) => (b.order || 0) - (a.order || 0))
+            return await bannerService.getPublicBanners()
         }
     })
 

@@ -47,6 +47,53 @@ const getBanners = async (req, res) => {
     }
 };
 
+// @desc    Get public homepage banners
+// @route   GET /api/banners/public
+// @access  Public
+const getPublicBanners = async (req, res) => {
+    try {
+        const banners = await prisma.banner.findMany({
+            where: {
+                isActive: true,
+                isHomepage: true,
+            },
+            orderBy: { priority: 'desc' },
+            include: {
+                event: {
+                    select: {
+                        id: true,
+                        title: true,
+                        slug: true,
+                    }
+                }
+            }
+        });
+
+        const transformedBanners = banners.map(banner => ({
+            id: banner.id.toString(),
+            title: banner.title,
+            image_url: banner.imageUrl,
+            link_url: banner.linkUrl || '',
+            event_id: banner.eventId,
+            event: banner.event,
+            is_active: banner.isActive,
+            is_homepage: banner.isHomepage,
+            order: banner.priority,
+        }));
+
+        res.json({
+            success: true,
+            data: transformedBanners
+        });
+    } catch (error) {
+        console.error('Get public banners error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error fetching public banners'
+        });
+    }
+};
+
 // @desc    Create a banner
 // @route   POST /api/banners
 // @access  Private/Admin
@@ -103,17 +150,19 @@ const updateBanner = async (req, res) => {
         const { id } = req.params;
         const { title, image_url, link_url, event_id, is_active, is_homepage, priority } = req.body;
 
+        // Build data object dynamically to avoid overwriting with null/undefined
+        const updateData = {};
+        if (title !== undefined) updateData.title = title;
+        if (image_url !== undefined) updateData.imageUrl = image_url;
+        if (link_url !== undefined) updateData.linkUrl = link_url;
+        if (event_id !== undefined) updateData.eventId = event_id;
+        if (is_active !== undefined) updateData.isActive = is_active;
+        if (is_homepage !== undefined) updateData.isHomepage = is_homepage;
+        if (priority !== undefined) updateData.priority = priority;
+
         const banner = await prisma.banner.update({
             where: { id: parseInt(id) },
-            data: {
-                title,
-                imageUrl: image_url,
-                linkUrl: link_url,
-                eventId: event_id || null,
-                isActive: is_active,
-                isHomepage: is_homepage,
-                priority,
-            }
+            data: updateData
         });
 
         res.json({
@@ -204,4 +253,4 @@ const toggleBannerActive = async (req, res) => {
     }
 };
 
-module.exports = { getBanners, createBanner, updateBanner, deleteBanner, toggleBannerActive };
+module.exports = { getBanners, getPublicBanners, createBanner, updateBanner, deleteBanner, toggleBannerActive };

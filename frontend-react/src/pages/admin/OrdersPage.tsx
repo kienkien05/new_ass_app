@@ -1,44 +1,93 @@
 import { useState } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Search, Filter, Calendar, MapPin, Ticket, User, X, Eye } from 'lucide-react'
+import { Search, Filter, Ticket, User, X, Eye } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Modal, ModalFooter } from '@/components/ui/modal'
 import { formatDate, formatCurrency } from '@/lib/utils'
-import { useTicketStore, type SoldTicket } from '@/stores/ticketStore'
+import api from '@/services/api'
+
+// Match actual API response format (flat structure)
+interface AdminTicket {
+    id: string
+    ticket_code: string
+    qr_code?: string
+    status: 'valid' | 'used' | 'cancelled'
+    price: number
+    purchase_date: string
+    event_id: string
+    event_title: string
+    event_date: string
+    event_location: string
+    buyer_id: string
+    buyer_name: string
+    buyer_email: string
+    seat?: {
+        id: string
+        room: string
+        row: string
+        number: number
+    }
+}
 
 export default function AdminOrdersPage() {
-    const { tickets, updateTicketStatus } = useTicketStore()
+    const queryClient = useQueryClient()
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false)
-    const [selectedTicket, setSelectedTicket] = useState<SoldTicket | null>(null)
+    const [selectedTicket, setSelectedTicket] = useState<AdminTicket | null>(null)
 
     // Search & Filters
     const [searchQuery, setSearchQuery] = useState(() => {
-        // Initialize from URL query param
         const params = new URLSearchParams(window.location.search)
         return params.get('search') || ''
     })
     const [filters, setFilters] = useState({
         event: '',
-        date: '',
-        location: '',
         status: '',
     })
-
-    // Temp filters for modal
     const [tempFilters, setTempFilters] = useState(filters)
+
+    // Fetch tickets from API
+    const { data, isLoading } = useQuery<{ success: boolean; data: AdminTicket[] }>({
+        queryKey: ['adminTickets'],
+        queryFn: async () => {
+            const response = await api.get('/orders/tickets')
+            return response.data
+        }
+    })
+
+    const tickets = data?.data || []
+
+    // Update ticket status mutation
+    const updateStatusMutation = useMutation({
+        mutationFn: async ({ ticketId, status }: { ticketId: string; status: string }) => {
+            if (status === 'used') {
+                const ticket = tickets.find(t => t.id === ticketId)
+                if (ticket) {
+                    await api.post('/tickets/validate-qr', { ticket_code: ticket.ticket_code })
+                }
+            }
+            return { ticketId, status }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['adminTickets'] })
+            toast.success('Đã cập nhật trạng thái vé')
+        },
+        onError: () => {
+            toast.error('Không thể cập nhật trạng thái')
+        }
+    })
 
     // Get unique values for filter options
     const uniqueEvents = [...new Set(tickets.map((t) => t.event_title))]
-    const uniqueLocations = [...new Set(tickets.map((t) => t.event_location))]
 
     // Filter tickets
     const filteredTickets = tickets.filter((ticket) => {
-        // Text search (code, buyer name, email, event)
         const searchLower = searchQuery.toLowerCase()
         const matchesSearch = searchQuery === '' ||
             ticket.ticket_code.toLowerCase().includes(searchLower) ||
@@ -46,13 +95,10 @@ export default function AdminOrdersPage() {
             ticket.buyer_email.toLowerCase().includes(searchLower) ||
             ticket.event_title.toLowerCase().includes(searchLower)
 
-        // Dropdown filters
         const matchesEvent = filters.event === '' || ticket.event_title === filters.event
-        const matchesDate = filters.date === '' || ticket.event_date === filters.date
-        const matchesLocation = filters.location === '' || ticket.event_location === filters.location
         const matchesStatus = filters.status === '' || ticket.status === filters.status
 
-        return matchesSearch && matchesEvent && matchesDate && matchesLocation && matchesStatus
+        return matchesSearch && matchesEvent && matchesStatus
     })
 
     const stats = {
@@ -76,26 +122,40 @@ export default function AdminOrdersPage() {
     }
 
     const clearFilters = () => {
-        const emptyFilters = { event: '', date: '', location: '', status: '' }
+        const emptyFilters = { event: '', status: '' }
         setFilters(emptyFilters)
         setTempFilters(emptyFilters)
         setIsFilterModalOpen(false)
     }
 
-    const openDetailModal = (ticket: SoldTicket) => {
+    const openDetailModal = (ticket: AdminTicket) => {
         setSelectedTicket(ticket)
         setIsDetailModalOpen(true)
     }
 
     const handleUpdateStatus = (status: 'valid' | 'used' | 'cancelled') => {
         if (!selectedTicket) return
-        updateTicketStatus(selectedTicket.id, status)
+        updateStatusMutation.mutate({ ticketId: selectedTicket.id, status })
         setSelectedTicket({ ...selectedTicket, status })
-        toast.success(`Đã cập nhật trạng thái vé thành "${status === 'valid' ? 'Còn hiệu lực' : status === 'used' ? 'Đã sử dụng' : 'Đã hủy'}"`)
     }
 
-    const getQRCodeUrl = (code: string) => {
-        return `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(code)}`
+    const getQRCodeUrl = (ticket: AdminTicket) => {
+        if (ticket.qr_code) return ticket.qr_code
+        return `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(ticket.ticket_code)}`
+    }
+
+    if (isLoading) {
+        return (
+            <div className="space-y-6">
+                <Skeleton className="h-10 w-64" />
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                        <Skeleton key={i} className="h-24 rounded-lg" />
+                    ))}
+                </div>
+                <Skeleton className="h-96 rounded-lg" />
+            </div>
+        )
     }
 
     return (
@@ -202,24 +262,6 @@ export default function AdminOrdersPage() {
                         <Badge variant="secondary" className="gap-1 pr-1">
                             Sự kiện: {filters.event}
                             <button onClick={() => setFilters({ ...filters, event: '' })} className="ml-1 p-0.5 hover:bg-muted rounded">
-                                <X className="size-3" />
-                            </button>
-                        </Badge>
-                    )}
-                    {filters.date && (
-                        <Badge variant="secondary" className="gap-1 pr-1">
-                            <Calendar className="size-3" />
-                            {new Date(filters.date).toLocaleDateString('vi-VN')}
-                            <button onClick={() => setFilters({ ...filters, date: '' })} className="ml-1 p-0.5 hover:bg-muted rounded">
-                                <X className="size-3" />
-                            </button>
-                        </Badge>
-                    )}
-                    {filters.location && (
-                        <Badge variant="secondary" className="gap-1 pr-1">
-                            <MapPin className="size-3" />
-                            {filters.location.substring(0, 20)}...
-                            <button onClick={() => setFilters({ ...filters, location: '' })} className="ml-1 p-0.5 hover:bg-muted rounded">
                                 <X className="size-3" />
                             </button>
                         </Badge>
@@ -349,33 +391,6 @@ export default function AdminOrdersPage() {
                         </select>
                     </div>
                     <div className="space-y-2">
-                        <label className="text-sm font-medium flex items-center gap-2">
-                            <Calendar className="size-4" />
-                            Ngày tổ chức
-                        </label>
-                        <Input
-                            type="date"
-                            value={tempFilters.date}
-                            onChange={(e) => setTempFilters({ ...tempFilters, date: e.target.value })}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium flex items-center gap-2">
-                            <MapPin className="size-4" />
-                            Địa điểm
-                        </label>
-                        <select
-                            value={tempFilters.location}
-                            onChange={(e) => setTempFilters({ ...tempFilters, location: e.target.value })}
-                            className="w-full px-3 py-2 border border-border rounded-lg bg-background text-sm"
-                        >
-                            <option value="">Tất cả địa điểm</option>
-                            {uniqueLocations.map((loc) => (
-                                <option key={loc} value={loc}>{loc}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="space-y-2">
                         <label className="text-sm font-medium">Trạng thái</label>
                         <select
                             value={tempFilters.status}
@@ -412,15 +427,13 @@ export default function AdminOrdersPage() {
                 {selectedTicket && (
                     <div className="space-y-6">
                         <div className="flex gap-6">
-                            {/* QR Code */}
                             <div className="bg-white p-4 rounded-xl shrink-0">
                                 <img
-                                    src={getQRCodeUrl(selectedTicket.ticket_code)}
+                                    src={getQRCodeUrl(selectedTicket)}
                                     alt="QR Code"
                                     className="w-32 h-32"
                                 />
                             </div>
-                            {/* Info */}
                             <div className="flex-1 space-y-3">
                                 <div>
                                     <p className="text-xs text-muted-foreground">Mã vé</p>
@@ -475,20 +488,10 @@ export default function AdminOrdersPage() {
                                 </Badge>
                             </div>
                             <div className="flex gap-2">
-                                {selectedTicket.status !== 'valid' && (
-                                    <Button variant="outline" size="sm" onClick={() => handleUpdateStatus('valid')}>
-                                        Khôi phục
-                                    </Button>
-                                )}
                                 {selectedTicket.status === 'valid' && (
-                                    <>
-                                        <Button variant="outline" size="sm" onClick={() => handleUpdateStatus('used')}>
-                                            Đánh dấu đã dùng
-                                        </Button>
-                                        <Button variant="destructive" size="sm" onClick={() => handleUpdateStatus('cancelled')}>
-                                            Hủy vé
-                                        </Button>
-                                    </>
+                                    <Button variant="outline" size="sm" onClick={() => handleUpdateStatus('used')}>
+                                        Đánh dấu đã dùng
+                                    </Button>
                                 )}
                             </div>
                         </div>

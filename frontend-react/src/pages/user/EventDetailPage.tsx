@@ -11,7 +11,6 @@ import { Modal, ModalFooter } from '@/components/ui/modal'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatDate, formatCurrency } from '@/lib/utils'
 import { eventService } from '@/services/eventService'
-import { useTicketStore } from '@/stores/ticketStore'
 import { useRoomStore } from '@/stores/roomStore'
 import { useAuthStore } from '@/stores/authStore'
 import api from '@/services/api'
@@ -34,7 +33,6 @@ interface TicketTypeSelection {
 export default function EventDetailPage() {
     const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
-    const { tickets, addTicket } = useTicketStore()
     const { getRoomForEvent, getAllRooms, fetchRooms } = useRoomStore()
     const { user, isAuthenticated } = useAuthStore()
 
@@ -84,20 +82,24 @@ export default function EventDetailPage() {
         }, 0)
     }, [event, ticketQuantities])
 
-    // Get sold seats for this event from tickets store (mock data derived)
-    // In real app, this should come from API. For now we use local store + basic logic
-    const soldSeatIds = useMemo(() => {
-        return tickets
-            .filter((t) => t.event_id === id && t.seat && t.status !== 'cancelled')
-            .map((t) => `${t.seat!.row}${t.seat!.number}`)
-    }, [tickets, id])
+    // Fetch sold seats for this event from API
+    const { data: soldSeatsData } = useQuery<{ success: boolean; data: { sold_seat_ids: string[] } }>({
+        queryKey: ['soldSeats', id],
+        queryFn: async () => {
+            const response = await api.get(`/events/${id}/sold-seats`)
+            return response.data
+        },
+        enabled: !!id
+    })
+
+    const soldSeatIds = soldSeatsData?.data?.sold_seat_ids || []
 
     // Build seats display
     const seats: SeatDisplay[] = useMemo(() => {
         return room && Array.isArray(room.seats)
             ? room.seats.map((seat) => {
-                const seatKey = `${seat.row}${seat.number}`
-                const isSold = soldSeatIds.includes(seatKey)
+                // Compare by seat UUID (sold_seat_ids are UUIDs from API)
+                const isSold = soldSeatIds.includes(seat.id)
                 const isSelected = selectedSeats.some(s => s.id === seat.id)
                 const isDisabled = !seat.isActive
 
@@ -217,32 +219,6 @@ export default function EventDetailPage() {
             })
 
             if (response.data.success) {
-                // Update local store (simulated sync)
-                const newTickets = response.data.data.tickets
-                newTickets.forEach((t: any) => {
-                    addTicket({
-                        id: t.id,
-                        ticket_code: t.ticket_code,
-                        qr_code: t.qr_code,
-                        event_id: event.id,
-                        event_title: event.title,
-                        event_date: event.start_time || '',
-                        event_location: event.location || '',
-                        price: t.price_at_purchase,
-                        buyer_id: user.id,
-                        buyer_name: user.full_name,
-                        buyer_email: user.email,
-                        purchase_date: new Date().toISOString(),
-                        status: 'valid',
-                        seat: room && seat_ids.length > 0 ? {
-                            id: seat_ids[0], // simplified mapping for store
-                            room: room.name,
-                            row: 'X', // would need real mapping
-                            number: 0
-                        } : undefined
-                    })
-                })
-
                 toast.success('Mua vé thành công!')
                 navigate('/wallet')
             }

@@ -88,6 +88,9 @@ app.use('/api/admin/reports', reportRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve uploaded files
 
+// User's own tickets route
+app.get('/api/users/tickets', protect, getMyTickets);
+
 // Health Check
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });

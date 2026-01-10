@@ -437,5 +437,53 @@ const deleteEvent = async (req, res) => {
         });
     }
 };
+// @desc    Get sold seats for an event
+// @route   GET /api/events/:id/sold-seats
+// @access  Public
+const getSoldSeats = async (req, res) => {
+    try {
+        const { id } = req.params;
 
-module.exports = { getEvents, getEventById, getFeaturedEvents, createEvent, updateEvent, deleteEvent };
+        // Get all non-cancelled tickets with seats for this event
+        const tickets = await prisma.ticket.findMany({
+            where: {
+                eventId: id,
+                status: { not: 'cancelled' },
+                seatId: { not: null }
+            },
+            select: {
+                seatId: true,
+                seat: {
+                    select: {
+                        id: true,
+                        row: true,
+                        number: true
+                    }
+                }
+            }
+        });
+
+        const soldSeatIds = tickets.map(t => t.seatId);
+        const soldSeats = tickets.map(t => ({
+            id: t.seatId,
+            row: t.seat?.row,
+            number: t.seat?.number
+        }));
+
+        res.json({
+            success: true,
+            data: {
+                sold_seat_ids: soldSeatIds,
+                sold_seats: soldSeats
+            }
+        });
+    } catch (error) {
+        console.error('Get sold seats error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error fetching sold seats'
+        });
+    }
+};
+
+module.exports = { getEvents, getEventById, getFeaturedEvents, createEvent, updateEvent, deleteEvent, getSoldSeats };

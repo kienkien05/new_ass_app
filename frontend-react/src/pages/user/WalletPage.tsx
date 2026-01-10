@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, QrCode, AlertCircle, Copy, CheckCircle, Ticket as TicketIcon, Armchair } from 'lucide-react'
 import { toast } from 'sonner'
@@ -9,20 +10,54 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Modal, ModalFooter } from '@/components/ui/modal'
 import { formatDate, formatCurrency } from '@/lib/utils'
-import { useTicketStore, type SoldTicket } from '@/stores/ticketStore'
+import { useAuthStore } from '@/stores/authStore'
+import api from '@/services/api'
+
+interface UserTicket {
+    id: string
+    ticket_code: string
+    qr_code?: string
+    status: 'valid' | 'used' | 'cancelled'
+    price_at_purchase: number
+    created_at: string
+    event: {
+        id: string
+        title: string
+        start_time: string
+        location: string
+    }
+    ticket_type: {
+        id: string
+        name: string
+    }
+    seat?: {
+        room: string
+        row: string
+        number: number
+    }
+}
 
 export default function WalletPage() {
     const [isQRModalOpen, setIsQRModalOpen] = useState(false)
-    const [selectedTicket, setSelectedTicket] = useState<SoldTicket | null>(null)
+    const [selectedTicket, setSelectedTicket] = useState<UserTicket | null>(null)
     const [copied, setCopied] = useState(false)
-    const [isLoading] = useState(false)
 
-    const { tickets } = useTicketStore()
+    // Get current user for cache key
+    const { user } = useAuthStore()
 
-    // For demo, show all tickets (in real app, filter by user.id)
-    const userTickets = tickets
+    // Fetch tickets from API - include user ID in queryKey for per-user caching
+    const { data, isLoading } = useQuery<{ success: boolean; data: UserTicket[] }>({
+        queryKey: ['myTickets', user?.id],
+        queryFn: async () => {
+            const response = await api.get('/users/tickets')
+            return response.data
+        },
+        enabled: !!user?.id
+    })
 
-    const openQRModal = (ticket: SoldTicket) => {
+    const userTickets = data?.data || []
+
+    const openQRModal = (ticket: UserTicket) => {
         setSelectedTicket(ticket)
         setIsQRModalOpen(true)
     }
@@ -36,8 +71,9 @@ export default function WalletPage() {
         }
     }
 
-    const getQRCodeUrl = (code: string) => {
-        return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(code)}`
+    const getQRCodeUrl = (ticket: UserTicket) => {
+        if (ticket.qr_code) return ticket.qr_code
+        return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(ticket.ticket_code)}`
     }
 
     // Group tickets by status
@@ -98,7 +134,7 @@ export default function WalletPage() {
                 </Card>
             </div>
 
-            {/* Valid Tickets - Event Cards */}
+            {/* Valid Tickets */}
             {validTickets.length > 0 && (
                 <section className="mb-8">
                     <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -115,28 +151,26 @@ export default function WalletPage() {
                             >
                                 <Card className="overflow-hidden hover:shadow-lg transition-shadow">
                                     <CardContent className="p-0">
-                                        {/* Event Info as Card */}
                                         <div className="p-5">
                                             <div className="flex justify-between items-start mb-3">
                                                 <div className="flex-1">
                                                     <h3 className="font-bold text-lg line-clamp-2 mb-2">
-                                                        {ticket.event_title}
+                                                        {ticket.event.title}
                                                     </h3>
                                                     <div className="space-y-1 text-sm text-muted-foreground">
                                                         <div className="flex items-center gap-2">
                                                             <Calendar className="size-4" />
-                                                            <span>{formatDate(ticket.event_date)}</span>
+                                                            <span>{formatDate(ticket.event.start_time)}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2">
                                                             <MapPin className="size-4" />
-                                                            <span className="line-clamp-1">{ticket.event_location}</span>
+                                                            <span className="line-clamp-1">{ticket.event.location}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <Badge variant="success">Còn hiệu lực</Badge>
                                             </div>
 
-                                            {/* Seat Info */}
                                             {ticket.seat && (
                                                 <div className="flex items-center gap-2 p-3 bg-primary/10 rounded-lg mb-3">
                                                     <Armchair className="size-5 text-primary" />
@@ -149,7 +183,6 @@ export default function WalletPage() {
                                                 </div>
                                             )}
 
-                                            {/* Ticket Code Preview */}
                                             <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                                                 <div>
                                                     <p className="text-xs text-muted-foreground">Mã vé</p>
@@ -189,10 +222,10 @@ export default function WalletPage() {
                                         <div className="flex justify-between items-start">
                                             <div className="flex-1">
                                                 <h3 className="font-medium line-clamp-1 mb-1">
-                                                    {ticket.event_title}
+                                                    {ticket.event.title}
                                                 </h3>
                                                 <p className="text-sm text-muted-foreground">
-                                                    {formatDate(ticket.event_date)}
+                                                    {formatDate(ticket.event.start_time)}
                                                 </p>
                                             </div>
                                             <Badge variant="secondary">Đã sử dụng</Badge>
@@ -224,20 +257,18 @@ export default function WalletPage() {
                 isOpen={isQRModalOpen}
                 onClose={() => setIsQRModalOpen(false)}
                 title="Mã vé điện tử"
-                description={selectedTicket?.event_title}
+                description={selectedTicket?.event.title}
             >
                 {selectedTicket && (
                     <div className="text-center space-y-6">
-                        {/* QR Code */}
                         <div className="bg-white p-6 rounded-2xl inline-block mx-auto">
                             <img
-                                src={getQRCodeUrl(selectedTicket.ticket_code)}
+                                src={getQRCodeUrl(selectedTicket)}
                                 alt="QR Code"
                                 className="w-48 h-48 mx-auto"
                             />
                         </div>
 
-                        {/* Ticket Info */}
                         <div className="space-y-3">
                             <div className="p-4 bg-muted rounded-lg">
                                 <p className="text-xs text-muted-foreground mb-1">Mã vé</p>
@@ -246,7 +277,6 @@ export default function WalletPage() {
                                 </p>
                             </div>
 
-                            {/* Seat Info in Modal */}
                             {selectedTicket.seat && (
                                 <div className="p-4 bg-primary/10 rounded-lg">
                                     <p className="text-xs text-muted-foreground mb-1">Chỗ ngồi</p>
@@ -259,17 +289,17 @@ export default function WalletPage() {
                             <div className="grid grid-cols-2 gap-3 text-sm">
                                 <div className="p-3 bg-muted/50 rounded-lg">
                                     <p className="text-muted-foreground">Giá vé</p>
-                                    <p className="font-medium text-primary">{formatCurrency(selectedTicket.price)}</p>
+                                    <p className="font-medium text-primary">{formatCurrency(selectedTicket.price_at_purchase)}</p>
                                 </div>
                                 <div className="p-3 bg-muted/50 rounded-lg">
                                     <p className="text-muted-foreground">Ngày mua</p>
-                                    <p className="font-medium">{formatDate(selectedTicket.purchase_date)}</p>
+                                    <p className="font-medium">{formatDate(selectedTicket.created_at)}</p>
                                 </div>
                             </div>
 
                             <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                                 <Calendar className="size-4" />
-                                <span>{formatDate(selectedTicket.event_date)}</span>
+                                <span>{formatDate(selectedTicket.event.start_time)}</span>
                             </div>
                         </div>
 

@@ -30,7 +30,7 @@ const getAllUsers = async (req, res) => {
         // Count total
         const total = await prisma.user.count({ where });
 
-        // Fetch users
+        // Fetch users (simplified query without _count to avoid relation errors)
         const users = await prisma.user.findMany({
             where,
             select: {
@@ -46,10 +46,7 @@ const getAllUsers = async (req, res) => {
                 gender: true,
                 address: true,
                 createdAt: true,
-                updatedAt: true,
-                _count: {
-                    select: { tickets: true, orders: true }
-                }
+                updatedAt: true
             },
             orderBy: { createdAt: 'desc' },
             skip,
@@ -70,9 +67,7 @@ const getAllUsers = async (req, res) => {
             gender: u.gender,
             address: u.address,
             created_at: u.createdAt,
-            updated_at: u.updatedAt,
-            ticket_count: u._count.tickets,
-            order_count: u._count.orders
+            updated_at: u.updatedAt
         }));
 
         res.json({
@@ -340,9 +335,75 @@ const toggleUserStatus = async (req, res) => {
     }
 };
 
+// @desc    Create new user (Admin)
+// @route   POST /api/admin/users
+// @access  Private/Admin
+const createUser = async (req, res) => {
+    try {
+        const { full_name, email, password, role, phone_number, facebook_url, gender, address, date_of_birth } = req.body;
+
+        // Validate required fields
+        if (!full_name || !email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: 'Vui lòng điền đầy đủ thông tin bắt buộc (tên, email, mật khẩu)'
+            });
+        }
+
+        // Check if email already exists
+        const existingUser = await prisma.user.findUnique({ where: { email } });
+        if (existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: 'Email đã tồn tại trong hệ thống'
+            });
+        }
+
+        // Hash password
+        const bcrypt = require('bcryptjs');
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Create user
+        const newUser = await prisma.user.create({
+            data: {
+                fullName: full_name,
+                email,
+                passwordHash: hashedPassword,
+                role: role || 'user',
+                isActive: true,
+                phoneNumber: phone_number || null,
+                facebookUrl: facebook_url || null,
+                gender: gender || null,
+                address: address || null,
+                dateOfBirth: date_of_birth ? new Date(date_of_birth) : null
+            }
+        });
+
+        res.status(201).json({
+            success: true,
+            data: {
+                id: newUser.id,
+                email: newUser.email,
+                full_name: newUser.fullName,
+                role: newUser.role,
+                is_active: newUser.isActive
+            },
+            message: 'Tạo người dùng thành công'
+        });
+    } catch (error) {
+        console.error('Create user error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error creating user'
+        });
+    }
+};
+
 module.exports = {
     getAllUsers,
     getUserById,
+    createUser,
     updateUser,
     deleteUser,
     toggleUserStatus

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getEvents, getEventById, getFeaturedEvents, createEvent, updateEvent, deleteEvent } = require('../controllers/eventController');
+const { getEvents, getEventById, getFeaturedEvents, createEvent, updateEvent, deleteEvent, getSoldSeats } = require('../controllers/eventController');
 const { protect, admin } = require('../middleware/authMiddleware');
 const { validate, createEventRules, idParamRules } = require('../middleware/validationMiddleware');
 
@@ -8,6 +8,7 @@ const { validate, createEventRules, idParamRules } = require('../middleware/vali
 router.get('/', getEvents);
 router.get('/featured', getFeaturedEvents);
 router.get('/:id', getEventById);
+router.get('/:id/sold-seats', getSoldSeats);
 
 // Admin routes - protected
 router.post('/', protect, admin, createEventRules, validate, createEvent);

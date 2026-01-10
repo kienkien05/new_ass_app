@@ -74,7 +74,8 @@ const getEvents = async (req, res) => {
                 quantity_sold: tt.quantitySold,
                 status: tt.status,
             })),
-            rooms: event.rooms
+            rooms: event.rooms,
+            max_tickets_per_user: event.maxTicketsPerUser
         }));
 
         res.json({
@@ -142,7 +143,8 @@ const getEventById = async (req, res) => {
                     quantity_sold: tt.quantitySold,
                     status: tt.status,
                 })),
-                rooms: event.rooms
+                rooms: event.rooms,
+                max_tickets_per_user: event.maxTicketsPerUser
             }
         });
 
@@ -217,7 +219,9 @@ const createEvent = async (req, res) => {
             // NEW: Banner options
             create_banner,
             banner_is_homepage,
-            banner_priority
+            banner_priority,
+            // NEW: Ticket limit per user
+            max_tickets_per_user
         } = req.body;
 
         if (!title) {
@@ -253,6 +257,7 @@ const createEvent = async (req, res) => {
                     category: category || null,
                     status: status || 'draft',
                     isHot: is_hot || false,
+                    maxTicketsPerUser: max_tickets_per_user || 10,
                     rooms: room_ids && room_ids.length > 0 ? {
                         connect: room_ids.map(id => ({ id }))
                     } : undefined
@@ -332,7 +337,8 @@ const createEvent = async (req, res) => {
                     quantity_sold: tt.quantitySold,
                     status: tt.status
                 })),
-                banner_created: !!result.banner
+                banner_created: !!result.banner,
+                max_tickets_per_user: event.maxTicketsPerUser
             }
         });
     } catch (error) {
@@ -370,7 +376,8 @@ const updateEvent = async (req, res) => {
             category,
             is_hot,
             room_ids,
-            status
+            status,
+            max_tickets_per_user
         } = req.body;
 
         const event = await prisma.event.update({
@@ -388,11 +395,12 @@ const updateEvent = async (req, res) => {
                 category,
                 isHot: is_hot,
                 status,
+                maxTicketsPerUser: max_tickets_per_user,
                 rooms: room_ids ? {
                     set: room_ids.map(id => ({ id })) // Replace all
                 } : undefined
             },
-            include: { rooms: true }
+            include: { rooms: true, ticketTypes: true }
         });
 
         res.json({

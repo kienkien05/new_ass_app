@@ -8,17 +8,15 @@ export interface AppUser {
     status: 'active' | 'inactive'
     created_at: string
     avatar_url?: string
+    phone_number?: string
+    facebook_url?: string
+    gender?: 'male' | 'female' | 'other'
+    address?: string
+    date_of_birth?: string
 }
 
-// Mock users data - shared across all pages
-const mockUsers: AppUser[] = [
-    { id: 'user1', email: 'nguyenvana@gmail.com', full_name: 'Nguyễn Văn A', role: 'user', status: 'active', created_at: '2026-01-01' },
-    { id: 'user2', email: 'tranthib@gmail.com', full_name: 'Trần Thị B', role: 'user', status: 'active', created_at: '2026-01-02' },
-    { id: 'user3', email: 'levanc@gmail.com', full_name: 'Lê Văn C', role: 'user', status: 'active', created_at: '2026-01-03' },
-    { id: 'user4', email: 'phamthid@gmail.com', full_name: 'Phạm Thị D', role: 'user', status: 'active', created_at: '2026-01-04' },
-    { id: 'user5', email: 'hoangvane@gmail.com', full_name: 'Hoàng Văn E', role: 'user', status: 'inactive', created_at: '2026-01-05' },
-    { id: 'admin1', email: 'admin@evient.com', full_name: 'Admin EViENT', role: 'admin', status: 'active', created_at: '2025-12-01' },
-]
+// Users will be fetched from API - no mock data
+const mockUsers: AppUser[] = []
 
 interface UserStore {
     users: AppUser[]

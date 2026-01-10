@@ -21,14 +21,18 @@ export function formatCurrency(amount: number): string {
 /**
  * Format date in Vietnamese locale
  */
-export function formatDate(date: string | Date, options?: Intl.DateTimeFormatOptions): string {
+export function formatDate(date: string | Date | null | undefined, options?: Intl.DateTimeFormatOptions): string {
+    if (!date) return 'Chưa xác định'
+    const d = new Date(date)
+    if (isNaN(d.getTime())) return 'Chưa xác định'
+
     const defaultOptions: Intl.DateTimeFormatOptions = {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
         ...options,
     }
-    return new Intl.DateTimeFormat('vi-VN', defaultOptions).format(new Date(date))
+    return new Intl.DateTimeFormat('vi-VN', defaultOptions).format(d)
 }
 
 /**

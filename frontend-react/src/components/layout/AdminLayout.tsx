@@ -12,6 +12,8 @@ import {
     X,
     ChevronRight,
     Armchair,
+    QrCode,
+    BarChart3,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/authStore'
@@ -25,6 +27,8 @@ const sidebarLinks = [
     { to: '/admin/orders', icon: Ticket, label: 'Vé đã bán' },
     { to: '/admin/rooms', icon: Armchair, label: 'Phòng chiếu' },
     { to: '/admin/banners', icon: Image, label: 'Banner' },
+    { to: '/admin/scanner', icon: QrCode, label: 'Quét QR' },
+    { to: '/admin/reports', icon: BarChart3, label: 'Báo cáo' },
     { to: '/admin/settings', icon: Settings, label: 'Cài đặt' },
 ]
 

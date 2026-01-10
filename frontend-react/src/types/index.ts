@@ -28,6 +28,11 @@ export interface User {
     avatar_url?: string
     role: UserRole
     created_at: string
+    phone_number?: string
+    facebook_url?: string
+    gender?: 'male' | 'female' | 'other'
+    address?: string
+    date_of_birth?: string
 }
 
 export interface AuthResponse {
@@ -37,6 +42,11 @@ export interface AuthResponse {
     role: UserRole
     avatar_url?: string
     token: string
+    phone_number?: string
+    facebook_url?: string
+    gender?: 'male' | 'female' | 'other'
+    address?: string
+    date_of_birth?: string
 }
 
 // ==================== Event Types ====================
@@ -59,6 +69,7 @@ export interface Event {
     is_hot: boolean
     created_at: string
     ticket_types?: TicketType[]
+    max_tickets_per_user?: number
 }
 
 // ==================== Ticket Types ====================

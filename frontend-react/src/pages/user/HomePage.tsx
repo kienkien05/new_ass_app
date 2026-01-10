@@ -314,64 +314,98 @@ export default function HomePage() {
                     adminBanners={adminBanners || []}
                 />
 
-                {/* Featured Events */}
-                <section>
-                    <div className="flex items-center justify-between mb-8">
-                        <div>
-                            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-                                Sự kiện nổi bật
-                            </h2>
-                            <p className="text-muted-foreground mt-1">Các sự kiện hot trong tuần</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Button
-                                variant="outline"
-                                size="icon"
-                                onClick={() => scroll('left')}
-                                disabled={!canScrollLeft}
-                            >
-                                <ChevronLeft className="size-5" />
-                            </Button>
-                            <Button
-                                variant="outline"
-                                size="icon"
-                                onClick={() => scroll('right')}
-                                disabled={!canScrollRight}
-                            >
-                                <ChevronRight className="size-5" />
-                            </Button>
-                        </div>
-                    </div>
-
-                    {/* Scrollable Events */}
-                    <div
-                        ref={scrollRef}
-                        onScroll={checkScroll}
-                        className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                {/* About Us Section */}
+                <section className="mt-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-12"
                     >
-                        {isLoading ? (
-                            Array.from({ length: 5 }).map((_, i) => <SkeletonEventCard key={i} />)
-                        ) : featuredEvents && featuredEvents.length > 0 ? (
-                            featuredEvents.map((event: Event, index: number) => (
-                                <EventCard key={event.id} event={event} index={index} />
-                            ))
-                        ) : (
-                            <div className="w-full py-12 text-center text-muted-foreground">
-                                Không có sự kiện nổi bật
+                        <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+                            Về Chúng Tôi
+                        </h2>
+                        <p className="text-muted-foreground max-w-2xl mx-auto">
+                            EViENT - Nền tảng đặt vé sự kiện hàng đầu Việt Nam
+                        </p>
+                    </motion.div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {/* Card 1 */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-8 border border-primary/20"
+                        >
+                            <div className="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
+                                <Calendar className="w-7 h-7 text-primary" />
                             </div>
-                        )}
+                            <h3 className="text-xl font-semibold mb-3">Đa Dạng Sự Kiện</h3>
+                            <p className="text-muted-foreground leading-relaxed">
+                                Từ concert âm nhạc, hội thảo công nghệ đến các sự kiện ẩm thực -
+                                chúng tôi mang đến những trải nghiệm đa dạng và phong phú nhất.
+                            </p>
+                        </motion.div>
+
+                        {/* Card 2 */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-gradient-to-br from-green-500/10 to-green-500/5 rounded-2xl p-8 border border-green-500/20"
+                        >
+                            <div className="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center mb-6">
+                                <svg className="w-7 h-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-3">Thanh Toán An Toàn</h3>
+                            <p className="text-muted-foreground leading-relaxed">
+                                Hệ thống thanh toán được bảo mật tối đa, hỗ trợ nhiều phương thức
+                                thanh toán tiện lợi cho người dùng Việt Nam.
+                            </p>
+                        </motion.div>
+
+                        {/* Card 3 */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 rounded-2xl p-8 border border-purple-500/20"
+                        >
+                            <div className="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6">
+                                <svg className="w-7 h-7 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-3">Vé Điện Tử Tiện Lợi</h3>
+                            <p className="text-muted-foreground leading-relaxed">
+                                Nhận vé điện tử với mã QR ngay lập tức. Check-in nhanh chóng
+                                tại sự kiện chỉ bằng một lần quét.
+                            </p>
+                        </motion.div>
                     </div>
 
-                    {/* View All Link */}
-                    <div className="flex justify-center mt-8">
+                    {/* CTA */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.4 }}
+                        className="flex justify-center mt-12"
+                    >
                         <Link to="/events">
-                            <Button variant="outline" size="lg">
-                                Xem tất cả sự kiện
-                                <ArrowRight className="ml-2 size-5" />
+                            <Button size="lg" className="gap-2">
+                                Khám phá sự kiện
+                                <ArrowRight className="w-5 h-5" />
                             </Button>
                         </Link>
-                    </div>
+                    </motion.div>
                 </section>
             </div>
         </div>

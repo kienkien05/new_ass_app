@@ -1,13 +1,14 @@
 const prisma = require('../config/db');
 const { v4: uuidv4 } = require('uuid');
+const { generateQRCode } = require('../utils/qrGenerator');
 
 // @desc    Create new order (Book tickets)
 // @route   POST /api/orders
 // @access  Private
 const createOrder = async (req, res) => {
-    const { ticket_items, seat_id } = req.body;
+    const { ticket_items, seat_ids } = req.body;
     // ticket_items: [{ ticket_type_id, quantity }]
-    // seat_id: optional, for single ticket purchase with seat selection
+    // seat_ids: optional array of seat IDs for seat selection
 
     if (!ticket_items || ticket_items.length === 0) {
         return res.status(400).json({
@@ -19,32 +20,83 @@ const createOrder = async (req, res) => {
     try {
         // Use transaction for atomicity
         const result = await prisma.$transaction(async (tx) => {
-            // 1. Fetch all requested ticket types in one query
+            // 1. Fetch all requested ticket types with event info
             const itemIds = ticket_items.map(item => item.ticket_type_id);
             const ticketTypes = await tx.ticketType.findMany({
-                where: { id: { in: itemIds } }
+                where: { id: { in: itemIds } },
+                include: {
+                    event: {
+                        select: {
+                            id: true,
+                            title: true,
+                            maxTicketsPerUser: true
+                        }
+                    }
+                }
             });
 
             const ticketTypeMap = new Map(ticketTypes.map(tt => [tt.id, tt]));
 
-            // 2. Validate and Calculate Total
-            let totalAmount = 0;
-            const validatedItems = [];
-            const ticketsToCreate = [];
+            // 2. Calculate total tickets per event and validate limits
+            const eventTicketCounts = {};
+            let totalTicketsInOrder = 0;
 
             for (const item of ticket_items) {
                 const ticketType = ticketTypeMap.get(item.ticket_type_id);
-
                 if (!ticketType) {
                     throw new Error(`Ticket Type not found: ${item.ticket_type_id}`);
                 }
 
+                const eventId = ticketType.event.id;
+                eventTicketCounts[eventId] = (eventTicketCounts[eventId] || 0) + item.quantity;
+                totalTicketsInOrder += item.quantity;
+            }
+
+            // 3. Check max_tickets_per_user for each event
+            for (const [eventId, requestedCount] of Object.entries(eventTicketCounts)) {
+                // Get existing ticket count for this user and event
+                const existingTickets = await tx.ticket.count({
+                    where: {
+                        userId: req.user.id,
+                        eventId: eventId,
+                        status: { not: 'cancelled' }
+                    }
+                });
+
+                // Get event's max limit
+                const event = await tx.event.findUnique({
+                    where: { id: eventId },
+                    select: { maxTicketsPerUser: true, title: true }
+                });
+
+                const maxAllowed = event?.maxTicketsPerUser || 10;
+                const totalAfterOrder = existingTickets + requestedCount;
+
+                if (totalAfterOrder > maxAllowed) {
+                    const remaining = Math.max(0, maxAllowed - existingTickets);
+                    throw new Error(
+                        `Bạn chỉ có thể mua tối đa ${maxAllowed} vé cho sự kiện "${event?.title}". ` +
+                        `Bạn đã mua ${existingTickets} vé, còn có thể mua ${remaining} vé.`
+                    );
+                }
+            }
+
+            // 4. Validate stock and calculate total
+            let totalAmount = 0;
+            const validatedItems = [];
+            const ticketsToCreate = [];
+            let seatIndex = 0;
+
+            for (const item of ticket_items) {
+                const ticketType = ticketTypeMap.get(item.ticket_type_id);
+
                 if (ticketType.status !== 'active') {
-                    throw new Error(`Ticket Type not available: ${ticketType.name}`);
+                    throw new Error(`Loại vé không khả dụng: ${ticketType.name}`);
                 }
 
                 if (ticketType.quantitySold + item.quantity > ticketType.quantityTotal) {
-                    throw new Error(`Not enough tickets remaining for: ${ticketType.name}`);
+                    const remaining = ticketType.quantityTotal - ticketType.quantitySold;
+                    throw new Error(`Không đủ vé "${ticketType.name}". Còn lại: ${remaining} vé.`);
                 }
 
                 totalAmount += Number(ticketType.price) * item.quantity;
@@ -52,33 +104,38 @@ const createOrder = async (req, res) => {
 
                 // Prepare tickets data for bulk insert
                 for (let i = 0; i < item.quantity; i++) {
+                    const ticketCode = uuidv4().replace(/-/g, '').substring(0, 12).toUpperCase();
                     ticketsToCreate.push({
                         ticketTypeId: ticketType.id,
                         userId: req.user.id,
                         eventId: ticketType.eventId,
-                        ticketCode: uuidv4().replace(/-/g, '').substring(0, 12).toUpperCase(), // Better code format
+                        ticketCode,
                         priceAtPurchase: ticketType.price,
-                        seatId: seat_id || null // Assign seat if provided (assumes 1 ticket for now if seat selected)
+                        seatId: seat_ids && seat_ids[seatIndex] ? seat_ids[seatIndex] : null
                     });
+                    seatIndex++;
                 }
             }
 
-            // Check if seat is already taken if seat_id is provided
-            if (seat_id) {
-                const existingTicket = await tx.ticket.findFirst({
-                    where: {
-                        seatId: seat_id,
-                        status: { not: 'cancelled' },
-                        eventId: ticketsToCreate[0].eventId // Seat availability is per event!
+            // 5. Check if seats are already taken
+            if (seat_ids && seat_ids.length > 0) {
+                const validSeatIds = seat_ids.filter(id => id);
+                if (validSeatIds.length > 0) {
+                    const existingTickets = await tx.ticket.findMany({
+                        where: {
+                            seatId: { in: validSeatIds },
+                            status: { not: 'cancelled' },
+                            eventId: ticketsToCreate[0].eventId
+                        }
+                    });
+
+                    if (existingTickets.length > 0) {
+                        throw new Error('Một số ghế đã có người đặt!');
                     }
-                });
-
-                if (existingTicket) {
-                    throw new Error('Ghế này đã có người đặt!');
                 }
             }
 
-            // 3. Create Order
+            // 6. Create Order
             const order = await tx.order.create({
                 data: {
                     userId: req.user.id,
@@ -92,7 +149,7 @@ const createOrder = async (req, res) => {
             // Add orderId to tickets
             const ticketsData = ticketsToCreate.map(t => ({ ...t, orderId: order.id }));
 
-            // 4. Update TicketTypes (Stock) and Bulk Create Tickets
+            // 7. Update TicketTypes (Stock) and Bulk Create Tickets
             await Promise.all([
                 // Update stock for each type
                 ...validatedItems.map(item => {
@@ -109,12 +166,23 @@ const createOrder = async (req, res) => {
                 tx.ticket.createMany({ data: ticketsData })
             ]);
 
-            // 5. Fetch created tickets to return
+            // 8. Fetch created tickets and generate QR codes
             const createdTickets = await tx.ticket.findMany({
                 where: { orderId: order.id }
             });
 
-            return { order, tickets: createdTickets };
+            // Generate QR codes for each ticket
+            const qrUpdates = await Promise.all(
+                createdTickets.map(async (ticket) => {
+                    const qrCode = await generateQRCode(ticket.ticketCode);
+                    return tx.ticket.update({
+                        where: { id: ticket.id },
+                        data: { qrCode }
+                    });
+                })
+            );
+
+            return { order, tickets: qrUpdates };
         });
 
         // Transform response
@@ -131,6 +199,7 @@ const createOrder = async (req, res) => {
                 tickets: result.tickets.map(t => ({
                     id: t.id,
                     ticket_code: t.ticketCode,
+                    qr_code: t.qrCode,
                     status: t.status,
                     price_at_purchase: Number(t.priceAtPurchase),
                 }))
@@ -142,6 +211,56 @@ const createOrder = async (req, res) => {
         res.status(400).json({
             success: false,
             message: error.message || 'Server Error during booking'
+        });
+    }
+};
+
+// @desc    Get remaining tickets user can buy for an event
+// @route   GET /api/orders/remaining/:eventId
+// @access  Private
+const getRemainingTickets = async (req, res) => {
+    try {
+        const { eventId } = req.params;
+
+        // Get event max limit
+        const event = await prisma.event.findUnique({
+            where: { id: eventId },
+            select: { maxTicketsPerUser: true, title: true }
+        });
+
+        if (!event) {
+            return res.status(404).json({
+                success: false,
+                message: 'Event not found'
+            });
+        }
+
+        // Count user's existing tickets for this event
+        const existingCount = await prisma.ticket.count({
+            where: {
+                userId: req.user.id,
+                eventId,
+                status: { not: 'cancelled' }
+            }
+        });
+
+        const maxAllowed = event.maxTicketsPerUser || 10;
+        const remaining = Math.max(0, maxAllowed - existingCount);
+
+        res.json({
+            success: true,
+            data: {
+                event_id: eventId,
+                max_tickets_per_user: maxAllowed,
+                already_purchased: existingCount,
+                remaining_allowed: remaining
+            }
+        });
+    } catch (error) {
+        console.error('Get remaining tickets error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error'
         });
     }
 };
@@ -182,6 +301,7 @@ const getMyTickets = async (req, res) => {
         const transformedTickets = tickets.map(t => ({
             id: t.id,
             ticket_code: t.ticketCode,
+            qr_code: t.qrCode,
             status: t.status,
             used_at: t.usedAt,
             price_at_purchase: Number(t.priceAtPurchase),
@@ -256,6 +376,7 @@ const getAllTickets = async (req, res) => {
         const transformedTickets = tickets.map(t => ({
             id: t.id,
             ticket_code: t.ticketCode,
+            qr_code: t.qrCode,
             event_id: t.event.id,
             event_title: t.event.title,
             event_date: t.event.startTime ? t.event.startTime.toISOString() : '',
@@ -281,4 +402,4 @@ const getAllTickets = async (req, res) => {
     }
 }
 
-module.exports = { createOrder, getMyTickets, getAllTickets };
+module.exports = { createOrder, getMyTickets, getAllTickets, getRemainingTickets };

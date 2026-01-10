@@ -69,6 +69,9 @@ const roomRoutes = require('./routes/roomRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const bannerRoutes = require('./routes/bannerRoutes');
 const ticketTypeRoutes = require('./routes/ticketTypeRoutes');
+const userRoutes = require('./routes/userRoutes');
+const reportRoutes = require('./routes/reportRoutes');
+const ticketRoutes = require('./routes/ticketRoutes');
 const path = require('path');
 const { protect } = require('./middleware/authMiddleware');
 const { getMyTickets } = require('./controllers/orderController');
@@ -80,6 +83,9 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/ticket-types', ticketTypeRoutes);
+app.use('/api/admin/users', userRoutes);
+app.use('/api/admin/reports', reportRoutes);
+app.use('/api/tickets', ticketRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve uploaded files
 
 // Health Check

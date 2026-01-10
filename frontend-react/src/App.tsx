@@ -22,6 +22,8 @@ const AdminTicketsPage = lazy(() => import('@/pages/admin/TicketsPage'))
 const AdminBannersPage = lazy(() => import('@/pages/admin/BannersPage'))
 const AdminOrdersPage = lazy(() => import('@/pages/admin/OrdersPage'))
 const AdminRoomsPage = lazy(() => import('@/pages/admin/RoomsPage'))
+const QRScannerPage = lazy(() => import('@/pages/admin/QRScannerPage'))
+const ReportsPage = lazy(() => import('@/pages/admin/ReportsPage'))
 
 // Loading fallback
 const PageLoader = () => (
@@ -94,6 +96,8 @@ function App() {
                     <Route path="banners" element={<AdminBannersPage />} />
                     <Route path="orders" element={<AdminOrdersPage />} />
                     <Route path="rooms" element={<AdminRoomsPage />} />
+                    <Route path="scanner" element={<QRScannerPage />} />
+                    <Route path="reports" element={<ReportsPage />} />
                 </Route>
 
                 {/* Catch all */}

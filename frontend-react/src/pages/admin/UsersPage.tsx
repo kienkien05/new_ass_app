@@ -22,6 +22,11 @@ export default function AdminUsersPage() {
         email: '',
         password: '',
         role: 'user' as 'admin' | 'user',
+        phone_number: '',
+        facebook_url: '',
+        gender: 'other' as 'male' | 'female' | 'other',
+        address: '',
+        date_of_birth: ''
     })
 
     const filteredUsers = users.filter(
@@ -37,12 +42,22 @@ export default function AdminUsersPage() {
     }
 
     const resetForm = () => {
-        setFormData({ full_name: '', email: '', password: '', role: 'user' })
+        setFormData({
+            full_name: '',
+            email: '',
+            password: '',
+            role: 'user',
+            phone_number: '',
+            facebook_url: '',
+            gender: 'other',
+            address: '',
+            date_of_birth: ''
+        })
     }
 
     const handleAdd = () => {
         if (!formData.full_name || !formData.email || !formData.password) {
-            toast.error('Vui lòng điền đầy đủ thông tin!')
+            toast.error('Vui lòng điền đầy đủ thông tin bắt buộc!')
             return
         }
         // Check for duplicate email
@@ -55,6 +70,11 @@ export default function AdminUsersPage() {
             email: formData.email,
             role: formData.role,
             status: 'active',
+            phone_number: formData.phone_number,
+            facebook_url: formData.facebook_url,
+            gender: formData.gender,
+            address: formData.address,
+            date_of_birth: formData.date_of_birth
         })
         setIsAddModalOpen(false)
         resetForm()
@@ -75,6 +95,11 @@ export default function AdminUsersPage() {
             full_name: formData.full_name || selectedUser.full_name,
             email: formData.email || selectedUser.email,
             role: formData.role,
+            phone_number: formData.phone_number,
+            facebook_url: formData.facebook_url,
+            gender: formData.gender,
+            address: formData.address,
+            date_of_birth: formData.date_of_birth
         })
         setIsEditModalOpen(false)
         setSelectedUser(null)
@@ -102,6 +127,11 @@ export default function AdminUsersPage() {
             email: user.email,
             password: '',
             role: user.role,
+            phone_number: user.phone_number || '',
+            facebook_url: user.facebook_url || '',
+            gender: (user.gender as any) || 'other',
+            address: user.address || '',
+            date_of_birth: user.date_of_birth || ''
         })
         setIsEditModalOpen(true)
     }
@@ -182,9 +212,9 @@ export default function AdminUsersPage() {
                                 <tr className="border-b border-border bg-muted/50">
                                     <th className="text-left p-4 font-medium text-sm">Họ tên</th>
                                     <th className="text-left p-4 font-medium text-sm">Email</th>
+                                    <th className="text-left p-4 font-medium text-sm">SĐT</th>
                                     <th className="text-left p-4 font-medium text-sm">Vai trò</th>
                                     <th className="text-left p-4 font-medium text-sm">Trạng thái</th>
-                                    <th className="text-left p-4 font-medium text-sm">Ngày tạo</th>
                                     <th className="text-right p-4 font-medium text-sm">Thao tác</th>
                                 </tr>
                             </thead>
@@ -201,13 +231,16 @@ export default function AdminUsersPage() {
                                             <div className="flex items-center gap-3">
                                                 <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center">
                                                     <span className="text-sm font-medium text-primary">
-                                                        {user.full_name.charAt(0).toUpperCase()}
+                                                        {user.full_name?.charAt(0).toUpperCase()}
                                                     </span>
                                                 </div>
-                                                <span className="font-medium">{user.full_name}</span>
+                                                <div>
+                                                    <p className="font-medium">{user.full_name}</p>
+                                                </div>
                                             </div>
                                         </td>
                                         <td className="p-4 text-muted-foreground">{user.email}</td>
+                                        <td className="p-4 text-muted-foreground">{user.phone_number || '-'}</td>
                                         <td className="p-4">
                                             <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>
                                                 {user.role === 'admin' ? 'Admin' : 'User'}
@@ -218,13 +251,13 @@ export default function AdminUsersPage() {
                                                 {user.status === 'active' ? 'Hoạt động' : 'Vô hiệu'}
                                             </Badge>
                                         </td>
-                                        <td className="p-4 text-muted-foreground">{user.created_at}</td>
                                         <td className="p-4">
                                             <div className="flex items-center justify-end gap-2">
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
                                                     onClick={() => handleToggleStatus(user)}
+                                                    title={user.status === 'active' ? 'Vô hiệu hóa' : 'Kích hoạt'}
                                                 >
                                                     {user.status === 'active' ? (
                                                         <UserX className="size-4" />
@@ -236,6 +269,7 @@ export default function AdminUsersPage() {
                                                     variant="ghost"
                                                     size="icon"
                                                     onClick={() => openEditModal(user)}
+                                                    title="Chỉnh sửa"
                                                 >
                                                     <Edit className="size-4" />
                                                 </Button>
@@ -244,6 +278,7 @@ export default function AdminUsersPage() {
                                                     size="icon"
                                                     className="text-destructive"
                                                     onClick={() => openDeleteModal(user)}
+                                                    title="Xóa"
                                                 >
                                                     <Trash2 className="size-4" />
                                                 </Button>
@@ -271,15 +306,26 @@ export default function AdminUsersPage() {
                 title="Thêm người dùng mới"
                 description="Tạo tài khoản người dùng mới"
             >
-                <div className="space-y-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Họ tên *</label>
-                        <Input
-                            placeholder="Nhập họ tên"
-                            value={formData.full_name}
-                            onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                        />
+                <div className="space-y-4 max-h-[60vh] overflow-y-auto px-1">
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Họ tên *</label>
+                            <Input
+                                placeholder="Nhập họ tên"
+                                value={formData.full_name}
+                                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">SĐT</label>
+                            <Input
+                                placeholder="090..."
+                                value={formData.phone_number}
+                                onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
+                            />
+                        </div>
                     </div>
+
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Email *</label>
                         <Input
@@ -289,6 +335,7 @@ export default function AdminUsersPage() {
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         />
                     </div>
+
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Mật khẩu *</label>
                         <Input
@@ -298,6 +345,48 @@ export default function AdminUsersPage() {
                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         />
                     </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Ngày sinh</label>
+                            <Input
+                                type="date"
+                                value={formData.date_of_birth}
+                                onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Giới tính</label>
+                            <select
+                                value={formData.gender}
+                                onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
+                                className="w-full px-3 py-2 border border-border rounded-lg bg-background"
+                            >
+                                <option value="male">Nam</option>
+                                <option value="female">Nữ</option>
+                                <option value="other">Khác</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Địa chỉ</label>
+                        <Input
+                            placeholder="Địa chỉ liên hệ"
+                            value={formData.address}
+                            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Facebook URL</label>
+                        <Input
+                            placeholder="https://facebook.com/..."
+                            value={formData.facebook_url}
+                            onChange={(e) => setFormData({ ...formData, facebook_url: e.target.value })}
+                        />
+                    </div>
+
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Vai trò</label>
                         <select
@@ -327,15 +416,26 @@ export default function AdminUsersPage() {
                 title="Chỉnh sửa người dùng"
                 description="Cập nhật thông tin người dùng"
             >
-                <div className="space-y-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Họ tên</label>
-                        <Input
-                            placeholder="Nhập họ tên"
-                            value={formData.full_name}
-                            onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                        />
+                <div className="space-y-4 max-h-[60vh] overflow-y-auto px-1">
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Họ tên</label>
+                            <Input
+                                placeholder="Nhập họ tên"
+                                value={formData.full_name}
+                                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">SĐT</label>
+                            <Input
+                                placeholder="090..."
+                                value={formData.phone_number}
+                                onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
+                            />
+                        </div>
                     </div>
+
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Email</label>
                         <Input
@@ -345,6 +445,48 @@ export default function AdminUsersPage() {
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         />
                     </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Ngày sinh</label>
+                            <Input
+                                type="date"
+                                value={formData.date_of_birth}
+                                onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Giới tính</label>
+                            <select
+                                value={formData.gender}
+                                onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
+                                className="w-full px-3 py-2 border border-border rounded-lg bg-background"
+                            >
+                                <option value="male">Nam</option>
+                                <option value="female">Nữ</option>
+                                <option value="other">Khác</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Địa chỉ</label>
+                        <Input
+                            placeholder="Địa chỉ liên hệ"
+                            value={formData.address}
+                            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Facebook URL</label>
+                        <Input
+                            placeholder="https://facebook.com/..."
+                            value={formData.facebook_url}
+                            onChange={(e) => setFormData({ ...formData, facebook_url: e.target.value })}
+                        />
+                    </div>
+
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Vai trò</label>
                         <select

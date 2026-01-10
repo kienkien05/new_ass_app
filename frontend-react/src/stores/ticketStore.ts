@@ -13,6 +13,7 @@ export interface SoldTicket {
     buyer_name: string
     buyer_email: string
     purchase_date: string
+    qr_code?: string
     status: 'valid' | 'used' | 'cancelled'
     seat?: {
         id?: string
@@ -22,83 +23,8 @@ export interface SoldTicket {
     }
 }
 
-// Mock sold tickets data - shared between admin and user
-const mockSoldTickets: SoldTicket[] = [
-    {
-        id: '1',
-        ticket_code: 'EVT-2026-001234',
-        event_id: '1',
-        event_title: 'Concert Sơn Tùng M-TP',
-        event_date: '2026-02-14',
-        event_location: 'Sân vận động Mỹ Đình, Hà Nội',
-        price: 500000,
-        buyer_id: 'user1',
-        buyer_name: 'Nguyễn Văn A',
-        buyer_email: 'nguyenvana@gmail.com',
-        purchase_date: '2026-01-05',
-        status: 'valid',
-        seat: { id: 'seat1', room: 'Phòng chiếu 1', row: 'A', number: 1 }
-    },
-    {
-        id: '2',
-        ticket_code: 'EVT-2026-001235',
-        event_id: '1',
-        event_title: 'Concert Sơn Tùng M-TP',
-        event_date: '2026-02-14',
-        event_location: 'Sân vận động Mỹ Đình, Hà Nội',
-        price: 500000,
-        buyer_id: 'user2',
-        buyer_name: 'Trần Thị B',
-        buyer_email: 'tranthib@gmail.com',
-        purchase_date: '2026-01-05',
-        status: 'valid',
-        seat: { room: 'Phòng chiếu 1', row: 'A', number: 2 }
-    },
-    {
-        id: '3',
-        ticket_code: 'EVT-2026-001236',
-        event_id: '2',
-        event_title: 'Vietnam Tech Conference',
-        event_date: '2026-03-20',
-        event_location: 'GEM Center, TP.HCM',
-        price: 350000,
-        buyer_id: 'user3',
-        buyer_name: 'Lê Văn C',
-        buyer_email: 'levanc@gmail.com',
-        purchase_date: '2026-01-06',
-        status: 'used',
-        seat: { room: 'Phòng chiếu 2', row: 'B', number: 5 }
-    },
-    {
-        id: '4',
-        ticket_code: 'EVT-2026-001237',
-        event_id: '2',
-        event_title: 'Vietnam Tech Conference',
-        event_date: '2026-03-20',
-        event_location: 'GEM Center, TP.HCM',
-        price: 350000,
-        buyer_id: 'user4',
-        buyer_name: 'Phạm Thị D',
-        buyer_email: 'phamthid@gmail.com',
-        purchase_date: '2026-01-07',
-        status: 'valid',
-        seat: { room: 'Phòng chiếu 2', row: 'B', number: 6 }
-    },
-    {
-        id: '5',
-        ticket_code: 'EVT-2026-001238',
-        event_id: '3',
-        event_title: 'Lễ hội Ẩm thực Sài Gòn',
-        event_date: '2026-04-10',
-        event_location: 'Công viên 23/9, TP.HCM',
-        price: 150000,
-        buyer_id: 'user5',
-        buyer_name: 'Hoàng Văn E',
-        buyer_email: 'hoangvane@gmail.com',
-        purchase_date: '2026-01-08',
-        status: 'cancelled'
-    },
-]
+// Tickets will be fetched from API - no mock data
+const mockSoldTickets: SoldTicket[] = []
 
 interface TicketStore {
     tickets: SoldTicket[]

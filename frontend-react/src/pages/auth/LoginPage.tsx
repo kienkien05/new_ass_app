@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { authService } from '@/services/authService'
 import { useAuthStore } from '@/stores/authStore'
+import type { AuthResponse } from '@/types'
 
 type AuthMode = 'login' | 'register'
 
@@ -66,20 +67,35 @@ export default function LoginPage() {
                     email: formData.email,
                     password: formData.password,
                 })
-                toast.success('Đăng nhập thành công!')
             } else {
                 response = await authService.register({
                     email: formData.email,
                     password: formData.password,
                     full_name: formData.full_name,
                 })
-                toast.success('Tạo tài khoản thành công!')
             }
 
-            login(response)
+            // Check if OTP verification is required
+            if ('requireOTP' in response && response.requireOTP) {
+                toast.success('message' in response ? response.message : 'Mã OTP đã được gửi đến email của bạn')
+                navigate('/verify-otp', {
+                    state: {
+                        email: formData.email,
+                        type: mode
+                    }
+                })
+                return
+            }
+
+            // Direct login (fallback for backward compatibility)
+            toast.success(mode === 'login' ? 'Đăng nhập thành công!' : 'Tạo tài khoản thành công!')
+
+            // Cast to AuthResponse type for login
+            const authResponse = response as AuthResponse
+            login(authResponse)
 
             // Redirect based on role
-            if (response.role === 'admin') {
+            if (authResponse.role === 'admin') {
                 navigate('/admin')
             } else {
                 navigate('/')

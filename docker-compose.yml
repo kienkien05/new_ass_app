@@ -19,6 +19,16 @@ services:
     networks:
       - evient-network
 
+  # ==================== MAILHOG (EMAIL TESTING) ====================
+  mailhog:
+    image: mailhog/mailhog
+    container_name: evient-mailhog
+    ports:
+      - "1025:1025"  # SMTP server
+      - "8025:8025"  # Web UI
+    networks:
+      - evient-network
+
   # ==================== BACKEND ====================
   backend:
     build:
@@ -33,6 +43,9 @@ services:
       CLOUDINARY_API_SECRET: 'iG46JefDdy4RtakKTL4Kjk8r96s'
       PORT: 5000
       NODE_ENV: production
+      # SMTP settings for MailHog
+      SMTP_HOST: mailhog
+      SMTP_PORT: 1025
     volumes:
       - uploads_data:/app/uploads
     ports:
@@ -40,6 +53,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      mailhog:
+        condition: service_started
     networks:
       - evient-network
     restart: unless-stopped

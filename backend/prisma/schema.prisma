@@ -67,6 +67,18 @@ model User {
   @@map("users")
 }
 
+model OtpCode {
+  id        String   @id @default(uuid())
+  email     String
+  code      String
+  type      String   // 'register' or 'login'
+  expiresAt DateTime @map("expires_at")
+  isUsed    Boolean  @default(false) @map("is_used")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("otp_codes")
+}
+
 model Event {
   id                 String      @id @default(uuid())
   title              String

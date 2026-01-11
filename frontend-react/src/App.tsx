@@ -13,6 +13,7 @@ const EventDetailPage = lazy(() => import('@/pages/user/EventDetailPage'))
 const ProfilePage = lazy(() => import('@/pages/user/ProfilePage'))
 const WalletPage = lazy(() => import('@/pages/user/WalletPage'))
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'))
+const OTPVerifyPage = lazy(() => import('@/pages/auth/OTPVerifyPage'))
 
 // Admin pages
 const DashboardPage = lazy(() => import('@/pages/admin/DashboardPage'))
@@ -56,6 +57,7 @@ function App() {
             <Routes>
                 {/* Auth Routes */}
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/verify-otp" element={<OTPVerifyPage />} />
 
                 {/* User Routes */}
                 <Route element={<UserLayout />}>

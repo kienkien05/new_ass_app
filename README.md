@@ -52,6 +52,7 @@ Chạy toàn bộ ứng dụng (Frontend + Backend + Database) chỉ với một
 3.  **Truy cập ứng dụng:**
     - **Frontend:** [http://localhost:3000](http://localhost:3000)
     - **Backend API:** [http://localhost:5000](http://localhost:5000)
+    - **OTP gmail:**[http://localhost:5000](localhost:8025)
     - **Cơ Sở Dữ Liệu:** Được mở tại cổng `5432`.
 
 ### Cách 2: Cài Đặt Thủ Công (Local)
@@ -164,3 +165,4 @@ Backend cung cấp API chuẩn RESTful. Một số endpoint chính:
 - `POST /api/orders`: Tạo đơn mua vé
 
 Để có danh sách đầy đủ, vui lòng tham khảo các định nghĩa route trong mã nguồn backend.
+

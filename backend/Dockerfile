@@ -15,5 +15,5 @@ COPY . .
 
 EXPOSE 5000
 
-# Run migrations and start server
-CMD ["sh", "-c", "npx prisma migrate deploy && node server.js"]
+# Run db push to sync schema (using accept-data-loss for dev env) and start server
+CMD ["sh", "-c", "npx prisma db push --accept-data-loss && node server.js"]

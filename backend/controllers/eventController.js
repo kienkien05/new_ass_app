@@ -421,19 +421,52 @@ const updateEvent = async (req, res) => {
 // @access  Private/Admin
 const deleteEvent = async (req, res) => {
     try {
-        await prisma.event.delete({
-            where: { id: req.params.id }
+        const { id } = req.params;
+        console.log(`[deleteEvent] Attempting to delete event ${id}`);
+
+        // Use transaction to cleanup related data that doesn't have Cascade delete
+        await prisma.$transaction(async (tx) => {
+            // 1. Delete tickets associated with the event
+            console.log('[deleteEvent] Deleting tickets...');
+            const tickets = await tx.ticket.deleteMany({
+                where: { eventId: id }
+            });
+            console.log(`[deleteEvent] Deleted ${tickets.count} tickets`);
+
+            // 2. Delete ticket types associated with the event (Manually handling this to be safe)
+            console.log('[deleteEvent] Deleting ticket types...');
+            const ticketTypes = await tx.ticketType.deleteMany({
+                where: { eventId: id }
+            });
+            console.log(`[deleteEvent] Deleted ${ticketTypes.count} ticket types`);
+
+            // 3. Unlink banners associated with the event
+            console.log('[deleteEvent] Unlinking banners...');
+            const banners = await tx.banner.updateMany({
+                where: { eventId: id },
+                data: { eventId: null, isActive: false }
+            });
+            console.log(`[deleteEvent] Updated ${banners.count} banners`);
+
+            // 4. Delete the event
+            console.log('[deleteEvent] Deleting event...');
+            await tx.event.delete({
+                where: { id }
+            });
+            console.log('[deleteEvent] Event deleted successfully');
         });
 
         res.json({
             success: true,
-            message: 'Event deleted'
+            message: 'Event deleted successfully'
         });
     } catch (error) {
         console.error('Delete event error:', error);
         res.status(500).json({
             success: false,
-            message: 'Server error deleting event'
+            message: 'Server error deleting event',
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
         });
     }
 };

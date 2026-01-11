@@ -24,8 +24,8 @@ services:
     image: mailhog/mailhog
     container_name: evient-mailhog
     ports:
-      - "1025:1025"  # SMTP server
-      - "8025:8025"  # Web UI
+      - "1025:1025" # SMTP server
+      - "8025:8025" # Web UI
     networks:
       - evient-network
 
@@ -42,7 +42,7 @@ services:
       CLOUDINARY_API_KEY: '332377834468635'
       CLOUDINARY_API_SECRET: 'iG46JefDdy4RtakKTL4Kjk8r96s'
       PORT: 5000
-      NODE_ENV: production
+      NODE_ENV: development
       # SMTP settings for MailHog
       SMTP_HOST: mailhog
       SMTP_PORT: 1025

@@ -238,7 +238,106 @@ const getTicketInfo = async (req, res) => {
     }
 };
 
+// @desc    Resend ticket confirmation emails
+// @route   POST /api/tickets/resend-email
+// @access  Private/Admin
+const resendTicketEmails = async (req, res) => {
+    try {
+        const { ticketIds } = req.body;
+
+        if (!ticketIds || !Array.isArray(ticketIds) || ticketIds.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Vui lòng cung cấp danh sách vé'
+            });
+        }
+
+        // Fetch tickets with all necessary info
+        const tickets = await prisma.ticket.findMany({
+            where: {
+                id: { in: ticketIds }
+            },
+            include: {
+                event: {
+                    select: {
+                        id: true,
+                        title: true,
+                        startTime: true,
+                        location: true
+                    }
+                },
+                ticketType: {
+                    select: { name: true }
+                },
+                user: {
+                    select: { email: true, fullName: true }
+                },
+                seat: {
+                    include: { room: true }
+                }
+            }
+        });
+
+        if (tickets.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy vé nào'
+            });
+        }
+
+        // Send emails
+        const { sendTicketEmail } = require('../services/otpService');
+        const results = [];
+
+        for (const ticket of tickets) {
+            const ticketData = {
+                ticketCode: ticket.ticketCode,
+                qrCode: ticket.qrCode,
+                eventTitle: ticket.event.title,
+                eventDate: ticket.event.startTime,
+                eventLocation: ticket.event.location,
+                ticketTypeName: ticket.ticketType.name,
+                price: Number(ticket.priceAtPurchase),
+                seatInfo: ticket.seat ? {
+                    room: ticket.seat.room.name,
+                    row: ticket.seat.row,
+                    number: ticket.seat.number
+                } : null
+            };
+
+            const result = await sendTicketEmail(ticketData, ticket.user.email);
+            results.push({
+                ticketCode: ticket.ticketCode,
+                userEmail: ticket.user.email,
+                ...result
+            });
+        }
+
+        const successCount = results.filter(r => r.success).length;
+        const failureCount = results.length - successCount;
+
+        res.json({
+            success: true,
+            message: `Đã gửi ${successCount} email thành công${failureCount > 0 ? `, ${failureCount} thất bại` : ''}`,
+            data: {
+                total: results.length,
+                successCount,
+                failureCount,
+                results
+            }
+        });
+
+    } catch (error) {
+        console.error('Resend ticket emails error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server khi gửi lại email'
+        });
+    }
+};
+
 module.exports = {
     validateQR,
-    getTicketInfo
+    getTicketInfo,
+    resendTicketEmails
 };

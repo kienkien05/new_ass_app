@@ -16,6 +16,7 @@ export interface Room {
     seatsPerRow: number
     isActive: boolean
     seats: Seat[]
+    events?: { id: string; title: string; slug: string }[]
 }
 
 interface RoomStore {

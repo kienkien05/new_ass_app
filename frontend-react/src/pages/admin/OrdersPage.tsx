@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Search, Filter, Ticket, User, X, Eye } from 'lucide-react'
+import { Search, Filter, Ticket, User, X, Eye, CheckSquare, Square, Mail, Plus } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -11,6 +11,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Modal, ModalFooter } from '@/components/ui/modal'
 import { formatDate, formatCurrency } from '@/lib/utils'
 import api from '@/services/api'
+import { ticketService } from '@/services/ticketService'
+import CreateManualTicketModal from '@/components/admin/CreateManualTicketModal'
 
 // Match actual API response format (flat structure)
 interface AdminTicket {
@@ -39,7 +41,11 @@ export default function AdminOrdersPage() {
     const queryClient = useQueryClient()
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false)
+    const [isResendModalOpen, setIsResendModalOpen] = useState(false)
+    const [isCreateManualModalOpen, setIsCreateManualModalOpen] = useState(false)
     const [selectedTicket, setSelectedTicket] = useState<AdminTicket | null>(null)
+    const [selectedTicketIds, setSelectedTicketIds] = useState<string[]>([])
+    const [isResending, setIsResending] = useState(false)
 
     // Search & Filters
     const [searchQuery, setSearchQuery] = useState(() => {
@@ -144,6 +150,36 @@ export default function AdminOrdersPage() {
         return `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(ticket.ticket_code)}`
     }
 
+    const toggleTicketSelection = (ticketId: string) => {
+        setSelectedTicketIds(prev =>
+            prev.includes(ticketId)
+                ? prev.filter(id => id !== ticketId)
+                : [...prev, ticketId]
+        )
+    }
+
+    const toggleAllTickets = () => {
+        if (selectedTicketIds.length === filteredTickets.length) {
+            setSelectedTicketIds([])
+        } else {
+            setSelectedTicketIds(filteredTickets.map(t => t.id))
+        }
+    }
+
+    const handleResendEmails = async () => {
+        setIsResending(true)
+        try {
+            const result = await ticketService.resendTicketEmails(selectedTicketIds)
+            toast.success(result.message || 'Đã gửi email thành công')
+            setSelectedTicketIds([])
+            setIsResendModalOpen(false)
+        } catch (error: any) {
+            toast.error(error.response?.data?.message || 'Không thể gửi email')
+        } finally {
+            setIsResending(false)
+        }
+    }
+
     if (isLoading) {
         return (
             <div className="space-y-6">
@@ -227,6 +263,13 @@ export default function AdminOrdersPage() {
 
             {/* Search & Filter */}
             <div className="flex gap-3">
+                <Button
+                    onClick={() => setIsCreateManualModalOpen(true)}
+                    variant="default"
+                >
+                    <Plus className="size-4 mr-2" />
+                    Tạo vé thủ công
+                </Button>
                 <Button variant="outline" onClick={openFilterModal} className="relative">
                     <Filter className="size-4 mr-2" />
                     Bộ lọc
@@ -236,6 +279,15 @@ export default function AdminOrdersPage() {
                         </span>
                     )}
                 </Button>
+                {selectedTicketIds.length > 0 && (
+                    <Button
+                        onClick={() => setIsResendModalOpen(true)}
+                        variant="default"
+                    >
+                        <Mail className="size-4 mr-2" />
+                        Gửi lại vé ({selectedTicketIds.length})
+                    </Button>
+                )}
                 <div className="relative flex-1 max-w-md">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                     <Input
@@ -292,6 +344,15 @@ export default function AdminOrdersPage() {
                         <table className="w-full">
                             <thead>
                                 <tr className="border-b border-border bg-muted/50">
+                                    <th className="text-left p-4 w-12">
+                                        <button onClick={toggleAllTickets} className="hover:opacity-70">
+                                            {selectedTicketIds.length === filteredTickets.length && filteredTickets.length > 0 ? (
+                                                <CheckSquare className="size-5" />
+                                            ) : (
+                                                <Square className="size-5" />
+                                            )}
+                                        </button>
+                                    </th>
                                     <th className="text-left p-4 font-medium text-sm">Mã vé</th>
                                     <th className="text-left p-4 font-medium text-sm">Sự kiện</th>
                                     <th className="text-left p-4 font-medium text-sm">Người mua</th>
@@ -310,6 +371,18 @@ export default function AdminOrdersPage() {
                                         transition={{ delay: index * 0.02 }}
                                         className="border-b border-border last:border-0 hover:bg-muted/50"
                                     >
+                                        <td className="p-4 w-12">
+                                            <button
+                                                onClick={() => toggleTicketSelection(ticket.id)}
+                                                className="hover:opacity-70"
+                                            >
+                                                {selectedTicketIds.includes(ticket.id) ? (
+                                                    <CheckSquare className="size-5 text-primary" />
+                                                ) : (
+                                                    <Square className="size-5" />
+                                                )}
+                                            </button>
+                                        </td>
                                         <td className="p-4">
                                             <span className="font-mono text-sm">{ticket.ticket_code}</span>
                                         </td>
@@ -503,6 +576,53 @@ export default function AdminOrdersPage() {
                     </Button>
                 </ModalFooter>
             </Modal>
+
+            {/* Resend Email Modal */}
+            <Modal
+                isOpen={isResendModalOpen}
+                onClose={() => setIsResendModalOpen(false)}
+                title="Gửi lại vé"
+                description={`Gửi lại email xác nhận cho ${selectedTicketIds.length} vé đã chọn`}
+            >
+                <div className="space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                        Email sẽ được gửi đến địa chỉ email của người mua vé. Vui lòng kiểm tra kỹ trước khi gửi.
+                    </p>
+                    <div className="p-4 bg-muted/50 rounded-lg">
+                        <p className="text-sm font-medium mb-2">Danh sách vé:</p>
+                        <div className="max-h-48 overflow-y-auto space-y-1">
+                            {filteredTickets
+                                .filter(t => selectedTicketIds.includes(t.id))
+                                .map(ticket => (
+                                    <div key={ticket.id} className="flex justify-between text-sm">
+                                        <span className="font-mono">{ticket.ticket_code}</span>
+                                        <span className="text-muted-foreground">{ticket.buyer_email}</span>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                </div>
+                <ModalFooter>
+                    <Button variant="outline" onClick={() => setIsResendModalOpen(false)} disabled={isResending}>
+                        Hủy
+                    </Button>
+                    <Button onClick={handleResendEmails} disabled={isResending}>
+                        <Mail className="size-4 mr-2" />
+                        {isResending ? 'Đang gửi...' : 'Gửi email'}
+                    </Button>
+                </ModalFooter>
+            </Modal>
+
+            {/* Create Manual Ticket Modal */}
+            <CreateManualTicketModal
+                isOpen={isCreateManualModalOpen}
+                onClose={() => setIsCreateManualModalOpen(false)}
+                onSuccess={() => {
+                    queryClient.invalidateQueries({ queryKey: ['adminTickets'] })
+                    toast.success('Đã tạo vé thành công!')
+                }}
+            />
         </div>
     )
 }

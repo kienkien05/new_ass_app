@@ -60,6 +60,10 @@ model User {
   gender       String?   // 'male', 'female', 'other'
   address      String?
 
+  // Password Reset
+  resetPasswordToken   String?   @map("reset_password_token")
+  resetPasswordExpires DateTime? @map("reset_password_expires")
+
   orders        Order[]
   tickets       Ticket[]
   notifications Notification[]

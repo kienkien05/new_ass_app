@@ -225,9 +225,9 @@ export default function LoginPage() {
                                     <input type="checkbox" className="rounded border-border" />
                                     <span className="text-sm text-muted-foreground">Ghi nhớ đăng nhập</span>
                                 </label>
-                                <a href="#" className="text-sm text-primary hover:underline">
+                                <Link to="/forgot-password" className="text-sm text-primary hover:underline">
                                     Quên mật khẩu?
-                                </a>
+                                </Link>
                             </div>
                         )}
 

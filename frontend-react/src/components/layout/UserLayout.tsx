@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Sun, Moon, User, LogOut, Ticket } from 'lucide-react'
+import { Menu, X, User, LogOut, Ticket } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/authStore'
 import { cn } from '@/lib/utils'
@@ -11,18 +11,14 @@ const navLinks = [
     { to: '/events', label: 'Sự kiện' },
 ]
 
+import { ModeToggle } from '@/components/ui/mode-toggle'
+
 export default function UserLayout() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'))
     const { isAuthenticated, user, logout } = useAuthStore()
     const navigate = useNavigate()
 
-    const toggleTheme = () => {
-        const newIsDark = !isDark
-        setIsDark(newIsDark)
-        document.documentElement.classList.toggle('dark', newIsDark)
-        localStorage.setItem('theme', newIsDark ? 'dark' : 'light')
-    }
+
 
     const handleLogout = () => {
         logout()
@@ -63,9 +59,7 @@ export default function UserLayout() {
 
                         {/* Actions */}
                         <div className="flex items-center gap-3">
-                            <Button variant="ghost" size="icon" onClick={toggleTheme}>
-                                {isDark ? <Sun className="size-5" /> : <Moon className="size-5" />}
-                            </Button>
+                            <ModeToggle />
 
                             {isAuthenticated ? (
                                 <div className="hidden md:flex items-center gap-2">

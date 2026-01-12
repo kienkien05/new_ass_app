@@ -2,6 +2,7 @@ const prisma = require('../config/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendOTP, verifyOTP, resendOTP } = require('../services/otpService');
+const crypto = require('crypto');
 
 // Generate JWT
 const generateToken = (id) => {
@@ -157,6 +158,7 @@ const loginUser = async (req, res) => {
         });
 
         if (!user) {
+            console.log(`Login failed: User not found for email: ${email}`);
             return res.status(401).json({
                 success: false,
                 message: 'Email hoặc mật khẩu không đúng'
@@ -165,6 +167,7 @@ const loginUser = async (req, res) => {
 
         // Check if user is active
         if (!user.isActive) {
+            console.log(`Login failed: User inactive: ${email}`);
             return res.status(401).json({
                 success: false,
                 message: 'Tài khoản đã bị vô hiệu hóa'
@@ -175,6 +178,7 @@ const loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.passwordHash);
 
         if (!isMatch) {
+            console.log(`Login failed: Password mismatch for email: ${email}`);
             return res.status(401).json({
                 success: false,
                 message: 'Email hoặc mật khẩu không đúng'
@@ -353,11 +357,100 @@ const getUserProfile = async (req, res) => {
     }
 };
 
+// @desc    Forgot Password
+// @route   POST /api/auth/forgot-password
+// @access  Public
+const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ success: false, message: 'Vui lòng nhập email' });
+        }
+
+        const user = await prisma.user.findUnique({ where: { email } });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'Email không tồn tại trong hệ thống' });
+        }
+
+        // Generate token
+        const resetToken = crypto.randomBytes(20).toString('hex');
+        const resetTokenHash = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+        // Update user
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                resetPasswordToken: resetTokenHash,
+                resetPasswordExpires: new Date(Date.now() + 60 * 60 * 1000) // 1 hour
+            }
+        });
+
+        // Send email (send raw token, verifying hash later)
+        const { sendPasswordResetEmail } = require('../services/otpService');
+        await sendPasswordResetEmail(email, resetToken);
+
+        res.json({ success: true, message: 'Email đặt lại mật khẩu đã được gửi' });
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+};
+
+// @desc    Reset Password
+// @route   POST /api/auth/reset-password/:token
+// @access  Public
+const resetPassword = async (req, res) => {
+    try {
+        const resetToken = req.params.token;
+        const { password } = req.body;
+
+        if (!password) {
+            return res.status(400).json({ success: false, message: 'Vui lòng nhập mật khẩu mới' });
+        }
+
+        // Hash token to compare
+        const resetTokenHash = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+        const user = await prisma.user.findFirst({
+            where: {
+                resetPasswordToken: resetTokenHash,
+                resetPasswordExpires: { gt: new Date() }
+            }
+        });
+
+        if (!user) {
+            return res.status(400).json({ success: false, message: 'Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn' });
+        }
+
+        // Update password
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(password, salt);
+
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                passwordHash,
+                resetPasswordToken: null,
+                resetPasswordExpires: null
+            }
+        });
+
+        res.json({ success: true, message: 'Mật khẩu đã được thay đổi thành công' });
+    } catch (error) {
+        console.error('Reset password error:', error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+};
+
 module.exports = {
     registerUser,
     verifyRegisterOTP,
     loginUser,
     verifyLoginOTP,
     resendOTPCode,
-    getUserProfile
+    getUserProfile,
+    forgotPassword,
+    resetPassword
 };

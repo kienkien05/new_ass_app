@@ -40,5 +40,26 @@ export const ticketService = {
     deleteTicketType: async (id: string) => {
         const response = await api.delete(`/ticket-types/${id}`)
         return response.data
+    },
+
+    resendTicketEmails: async (ticketIds: string[]) => {
+        const response = await api.post('/tickets/resend-email', { ticketIds })
+        return response.data
+    },
+
+    getMyTickets: async () => {
+        const response = await api.get('/tickets/my-tickets')
+        return response.data.data
+    },
+
+    createManualTicket: async (data: {
+        email: string
+        eventId: string
+        ticketTypeId: string
+        seatId?: string
+        customPrice?: number
+    }) => {
+        const response = await api.post('/tickets/create-manual', data)
+        return response.data
     }
 }

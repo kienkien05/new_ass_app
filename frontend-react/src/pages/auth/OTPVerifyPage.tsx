@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, Mail, RefreshCw } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { ModeToggle } from '@/components/ui/mode-toggle'
 import { useAuthStore } from '@/stores/authStore'
 import api from '@/services/api'
 
@@ -134,7 +135,10 @@ export default function OTPVerifyPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 p-4">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 p-4 relative">
+            <div className="absolute top-4 left-4 z-50 text-foreground animate-in fade-in zoom-in duration-300" style={{ zIndex: 50 }}>
+                <ModeToggle />
+            </div>
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

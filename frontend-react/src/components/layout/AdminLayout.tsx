@@ -18,6 +18,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/authStore'
 import { cn } from '@/lib/utils'
+import { ModeToggle } from '@/components/ui/mode-toggle'
 
 const sidebarLinks = [
     { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
@@ -141,10 +142,13 @@ export default function AdminLayout() {
                             <Menu className="size-5" />
                         </Button>
                         <div className="flex-1" />
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground hidden md:block">
-                                Xin chào, <span className="font-medium text-foreground">{user?.full_name}</span>
-                            </span>
+                        <div className="flex items-center gap-4">
+                            <ModeToggle />
+                            <div className="flex items-center gap-2">
+                                <span className="text-sm text-muted-foreground hidden md:block">
+                                    Xin chào, <span className="font-medium text-foreground">{user?.full_name}</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </header>

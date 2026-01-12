@@ -185,6 +185,44 @@ const createOrder = async (req, res) => {
             return { order, tickets: qrUpdates };
         });
 
+        // Send email for each ticket created
+        const { sendTicketEmail } = require('../services/otpService');
+
+        // Fetch full ticket details for email
+        const fullTickets = await prisma.ticket.findMany({
+            where: { orderId: result.order.id },
+            include: {
+                event: { select: { title: true, startTime: true, location: true } },
+                ticketType: { select: { name: true } },
+                seat: { include: { room: true } }
+            }
+        });
+
+        // Send emails in background (don't block response)
+        Promise.all(
+            fullTickets.map(async (ticket) => {
+                try {
+                    const ticketData = {
+                        ticketCode: ticket.ticketCode,
+                        qrCode: ticket.qrCode,
+                        eventTitle: ticket.event.title,
+                        eventDate: ticket.event.startTime,
+                        eventLocation: ticket.event.location,
+                        ticketTypeName: ticket.ticketType.name,
+                        price: Number(ticket.priceAtPurchase),
+                        seatInfo: ticket.seat ? {
+                            room: ticket.seat.room.name,
+                            row: ticket.seat.row,
+                            number: ticket.seat.number
+                        } : null
+                    };
+                    await sendTicketEmail(ticketData, req.user.email);
+                } catch (emailError) {
+                    console.error(`Failed to send email for ticket ${ticket.ticketCode}:`, emailError);
+                }
+            })
+        ).catch(err => console.error('Email sending errors:', err));
+
         // Transform response
         res.status(201).json({
             success: true,
@@ -402,4 +440,163 @@ const getAllTickets = async (req, res) => {
     }
 }
 
-module.exports = { createOrder, getMyTickets, getAllTickets, getRemainingTickets };
+// @desc    Admin creates ticket manually (offline sale)
+// @route   POST /api/tickets/create-manual
+// @access  Private/Admin
+const createManualTicket = async (req, res) => {
+    try {
+        const {
+            email,
+            eventId,
+            ticketTypeId,
+            seatId,
+            customPrice
+        } = req.body;
+
+        // 1. Find user by email
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: `Không tìm thấy user với email: ${email}. Vui lòng tạo tài khoản trước.`
+            });
+        }
+
+        // 2. Validate event and ticket type
+        const event = await prisma.event.findUnique({
+            where: { id: eventId },
+            select: { id: true, title: true, startTime: true, location: true }
+        });
+
+        if (!event) {
+            return res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy sự kiện'
+            });
+        }
+
+        const ticketType = await prisma.ticketType.findUnique({
+            where: { id: ticketTypeId },
+            select: { id: true, name: true, price: true }
+        });
+
+        if (!ticketType) {
+            return res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy loại vé'
+            });
+        }
+
+        // 3. Validate seat if provided
+        let seat = null;
+        if (seatId) {
+            seat = await prisma.seat.findUnique({
+                where: { id: seatId },
+                include: { room: true }
+            });
+
+            if (!seat) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Không tìm thấy ghế'
+                });
+            }
+
+            // Check if seat is already taken
+            const existingTicket = await prisma.ticket.findFirst({
+                where: {
+                    eventId,
+                    seatId,
+                    status: { not: 'cancelled' }
+                }
+            });
+
+            if (existingTicket) {
+                return res.status(400).json({
+                    success: false,
+                    message: `Ghế ${seat.row}${seat.number} đã có người đặt`
+                });
+            }
+        }
+
+        // 4. Calculate price and generate ticket code
+        const finalPrice = customPrice !== undefined ? customPrice : ticketType.price;
+        const ticketCode = uuidv4().replace(/-/g, '').substring(0, 12).toUpperCase();
+
+        // 5. Create a dummy order for manual ticket (orderId is required)
+        const order = await prisma.order.create({
+            data: {
+                userId: user.id,
+                totalAmount: finalPrice,
+                status: 'paid',
+                paymentMethod: 'manual_admin',
+                paymentTransactionId: `MANUAL-${Date.now()}`
+            }
+        });
+
+        // 6. Create ticket
+        const ticket = await prisma.ticket.create({
+            data: {
+                orderId: order.id,
+                userId: user.id,
+                eventId,
+                ticketTypeId,
+                seatId: seatId || null,
+                ticketCode,
+                priceAtPurchase: finalPrice,
+                status: 'valid'
+            }
+        });
+
+        // 7. Generate QR code
+        const qrCode = await generateQRCode(ticket.ticketCode);
+        const updatedTicket = await prisma.ticket.update({
+            where: { id: ticket.id },
+            data: { qrCode }
+        });
+
+        // 8. Send email automatically
+        const { sendTicketEmail } = require('../services/otpService');
+        const ticketData = {
+            ticketCode: updatedTicket.ticketCode,
+            qrCode: updatedTicket.qrCode,
+            eventTitle: event.title,
+            eventDate: event.startTime,
+            eventLocation: event.location,
+            ticketTypeName: ticketType.name,
+            price: Number(finalPrice),
+            seatInfo: seat ? {
+                room: seat.room.name,
+                row: seat.row,
+                number: seat.number
+            } : null
+        };
+
+        // Send email in background
+        sendTicketEmail(ticketData, user.email).catch(err =>
+            console.error(`Failed to send email for manual ticket ${ticketCode}:`, err)
+        );
+
+        res.status(201).json({
+            success: true,
+            message: 'Đã tạo và gửi vé thành công',
+            data: {
+                id: updatedTicket.id,
+                ticket_code: updatedTicket.ticketCode,
+                qr_code: updatedTicket.qrCode,
+                user_email: user.email,
+                event_title: event.title,
+                seat: seat ? `${seat.row}${seat.number}` : null
+            }
+        });
+
+    } catch (error) {
+        console.error('Create manual ticket error:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Lỗi khi tạo vé thủ công'
+        });
+    }
+};
+
+module.exports = { createOrder, getMyTickets, getAllTickets, getRemainingTickets, createManualTicket };

@@ -10,6 +10,13 @@ const getRooms = async (req, res) => {
                         { row: 'asc' },
                         { number: 'asc' }
                     ]
+                },
+                events: {
+                    select: {
+                        id: true,
+                        title: true,
+                        slug: true
+                    }
                 }
             },
             orderBy: { createdAt: 'desc' }
@@ -118,19 +125,73 @@ const deleteRoom = async (req, res) => {
     }
 };
 
-// Update Room (name only for simplicity)
+// Update Room (name and optionally event associations)
 const updateRoom = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name } = req.body;
+        const { name, eventIds } = req.body; // eventIds is an array of event IDs
+
+        const updateData = { name };
+
+        // If eventIds is provided, validate and update the room-event relationship
+        if (eventIds !== undefined) {
+            // First, get current room with events
+            const currentRoom = await prisma.room.findUnique({
+                where: { id },
+                include: { events: true }
+            });
+
+            if (!currentRoom) {
+                return res.status(404).json({
+                    status: 'error',
+                    message: 'Không tìm thấy phòng'
+                });
+            }
+
+            // Find events being removed
+            const currentEventIds = currentRoom.events.map(e => e.id);
+            const removedEventIds = currentEventIds.filter(eventId => !eventIds.includes(eventId));
+
+            // Check if any removed events have sold tickets
+            if (removedEventIds.length > 0) {
+                const soldTicketsCount = await prisma.ticket.count({
+                    where: {
+                        eventId: { in: removedEventIds },
+                        status: { not: 'cancelled' }
+                    }
+                });
+
+                if (soldTicketsCount > 0) {
+                    return res.status(400).json({
+                        status: 'error',
+                        message: 'Không thể thay đổi phòng vì sự kiện đã có vé được bán. Vui lòng hủy hoặc hoàn tiền các vé trước khi đổi phòng.'
+                    });
+                }
+            }
+
+            // If validation passes, set the events
+            updateData.events = {
+                set: eventIds.map(eventId => ({ id: eventId }))
+            };
+        }
 
         const updatedRoom = await prisma.room.update({
             where: { id },
-            data: { name },
-            include: { seats: true }
+            data: updateData,
+            include: {
+                seats: true,
+                events: {
+                    select: {
+                        id: true,
+                        title: true,
+                        slug: true
+                    }
+                }
+            }
         });
         res.json({ status: 'success', data: updatedRoom });
     } catch (error) {
+        console.error('updateRoom error:', error);
         res.status(500).json({ status: 'error', message: error.message });
     }
 }

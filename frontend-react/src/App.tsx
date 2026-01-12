@@ -12,8 +12,11 @@ const EventsPage = lazy(() => import('@/pages/user/EventsPage'))
 const EventDetailPage = lazy(() => import('@/pages/user/EventDetailPage'))
 const ProfilePage = lazy(() => import('@/pages/user/ProfilePage'))
 const WalletPage = lazy(() => import('@/pages/user/WalletPage'))
+const MyTicketsPage = lazy(() => import('@/pages/user/MyTicketsPage'))
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'))
 const OTPVerifyPage = lazy(() => import('@/pages/auth/OTPVerifyPage'))
+const ForgotPasswordPage = lazy(() => import('@/pages/auth/ForgotPasswordPage'))
+const ResetPasswordPage = lazy(() => import('@/pages/auth/ResetPasswordPage'))
 
 // Admin pages
 const DashboardPage = lazy(() => import('@/pages/admin/DashboardPage'))
@@ -57,6 +60,8 @@ function App() {
             <Routes>
                 {/* Auth Routes */}
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
                 <Route path="/verify-otp" element={<OTPVerifyPage />} />
 
                 {/* User Routes */}
@@ -77,6 +82,14 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <WalletPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/my-tickets"
+                        element={
+                            <ProtectedRoute>
+                                <MyTicketsPage />
                             </ProtectedRoute>
                         }
                     />

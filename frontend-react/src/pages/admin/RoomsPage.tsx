@@ -19,7 +19,7 @@ export default function AdminRoomsPage() {
     const { tickets } = useTicketStore()
 
     const [events, setEvents] = useState<Event[]>([])
-    const [selectedEventId, setSelectedEventId] = useState('')
+    const [selectedEventIds, setSelectedEventIds] = useState<string[]>([])
 
     useEffect(() => {
         fetchRooms()
@@ -61,7 +61,7 @@ export default function AdminRoomsPage() {
     const resetForm = () => {
         setFormData({ name: '', rows: 8, seatsPerRow: 10 })
         setPendingSeats([])
-        setSelectedEventId('')
+        setSelectedEventIds([])
     }
 
     const handleAdd = () => {
@@ -85,9 +85,16 @@ export default function AdminRoomsPage() {
 
         setIsSaving(true)
         try {
-            // Update room name if changed
+            // Update room (name and events)
+            const updateData: any = {}
             if (formData.name !== selectedRoom.name) {
-                await updateRoom(selectedRoom.id, { name: formData.name })
+                updateData.name = formData.name
+            }
+            // Always send eventIds to update room-event associations
+            updateData.eventIds = selectedEventIds
+
+            if (Object.keys(updateData).length > 0) {
+                await updateRoom(selectedRoom.id, updateData)
             }
 
             // Update seats if any pending changes
@@ -99,9 +106,11 @@ export default function AdminRoomsPage() {
             setSelectedRoom(null)
             resetForm()
             toast.success('Lưu phòng thành công!')
-        } catch (error) {
-            toast.error('Có lỗi xảy ra khi lưu phòng!')
+        } catch (error: any) {
             console.error(error)
+            const errorMessage = error.response?.data?.message || 'Có lỗi xảy ra khi lưu phòng!'
+            toast.error(errorMessage)
+            // Don't close modal on error so user can fix the issue
         } finally {
             setIsSaving(false)
         }
@@ -123,7 +132,7 @@ export default function AdminRoomsPage() {
             seatsPerRow: room.seatsPerRow,
         })
         setPendingSeats([])
-        setSelectedEventId('')
+        setSelectedEventIds(room.events?.map(e => e.id) || [])
         setIsEditModalOpen(true)
     }
 
@@ -167,7 +176,8 @@ export default function AdminRoomsPage() {
     // Check if form has changes
     const hasChanges = selectedRoom && (
         formData.name !== selectedRoom.name ||
-        pendingSeats.length > 0
+        pendingSeats.length > 0 ||
+        JSON.stringify(selectedEventIds.sort()) !== JSON.stringify((selectedRoom.events?.map(e => e.id) || []).sort())
     )
 
     return (
@@ -433,19 +443,25 @@ export default function AdminRoomsPage() {
                                 </div>
                             </div>
 
-                            {/* Event Filter for sold seats */}
+                            {/* Event Assignment - Multi-select */}
                             <div className="space-y-2 p-4 bg-muted/50 rounded-xl">
-                                <label className="text-sm font-medium">Xem trạng thái đặt vé</label>
+                                <label className="text-sm font-medium">Sự kiện sử dụng phòng</label>
                                 <select
-                                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                                    value={selectedEventId}
-                                    onChange={(e) => setSelectedEventId(e.target.value)}
+                                    multiple
+                                    className="flex min-h-[120px] w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                                    value={selectedEventIds}
+                                    onChange={(e) => {
+                                        const selected = Array.from(e.target.selectedOptions, option => option.value)
+                                        setSelectedEventIds(selected)
+                                    }}
                                 >
-                                    <option value="">-- Chọn sự kiện --</option>
                                     {events.map(event => (
                                         <option key={event.id} value={event.id}>{event.title}</option>
                                     ))}
                                 </select>
+                                <p className="text-xs text-muted-foreground">
+                                    Giữ Ctrl (hoặc Cmd) để chọn nhiều sự kiện
+                                </p>
                             </div>
 
                             {/* Legend */}
@@ -464,7 +480,7 @@ export default function AdminRoomsPage() {
                                         <div className="size-5 bg-amber-500 rounded ring-2 ring-amber-500 ring-offset-1" />
                                         <span>Đang thay đổi</span>
                                     </div>
-                                    {selectedEventId && (
+                                    {selectedEventIds.length > 0 && (
                                         <div className="flex items-center gap-2">
                                             <div className="size-5 bg-blue-600 rounded flex items-center justify-center">
                                                 <Ticket className="size-3 text-white" />
@@ -528,8 +544,8 @@ export default function AdminRoomsPage() {
                                                         const isActive = pending ? pending.isActive : seat.isActive
                                                         const isModified = !!pending
 
-                                                        const soldTicket = selectedEventId ? tickets.find(t =>
-                                                            t.event_id === selectedEventId &&
+                                                        const soldTicket = selectedEventIds.length > 0 ? tickets.find(t =>
+                                                            selectedEventIds.includes(t.event_id) &&
                                                             t.status !== 'cancelled' &&
                                                             (t.seat?.id === seat.id || (t.seat?.room === currentRoom.name && t.seat?.row === seat.row && t.seat?.number === seat.number))
                                                         ) : null
@@ -540,7 +556,7 @@ export default function AdminRoomsPage() {
                                                             <button
                                                                 key={seat.id}
                                                                 onClick={() => {
-                                                                    if (isSold && selectedEventId) {
+                                                                    if (isSold && selectedEventIds.length > 0) {
                                                                         handleSoldSeatClick(soldTicket!)
                                                                         return
                                                                     }

@@ -27,6 +27,12 @@ const getEvents = async (req, res) => {
             };
         }
 
+        // Hide non-published events for non-admins
+        const isAdmin = req.user && req.user.role === 'admin';
+        if (!isAdmin) {
+            where.status = 'published';
+        }
+
         // Get total count
         const count = await prisma.event.count({ where });
 
@@ -104,7 +110,7 @@ const getEventById = async (req, res) => {
         const event = await prisma.event.findUnique({
             where: { id: req.params.id },
             include: {
-                ticketTypes: true,
+                ticketTypes: true, // Fetch all, filter later
                 rooms: true
             }
         });
@@ -115,6 +121,21 @@ const getEventById = async (req, res) => {
                 message: 'Event not found'
             });
         }
+
+        const isAdmin = req.user && req.user.role === 'admin';
+
+        // Check visibility
+        if (!isAdmin && event.status !== 'published') {
+            return res.status(404).json({
+                success: false,
+                message: 'Event not found'
+            });
+        }
+
+        // Filter hidden ticket types for non-admins
+        const visibleTicketTypes = isAdmin
+            ? event.ticketTypes
+            : event.ticketTypes.filter(tt => tt.status !== 'hidden');
 
         // Transform response
         res.json({
@@ -134,7 +155,8 @@ const getEventById = async (req, res) => {
                 status: event.status,
                 is_hot: event.isHot,
                 created_at: event.createdAt,
-                ticket_types: event.ticketTypes.map(tt => ({
+                created_at: event.createdAt,
+                ticket_types: visibleTicketTypes.map(tt => ({
                     id: tt.id,
                     name: tt.name,
                     description: tt.description,

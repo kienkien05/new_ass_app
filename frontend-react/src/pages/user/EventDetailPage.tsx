@@ -378,43 +378,59 @@ export default function EventDetailPage() {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 {/* Ticket Types List */}
-                                {event.ticket_types?.map((type) => (
-                                    <div key={type.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg border">
-                                        <div>
-                                            <p className="font-medium">{type.name}</p>
-                                            <p className="text-primary font-bold">{formatCurrency(type.price)}</p>
-                                            <p className="text-xs text-muted-foreground">
-                                                Còn: {type.quantity_total - type.quantity_sold}
-                                            </p>
+                                {event.ticket_types?.map((type) => {
+                                    const isHidden = type.status === 'hidden';
+                                    const isAdmin = user?.role === 'admin';
+
+                                    // If hidden and not admin, should rely on backend filtering, 
+                                    // but we can also hide it here just in case backend fails or cache issues
+                                    if (isHidden && !isAdmin) return null;
+
+                                    return (
+                                        <div key={type.id} className={`flex items-center justify-between p-3 rounded-lg border ${isHidden ? 'bg-yellow-500/10 border-yellow-500/50' : 'bg-muted/30'}`}>
+                                            <div>
+                                                <div className="flex items-center gap-2">
+                                                    <p className="font-medium">{type.name}</p>
+                                                    {isHidden && (
+                                                        <Badge variant="outline" className="text-yellow-600 border-yellow-600 h-5 text-[10px] px-1">
+                                                            Ẩn
+                                                        </Badge>
+                                                    )}
+                                                </div>
+                                                <p className="text-primary font-bold">{formatCurrency(type.price)}</p>
+                                                <p className="text-xs text-muted-foreground">
+                                                    Còn: {type.quantity_total - type.quantity_sold}
+                                                </p>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    className="size-8"
+                                                    onClick={() => handleQuantityChange(type.id, -1)}
+                                                    disabled={!ticketQuantities[type.id]}
+                                                >
+                                                    <Minus className="size-3" />
+                                                </Button>
+                                                <span className="w-4 text-center font-medium">
+                                                    {ticketQuantities[type.id] || 0}
+                                                </span>
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    className="size-8"
+                                                    onClick={() => handleQuantityChange(type.id, 1)}
+                                                    disabled={
+                                                        (type.quantity_total - type.quantity_sold) <= (ticketQuantities[type.id] || 0) ||
+                                                        (remainingLimit !== null && totalQuantity >= remainingLimit)
+                                                    }
+                                                >
+                                                    <Plus className="size-3" />
+                                                </Button>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-3">
-                                            <Button
-                                                variant="outline"
-                                                size="icon"
-                                                className="size-8"
-                                                onClick={() => handleQuantityChange(type.id, -1)}
-                                                disabled={!ticketQuantities[type.id]}
-                                            >
-                                                <Minus className="size-3" />
-                                            </Button>
-                                            <span className="w-4 text-center font-medium">
-                                                {ticketQuantities[type.id] || 0}
-                                            </span>
-                                            <Button
-                                                variant="outline"
-                                                size="icon"
-                                                className="size-8"
-                                                onClick={() => handleQuantityChange(type.id, 1)}
-                                                disabled={
-                                                    (type.quantity_total - type.quantity_sold) <= (ticketQuantities[type.id] || 0) ||
-                                                    (remainingLimit !== null && totalQuantity >= remainingLimit)
-                                                }
-                                            >
-                                                <Plus className="size-3" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                ))}
+                                    )
+                                })}
 
                                 <div className="pt-4 border-t space-y-2">
                                     <div className="flex justify-between text-sm">

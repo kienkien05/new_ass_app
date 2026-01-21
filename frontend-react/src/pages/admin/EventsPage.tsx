@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Plus, Search, Edit, Trash2, Eye, Calendar, MapPin, Image, Upload, X, Ticket, Tag, Home } from 'lucide-react'
+import { Plus, Search, Edit, Trash2, Eye, EyeOff, Calendar, MapPin, Image, Upload, X, Ticket, Tag, Home } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -609,9 +609,31 @@ export default function AdminEventsPage() {
                                                         variant="ghost"
                                                         size="icon"
                                                         onClick={() => window.open(`/events/${event.id}`, '_blank')}
+                                                        title="Xem trang công khai"
                                                     >
                                                         <Eye className="size-4" />
                                                     </Button>
+
+                                                    {/* Visibility Toggle */}
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        onClick={async () => {
+                                                            try {
+                                                                const newStatus = event.status === 'published' ? 'draft' : 'published';
+                                                                await eventService.updateEvent(event.id, { status: newStatus });
+                                                                toast.success(newStatus === 'published' ? 'Đã công khai sự kiện' : 'Đã ẩn sự kiện');
+                                                                refetch();
+                                                            } catch (error) {
+                                                                toast.error('Lỗi khi cập nhật trạng thái');
+                                                            }
+                                                        }}
+                                                        title={event.status === 'published' ? "Ẩn sự kiện" : "Công khai sự kiện"}
+                                                        className={event.status === 'published' ? "text-amber-600" : "text-green-600"}
+                                                    >
+                                                        {event.status === 'published' ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                                                    </Button>
+
                                                     <Button variant="ghost" size="icon" onClick={() => openEditModal(event)}>
                                                         <Edit className="size-4" />
                                                     </Button>

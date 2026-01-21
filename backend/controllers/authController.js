@@ -3,16 +3,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendOTP, verifyOTP, resendOTP } = require('../services/otpService');
 const crypto = require('crypto');
+const logger = require('../utils/logger');
+const { DEFAULTS, JWT } = require('../config/constants');
 
 // Generate JWT
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN || '30d',
+        expiresIn: process.env.JWT_EXPIRES_IN || JWT.DEFAULT_EXPIRY,
     });
 };
-
-// Store pending registrations temporarily (will be moved to DB in production)
-const pendingRegistrations = new Map();
 
 // @desc    Register a new user - Step 1: Send OTP
 // @route   POST /api/auth/register
@@ -41,20 +40,15 @@ const registerUser = async (req, res) => {
             });
         }
 
-        // Hash password and store temporarily
-        const salt = await bcrypt.genSalt(10);
+        // Hash password
+        const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_ROUNDS) || 10);
         const passwordHash = await bcrypt.hash(password, salt);
 
-        // Store pending registration (expires in 10 minutes)
-        pendingRegistrations.set(email, {
-            fullName: full_name,
-            email,
-            passwordHash,
-            createdAt: Date.now()
-        });
+        // Note: Pending registration data will be stored in OtpCode record by sendOTP
+        // This eliminates the need for in-memory storage
 
-        // Send OTP
-        const otpResult = await sendOTP(email, 'register');
+        // Send OTP and store pending registration in database
+        const otpResult = await sendOTP(email, 'register', { fullName: full_name, passwordHash });
 
         if (!otpResult.success) {
             return res.status(500).json({
@@ -70,7 +64,7 @@ const registerUser = async (req, res) => {
             data: { email }
         });
     } catch (error) {
-        console.error('Register error:', error);
+        logger.error('Register error:', { error: error.message, stack: error.stack });
         res.status(500).json({
             success: false,
             message: 'Lỗi server trong quá trình đăng ký'
@@ -102,10 +96,19 @@ const verifyRegisterOTP = async (req, res) => {
             });
         }
 
-        // Get pending registration
-        const pendingData = pendingRegistrations.get(email);
+        // Get pending registration from OTP record
+        const otpRecord = await prisma.otpCode.findFirst({
+            where: {
+                email,
+                type: 'register',
+                isUsed: true, // Just used/verified
+                fullName: { not: null }
+            },
+            orderBy: { createdAt: 'desc' }
+        });
 
-        if (!pendingData) {
+        if (!otpRecord || !otpRecord.fullName || !otpRecord.passwordHash) {
+            logger.warn(`Pending registration not found for email: ${email}`);
             return res.status(400).json({
                 success: false,
                 message: 'Phiên đăng ký đã hết hạn. Vui lòng đăng ký lại.'
@@ -115,15 +118,23 @@ const verifyRegisterOTP = async (req, res) => {
         // Create user
         const user = await prisma.user.create({
             data: {
-                fullName: pendingData.fullName,
-                email: pendingData.email,
-                passwordHash: pendingData.passwordHash,
+                fullName: otpRecord.fullName,
+                email: otpRecord.email,
+                passwordHash: otpRecord.passwordHash,
                 isActive: true
             }
         });
 
-        // Clear pending registration
-        pendingRegistrations.delete(email);
+        // Clear pending registration data from OTP record
+        await prisma.otpCode.update({
+            where: { id: otpRecord.id },
+            data: {
+                fullName: null,
+                passwordHash: null
+            }
+        });
+
+        logger.info(`New user registered successfully: ${email}`);
 
         res.status(201).json({
             success: true,
@@ -137,7 +148,7 @@ const verifyRegisterOTP = async (req, res) => {
             },
         });
     } catch (error) {
-        console.error('Verify register OTP error:', error);
+        logger.error('Verify register OTP error:', { error: error.message, stack: error.stack });
         res.status(500).json({
             success: false,
             message: 'Lỗi server trong quá trình xác thực'
@@ -158,7 +169,7 @@ const loginUser = async (req, res) => {
         });
 
         if (!user) {
-            console.log(`Login failed: User not found for email: ${email}`);
+            logger.warn(`Login failed: User not found for email: ${email}`);
             return res.status(401).json({
                 success: false,
                 message: 'Email hoặc mật khẩu không đúng'
@@ -167,7 +178,7 @@ const loginUser = async (req, res) => {
 
         // Check if user is active
         if (!user.isActive) {
-            console.log(`Login failed: User inactive: ${email}`);
+            logger.warn(`Login failed: User inactive: ${email}`);
             return res.status(401).json({
                 success: false,
                 message: 'Tài khoản đã bị vô hiệu hóa'
@@ -178,7 +189,7 @@ const loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.passwordHash);
 
         if (!isMatch) {
-            console.log(`Login failed: Password mismatch for email: ${email}`);
+            logger.warn(`Login failed: Password mismatch for email: ${email}`);
             return res.status(401).json({
                 success: false,
                 message: 'Email hoặc mật khẩu không đúng'
@@ -202,7 +213,7 @@ const loginUser = async (req, res) => {
             data: { email }
         });
     } catch (error) {
-        console.error('Login error:', error);
+        logger.error('Login error:', { error: error.message, stack: error.stack });
         res.status(500).json({
             success: false,
             message: 'Lỗi server trong quá trình đăng nhập'
@@ -259,7 +270,7 @@ const verifyLoginOTP = async (req, res) => {
             },
         });
     } catch (error) {
-        console.error('Verify login OTP error:', error);
+        logger.error('Verify login OTP error:', { error: error.message, stack: error.stack });
         res.status(500).json({
             success: false,
             message: 'Lỗi server trong quá trình xác thực'
@@ -295,7 +306,7 @@ const resendOTPCode = async (req, res) => {
             message: result.message
         });
     } catch (error) {
-        console.error('Resend OTP error:', error);
+        logger.error('Resend OTP error:', { error: error.message, stack: error.stack });
         res.status(500).json({
             success: false,
             message: 'Lỗi server khi gửi lại OTP'
@@ -349,7 +360,7 @@ const getUserProfile = async (req, res) => {
             },
         });
     } catch (error) {
-        console.error('Get profile error:', error);
+        logger.error('Get profile error:', { error: error.message, stack: error.stack });
         res.status(500).json({
             success: false,
             message: 'Lỗi server'
@@ -393,7 +404,7 @@ const forgotPassword = async (req, res) => {
 
         res.json({ success: true, message: 'Email đặt lại mật khẩu đã được gửi' });
     } catch (error) {
-        console.error('Forgot password error:', error);
+        logger.error('Forgot password error:', { error: error.message, stack: error.stack });
         res.status(500).json({ success: false, message: 'Lỗi server' });
     }
 };
@@ -439,7 +450,7 @@ const resetPassword = async (req, res) => {
 
         res.json({ success: true, message: 'Mật khẩu đã được thay đổi thành công' });
     } catch (error) {
-        console.error('Reset password error:', error);
+        logger.error('Reset password error:', { error: error.message, stack: error.stack });
         res.status(500).json({ success: false, message: 'Lỗi server' });
     }
 };

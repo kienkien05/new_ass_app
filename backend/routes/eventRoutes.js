@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { getEvents, getEventById, getFeaturedEvents, createEvent, updateEvent, deleteEvent, getSoldSeats } = require('../controllers/eventController');
-const { protect, admin } = require('../middleware/authMiddleware');
+const { protect, admin, optionalProtect } = require('../middleware/authMiddleware');
 const { validate, createEventRules, idParamRules } = require('../middleware/validationMiddleware');
 
-// Public routes
-router.get('/', getEvents);
+// Public routes (with optional auth to detect admin)
+router.get('/', optionalProtect, getEvents);
 router.get('/featured', getFeaturedEvents);
-router.get('/:id', getEventById);
+router.get('/:id', optionalProtect, getEventById);
 router.get('/:id/sold-seats', getSoldSeats);
 
 // Admin routes - protected

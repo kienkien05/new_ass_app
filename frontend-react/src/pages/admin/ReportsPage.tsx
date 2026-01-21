@@ -153,7 +153,7 @@ export default function ReportsPage() {
                                 type="date"
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
-                                className="px-3 py-1.5 border rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                                className="px-3 py-1.5 border border-input rounded-lg text-sm bg-background text-foreground focus:ring-2 focus:ring-primary focus:outline-none dark:[color-scheme:dark]"
                             />
                         </div>
                         <div className="flex items-center gap-2">
@@ -162,7 +162,7 @@ export default function ReportsPage() {
                                 type="date"
                                 value={endDate}
                                 onChange={(e) => setEndDate(e.target.value)}
-                                className="px-3 py-1.5 border rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                                className="px-3 py-1.5 border border-input rounded-lg text-sm bg-background text-foreground focus:ring-2 focus:ring-primary focus:outline-none dark:[color-scheme:dark]"
                             />
                         </div>
                         <div className="flex items-center gap-2">
@@ -170,7 +170,7 @@ export default function ReportsPage() {
                             <select
                                 value={groupBy}
                                 onChange={(e) => setGroupBy(e.target.value as 'day' | 'week' | 'month')}
-                                className="px-3 py-1.5 border rounded-lg text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                                className="px-3 py-1.5 border border-input rounded-lg text-sm bg-background text-foreground focus:ring-2 focus:ring-primary focus:outline-none dark:[color-scheme:dark]"
                             >
                                 <option value="day">Ngày</option>
                                 <option value="week">Tuần</option>
